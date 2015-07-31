@@ -7,13 +7,13 @@
     <title>Lý Lich Khoa Học</title>
     <!-- Bootstrap css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
-    <link rel="stylesheet" type="text/css" href="css/flat-ui/flat-ui.css" >
+    <!-- <link rel="stylesheet" type="text/css" href="css/flat-ui/flat-ui.css" > -->
     <link rel="stylesheet" type="text/css" href="css/custom.css">
 
     <!-- Bootstrap js -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/flat-ui/flat-ui.min.js"></script> 
+    <!-- <script src="js/flat-ui/flat-ui.min.js"></script>  -->
     <script src="js/custom.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -26,10 +26,420 @@
   </head>
   <body>
     <div id="header">
-      
+
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Trường Đại học Trà Vinh</a>
+          </div>
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+              <!-- 
+              <li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li> 
+              -->
+            </ul>
+            <!-- 
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form> 
+            -->
+            <ul class="nav navbar-nav navbar-right">              
+              <li><a href="#"><b class="glyphicon glyphicon-user"></b> Account Info</a></li>              
+              
+              <li><a href="#"><b class="glyphicon glyphicon-off"></b> Logout</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-lock"></b> Login</a>
+                <ul class="dropdown-menu form-login">
+                  <li>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                          <div class="form-group">
+                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                            <input type="email" class="form-control border-radius-none" id="exampleInputEmail2" placeholder="Email address" required>
+                          </div>
+                          <div class="form-group">
+                            <label class="sr-only" for="exampleInputPassword2">Password</label>
+                            <input type="password" class="form-control border-radius-none" id="exampleInputPassword2" placeholder="Password" required>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox"> Remember me
+                            </label>
+                          </div>
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-orange btn-block border-radius-none">Sign in</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </li>                  
+                </ul>
+              </li> 
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+
     </div><!-- header -->
-    <div id="content">     
-     
+    <div id="content">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <h3 class="heading">&nbsp;</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="active">
+                      Danh sách giảng viên
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Tên giảng viên</td>
+                    <td class="active">Tên khoa</td>
+                    <td class="active">Tên bộ môn</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                    
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <h3 class="heading">&nbsp;</h3>
+            
+            <h3 class="heading">A. Thông tin cá nhân</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="2" class="active">
+                      Thông tin cá nhân
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">Tiêu đề</td>
+                    <td class="active">Nội dung</td>                    
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                    
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="active">
+                      Các chứng chỉ
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Nội dung</td>
+                    <td class="active">Trạng thái</td>
+                    <td class="active">Ghi chú</td>                   
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                   
+                    <td>Nội dung</td> 
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                   
+                    <td>Nội dung</td>                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="heading">B. Kinh nghiệm làm việc</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="6" class="active">
+                      Công tác giảng dạy
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Tên môn</td>
+                    <td class="active">Số tiết</td> 
+                    <td class="active">Bậc học</td>
+                    <td class="active">Hệ đào tạo</td>
+                    <td class="active">Ghi chú</td>                  
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="6" class="active">
+                      Công tác nghiên cứu khoa học
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Hoạt đông</td>
+                    <td class="active">Trạng thái</td> 
+                    <td class="active">Thời gian bắt đầu</td>
+                    <td class="active">Thời gian kết thúc</td>
+                    <td class="active">Ghi chú</td>                 
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                 
+                    <td>Nội dung</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>   
+                    <td>Nội dung</td>             
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="active">
+                      Công tác khác
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="heading">C. Định hướng phát triển</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="6" class="active">
+                      Công tác giảng dạy
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="active">
+                      Công tác nghiên cứu khoa học
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                 
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                 
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>                 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="6" class="active">
+                      Học tập nâng cao trình độ
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan="5" class="active">
+                      Các hoạch định khác
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Nội dung</td>
+                    <td class="active">Thời gian bắt đầu</td> 
+                    <td class="active">Thời gian kết thúc</td>
+                    <td class="active">Ghi chú</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                  <tr>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>
+                    <td>Nội dung</td> 
+                    <td>Nội dung</td>
+                    <td>Nội dung</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>  
     </div><!-- content -->
     <div id="footer">
       
