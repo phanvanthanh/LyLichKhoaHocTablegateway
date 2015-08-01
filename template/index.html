@@ -27,16 +27,16 @@
   <body>
     <div id="header">
 
-      <nav class="navbar navbar-default" role="navigation">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
-          <div class="navbar-header">
+          <div class="navbar-header">            
+            <a class="navbar-brand" href="#"><span class="hidden-sm hidden-md hidden-lg">Trường ĐH Trà Vinh</span><span class="hidden-xs">Trường Đại học Trà Vinh</span></a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Trường Đại học Trà Vinh</a>
           </div>
           <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
@@ -90,63 +90,78 @@
             </ul>
           </div>
         </div>
-      </nav>
+      </nav>    
 
     </div><!-- header -->
     <div id="content">
         <div class="row">
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <h3 class="heading">&nbsp;</h3>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="4" class="active">
-                      Danh sách giảng viên
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="active">STT</td>
-                    <td class="active">Tên giảng viên</td>
-                    <td class="active">Tên khoa</td>
-                    <td class="active">Tên bộ môn</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                    
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                    
-                  </tr>
-                </tbody>
-              </table>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">                       
+            <div  data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+              <div class="panel panel-default filterable table-responsive">
+                <div class="panel-heading">
+                  <h3 class="panel-title hidden-xs hidden-md hidden-lg">Danh sách GV</h3>
+                  <h3 class="panel-title hidden-sm">Danh sách giảng viên</h3>
+                  <div class="pull-right pull-right-btn-filter">
+                      <button class="btn btn-default btn-xs btn-filter" ><span class="glyphicon glyphicon-filter"></span> Search</button>
+                  </div>
+                </div>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="filters">
+                            <td>
+                              <input type="text" class="form-control" placeholder="STT" disabled>
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" placeholder="Tên giảng viên" disabled>
+                            </td>
+                            <td class="hidden-xs hidden-sm">
+                              <input type="text" class="form-control" placeholder="Tên khoa" disabled>
+                            </td>
+                            <td class="hidden-xs hidden-sm">
+                              <input type="text" class="form-control" placeholder="Tên bộ môn" disabled>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Hoàng Duy Thiện</td>
+                            <td class="hidden-xs hidden-sm">KTCN</td>
+                            <td class="hidden-xs hidden-sm">CNTT</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jacob</td>
+                            <td class="hidden-xs hidden-sm">Thornton</td>
+                            <td class="hidden-xs hidden-sm">@fat</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Larry</td>
+                            <td class="hidden-xs hidden-sm">the Bird</td>
+                            <td class="hidden-xs hidden-sm">@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <h3 class="heading">&nbsp;</h3>
+
+
+
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">            
+            <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
             
-            <h3 class="heading">A. Thông tin cá nhân</h3>
+            <h3><small>1. Thông tin cá nhân</small></h3>
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
-                  <tr>
-                    <th colspan="2" class="active">
-                      Thông tin cá nhân
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
                   <tr>
                     <td class="active">Tiêu đề</td>
                     <td class="active">Nội dung</td>                    
                   </tr>
+                </thead>
+                <tbody>                  
                   <tr>
                     <td>Nội dung</td>
                     <td>Nội dung</td>                    
@@ -158,49 +173,41 @@
                 </tbody>
               </table>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="4" class="active">
-                      Các chứng chỉ
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+
+            <h3><small>2. Các chứng chỉ</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
                     <td class="active">STT</td>
                     <td class="active">Nội dung</td>
                     <td class="active">Trạng thái</td>
                     <td class="active">Ghi chú</td>                   
                   </tr>
+                </thead>
+                <tbody>                  
                   <tr>
-                    <td>1</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                   
-                    <td>Nội dung</td> 
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Trạng thái">Trạng thái</td>                   
+                    <td data-title="Ghi chú">Ghi chú</td> 
                   </tr>
                   <tr>
-                    <td>2</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                   
-                    <td>Nội dung</td>                    
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Trạng thái">Trạng thái</td>                   
+                    <td data-title="Ghi chú">Ghi chú</td> 
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 class="heading">B. Kinh nghiệm làm việc</h3>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="6" class="active">
-                      Công tác giảng dạy
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+            <h3>B. Kinh nghiệm làm việc</h3>
+
+            <h3><small>1. Công tác giảng dạy</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">                  
                   <tr>
                     <td class="active">STT</td>
                     <td class="active">Tên môn</td>
@@ -209,210 +216,192 @@
                     <td class="active">Hệ đào tạo</td>
                     <td class="active">Ghi chú</td>                  
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="6" class="active">
-                      Công tác nghiên cứu khoa học
-                    </th>
-                  </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
                   <tr>
-                    <td class="active">STT</td>
-                    <td class="active">Hoạt đông</td>
-                    <td class="active">Trạng thái</td> 
-                    <td class="active">Thời gian bắt đầu</td>
-                    <td class="active">Thời gian kết thúc</td>
-                    <td class="active">Ghi chú</td>                 
+                    <td data-title="STT">1</td>
+                    <td data-title="Tên môn">Tên môn</td>
+                    <td data-title="Số tiết">Số tiết</td> 
+                    <td data-title="Bậc học">Bậc học</td>
+                    <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                    
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                 
-                    <td>Nội dung</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>   
-                    <td>Nội dung</td>             
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th colspan="4" class="active">
-                      Công tác khác
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                
-                  </tr>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                
-                  </tr>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                
+                    <td data-title="STT">2</td>
+                    <td data-title="Tên môn">Tên môn</td>
+                    <td data-title="Số tiết">Số tiết</td> 
+                    <td data-title="Bậc học">Bậc học</td>
+                    <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                    
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 class="heading">C. Định hướng phát triển</h3>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
+            <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
-                    <th colspan="6" class="active">
-                      Công tác giảng dạy
-                    </th>
+                    <td class="active">STT</td>
+                    <td class="active">Hoạt động</td>
+                    <td class="active">Trạng thái</td> 
+                    <td class="active">Thời gian bắt đầu</td>
+                    <td class="active">Thời gian kết thúc</td>
+                    <td class="active">Ghi chú</td>                 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">1</td>
+                    <td data-title="Hoạt động">Hoạt động</td>
+                    <td data-title="Trạng thái">Trạng thái</td> 
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>
                   </tr>
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
-                  </tr>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">2</td>
+                    <td data-title="Hoạt động">Hoạt động</td>
+                    <td data-title="Trạng thái">Trạng thái</td> 
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>             
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
+
+            <h3><small>3. Công tác khác</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
-                    <th colspan="4" class="active">
-                      Công tác nghiên cứu khoa học
-                    </th>
+                    <td class="active">STT</td>
+                    <td class="active">Nội dung</td>
+                    <td class="active">Thời gian</td> 
+                    <td class="active">Ghi chú</td>                
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                 
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian">Nội dung</td> 
+                    <td data-title="Ghi chú">Ghi chú</td>                
                   </tr>
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                 
-                  </tr>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>                 
+                    <td data-title="STT">2</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian">Nội dung</td> 
+                    <td data-title="Ghi chú">Ghi chú</td>                
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
+
+            <h3>C. Định hướng phát triển</h3>
+            
+            <h3><small>1. Công tác giảng dạy</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
-                    <th colspan="6" class="active">
-                      Học tập nâng cao trình độ
-                    </th>
+                    <td class="active">STT</td>
+                    <td class="active">Tên môn</td>
+                    <td class="active">Số tiết</td> 
+                    <td class="active">Bậc học</td>
+                    <td class="active">Hệ đào tạo</td>
+                    <td class="active">Ghi chú</td>                  
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">1</td>
+                    <td data-title="Tên môn">Tên môn</td>
+                    <td data-title="Số tiết">Số tiết</td> 
+                    <td data-title="Bậc học">Bậc học</td>
+                    <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
                   </tr>
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
-                  </tr>
-                  <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">2</td>
+                    <td data-title="Tên môn">Tên môn</td>
+                    <td data-title="Số tiết">Số tiết</td> 
+                    <td data-title="Bậc học">Bậc học</td>
+                    <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
+
+            <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
-                    <th colspan="5" class="active">
-                      Các hoạch định khác
-                    </th>
+                    <td class="active">STT</td>
+                    <td class="active">Nội dung</td>
+                    <td class="active">Thời gian bắt đầu</td> 
+                    <td class="active">Ghi chú</td>                 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
+                  <tr>
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                    <td data-title="Ghi chú">Ghi chú</td>                 
+                  </tr>
+                  <tr>
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                    <td data-title="Ghi chú">Ghi chú</td>                 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3><small>3. Học tập nâng cao trình độ</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Nội dung</td>
+                    <td class="active">Nơi học</td> 
+                    <td class="active">Thời gian bắt đầu</td>
+                    <td class="active">Thời gian kết thúc</td>
+                    <td class="active">Ghi chú</td>                  
+                  </tr>
+                </thead>
+                <tbody>                  
+                  <tr>
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Nơi học">Nơi học</td> 
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
+                  </tr>
+                  <tr>
+                    <td data-title="STT">2</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Nơi học">Nơi học</td> 
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3><small>4. Các hoạch định khác</small></h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
                   <tr>
                     <td class="active">STT</td>
                     <td class="active">Nội dung</td>
@@ -420,24 +409,56 @@
                     <td class="active">Thời gian kết thúc</td>
                     <td class="active">Ghi chú</td>                  
                   </tr>
+                </thead>
+                <tbody>                  
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
                   </tr>
                   <tr>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>
-                    <td>Nội dung</td> 
-                    <td>Nội dung</td>
-                    <td>Nội dung</td>                  
+                    <td data-title="STT">1</td>
+                    <td data-title="Nội dung">Nội dung</td>
+                    <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                    <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
                   </tr>
                 </tbody>
               </table>
             </div>
 
+            <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+            <div class="table-responsive" id="no-more-tables">
+              <table class="table table-bordered table-hover cf">
+                <thead class="cf">
+                  <tr>
+                    <td class="active">STT</td>
+                    <td class="active">Tên bài báo</td>
+                    <td class="active">Nơi xuất bản</td> 
+                    <td class="active">Năm xuất bản</td>
+                    <td class="active">Ghi chú</td>                  
+                  </tr>
+                </thead>
+                <tbody>                  
+                  <tr>
+                    <td data-title="STT">1</td>
+                    <td data-title="Tên bài báo">Tên bài báo</td>
+                    <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+                    <td data-title="Năm xuất bản">Năm xuất bản</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
+                  </tr>
+                  <tr>
+                    <td data-title="STT">1</td>
+                    <td data-title="Tên bài báo">Tên bài báo</td>
+                    <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+                    <td data-title="Năm xuất bản">Năm xuất bản</td>
+                    <td data-title="Ghi chú">Ghi chú</td>                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>  
     </div><!-- content -->
