@@ -20,21 +20,16 @@
   margin-bottom:80px;
 }
 
-.row-danh-sach-giang-vien{
-  padding:0px 15px 0px 15px;
-}
 
+/*filter danh sach giang vien*/
 .pull-right-btn-filter{
   margin-top: -20px;
 }
-/*filter danh sach giang vien*/
-.filterable .filters input[disabled] {
-    background-color: transparent;
-    border: none;
-    cursor: auto;
-    box-shadow: none;
-    padding: 0;
-    height: auto;
+.clickable{
+  cursor: pointer;   
+}
+.danh-sach-giang-vien .panel .panel-body{
+  display: none;
 }
 
 @media only screen and (max-width: 767px) {
