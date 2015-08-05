@@ -29,9 +29,7 @@ $(document).ready(function(){
         forceParse: 0
     });
 
-    jQuery('.form_date').on('click',function(){
-        alert(11111);
-    });
+    
 });
 
 function stickyDanhSachGiangVien(){
