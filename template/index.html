@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
     <link rel="stylesheet" type="text/css" href="css/datetime-picker/bootstrap-datetimepicker.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/flat-ui/flat-ui.css" > -->
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/custom/custom.css">
 
     <!-- Bootstrap js -->
     <script src="js/jquery.min.js"></script>
@@ -17,7 +17,8 @@
     <script src="js/sticky/jquery.sticky.js"></script>
     <script src="js/datetime-picker/bootstrap-datetimepicker.js"></script>
     <!-- <script src="js/flat-ui/flat-ui.min.js"></script>  -->
-    <script src="js/custom.js"></script>
+    <script src="js/function/function.js"></script>
+    <script src="js/custom/custom.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -110,55 +111,55 @@
                   </div>
                 </div>
                 <div class="panel-body">
-                  <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Filter Tasks" />
+                  <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Tìm kiếm giảng viên" />
                 </div>
-                <table class="table table-bordered table-hover" id="task-table">
+                <table class="table table-bordered table-hover pointer" id="task-table">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Task</th>
-                      <th class="hidden-xs hidden-sm">Assignee</th>
-                      <th class="hidden-xs hidden-sm hidden-md">Status</th>
+                      <th>Họ và tên</th>
+                      <th class="hidden-xs hidden-sm">Khoa</th>
+                      <th class="hidden-xs hidden-sm hidden-md">Bộ môn</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>1</td>
                       <td>Site Wireframes</td>
                       <td class="hidden-xs hidden-sm">John Smith</td>
                       <td class="hidden-xs hidden-sm hidden-md">in progress</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>2</td>
                       <td>Mobile Landing Page</td>
                       <td class="hidden-xs hidden-sm">Kilgore Trout</td>
                       <td class="hidden-xs hidden-sm hidden-md">completed</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>3</td>
                       <td>Add SEO tags</td>
                       <td class="hidden-xs hidden-sm">Bob Loblaw</td>
                       <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>4</td>
                       <td>Migrate to Bootstrap 3</td>
                       <td class="hidden-xs hidden-sm">Emily Hoenikker</td>
                       <td class="hidden-xs hidden-sm hidden-md">in progress</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>5</td>
                       <td>Update jQuery library</td>
                       <td class="hidden-xs hidden-sm">Holden Caulfield</td>
                       <td class="hidden-xs hidden-sm hidden-md">deployed</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>6</td>
                       <td>Issues in IE7</td>
                       <td class="hidden-xs hidden-sm">Jane Doe</td>
                       <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
                     </tr>
-                    <tr>
+                    <tr onclick="setLocation('index.html')">
                       <td>7</td>
                       <td>Bugs from Sprint 14</td>
                       <td class="hidden-xs hidden-sm">Kilgore Trout</td>
@@ -191,8 +192,7 @@
               </div>
               <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 text-right">
                 &nbsp;&nbsp;
-              </div>
-              
+              </div>              
 
             </div>          
             
