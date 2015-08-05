@@ -17,18 +17,10 @@ $(document).ready(function(){
     });
     $('[data-toggle="tooltip"]').tooltip();
 
-    // datetime-picker
-    $('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
+    // datetime-picker    
+    $('.date-time').datepicker({
+        format: "dd/mm/yyyy"
     });
-
     
 });
 
@@ -51,14 +43,14 @@ function stickyDanhSachGiangVien(){
 
 function tableResponsive(){
     $(window).resize(function(){
-        if ($(window).width()<=767) {            
+        if ($(window).width()<=750) {            
             jQuery('table.cf tbody tr td:first-child').addClass('active');            
         }
         else{
             jQuery('table.cf tbody tr td:first-child').removeClass('active');
         }
     });
-    if ($(window).width()<=767) {
+    if ($(window).width()<=750) {
         jQuery('table.cf tbody tr td:first-child').addClass('active');
         
     }

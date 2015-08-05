@@ -15,25 +15,24 @@
 .header-thong-tin-ca-nhan {
   margin-top: 0px;
 }
-
-#header{
-  margin-bottom:80px;
+#header {
+  margin-bottom: 80px;
 }
-
-
+.affix{
+  z-index:1000;
+}
 /*filter danh sach giang vien*/
-.pull-right-btn-filter{
+.pull-right-btn-filter {
   margin-top: -20px;
 }
-.clickable{
-  cursor: pointer;   
+.clickable {
+  cursor: pointer;
 }
-.danh-sach-giang-vien .panel .panel-body{
+.danh-sach-giang-vien .panel .panel-body {
   display: none;
 }
-
 @media only screen and (max-width: 767px) {
-  #header .navbar-fixed-top{
+  #header .navbar-fixed-top {
     margin: 0px 15px 0px 15px;
   }
   /*table responsive columns convert to row*/
@@ -52,7 +51,6 @@
     top: -9999px;
     left: -9999px;
   }
-
   #no-more-tables td {
     /* Behave  like a "row" */
     border: none;
