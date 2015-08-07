@@ -36,9 +36,6 @@ table.pointer tbody tr:hover{
   display: none;
 }
 @media only screen and (max-width: 767px) {
-  #header .navbar-fixed-top {
-    margin: 0px 15px 0px 15px;
-  }
   /*table responsive columns convert to row*/
   /* Force table to not be like tables anymore */
   #no-more-tables table,

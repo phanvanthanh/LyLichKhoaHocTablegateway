@@ -21,6 +21,21 @@ $(document).ready(function(){
     $('.date-time').datepicker({
         format: "dd/mm/yyyy"
     });
+
+    // modal
+    jQuery('select.modal-mon-hoc').on('change', function(){
+        var value=jQuery(this).val();
+        if(value.trim()=='#modal-mon-hoc'){
+            $('#modal-mon-hoc').modal(); 
+        }               
+    });
+
+    jQuery('select.modal-ngoai-ngu').on('change', function(){
+        var value=jQuery(this).val();
+        if(value.trim()=='#modal-ngoai-ngu'){
+            $('#modal-ngoai-ngu').modal(); 
+        }               
+    });
     
 });
 
@@ -57,10 +72,6 @@ function tableResponsive(){
     else{        
         jQuery('table.cf body tr td:first-child').removeClass('active');     
     }
-}
-
-function setLocation(url){
-    window.location.href = url;
 }
 
 (function(){
