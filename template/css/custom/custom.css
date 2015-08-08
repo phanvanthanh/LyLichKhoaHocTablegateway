@@ -39,7 +39,40 @@ table.pointer tbody tr:hover{
   width:110px;
 }
 
-@media only screen and (max-width: 767px) {
+.dropdown-menu.dropdown-action {
+  padding: 15px 15px 15px 15px;
+}
+@media (min-width: 1200px) {
+  .dropdown-menu.dropdown-action {
+    left: -120px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .dropdown-menu.dropdown-action {
+    left: -130px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .dropdown-menu.dropdown-action {
+    left: -140px;
+  }
+}
+@media (min-width: 467px) and (max-width: 767px) {
+  .dropdown-menu.dropdown-action {
+    left: -100px;
+  }
+}
+@media (max-width: 466px) {
+  .dropdown-menu.dropdown-action {
+    left: -140px;
+  }
+}
+
+
+
+
+
+@media only screen and (max-width: 767px) {  
   /*table responsive columns convert to row*/
   /* Force table to not be like tables anymore */
   #no-more-tables table,

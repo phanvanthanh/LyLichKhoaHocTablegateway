@@ -89,6 +89,39 @@ table.pointer tbody tr:hover{
   width:110px;
 }
 
+.dropdown-menu.dropdown-action{
+    padding: 15px 15px 15px 15px;
+}
+@media (min-width: @min-lg){
+  .dropdown-menu.dropdown-action{
+      left: -120px;
+    }
+}
+
+@media (min-width: @min-md) and (max-width:@max-md){
+  .dropdown-menu.dropdown-action{
+      left: -130px;
+    }
+}
+
+@media (min-width: @min-sm) and (max-width:@max-sm){
+  .dropdown-menu.dropdown-action{
+      left: -140px;
+    }
+}
+
+@media (min-width:@min-xs) and (max-width:@max-xs){
+  .dropdown-menu.dropdown-action{
+      left: -100px;
+    }
+}
+
+@media (max-width:@last-sc){
+  .dropdown-menu.dropdown-action{
+      left: -140px;
+    }
+}
+
 @media only screen and (max-width: @max-xs) {
   /*table responsive columns convert to row*/
   /* Force table to not be like tables anymore */
