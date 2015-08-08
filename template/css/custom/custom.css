@@ -35,6 +35,10 @@ table.pointer tbody tr:hover{
 .danh-sach-giang-vien .panel .panel-body {
   display: none;
 }
+.td-kich-hoat{
+  width:110px;
+}
+
 @media only screen and (max-width: 767px) {
   /*table responsive columns convert to row*/
   /* Force table to not be like tables anymore */
