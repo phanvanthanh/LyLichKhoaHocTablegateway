@@ -1,11 +1,17 @@
 
 $(document).ready(function(){
+    // alert
+    $("#alert").hide();
+    /*
+    jQuery('#alert').attr('class','alert alert-danger').children('span').text('Lỗi! Cập nhật giỏ hàng không thành công!');
+    jQuery('#alert').show('slow').delay(3000).hide('slow');
+    */
     
     stickyDanhSachGiangVien();
     tableResponsive();
-    yesOrNo();
-    // tree phân quyền
-    $('#tree').treed();    
+    yesOrNo();  
+     
+
 
     // attach table filter plugin to inputs
     $('[data-action="filter"]').filterTable();    

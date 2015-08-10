@@ -29,12 +29,15 @@
 
   </head>
   <body>
-    <div id="header">
-
+    <div id="alert" class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">x</button>
+      <span>Đăng nhập thành công</span>
+    </div>
+    <div id="header">    
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">            
-            <a class="navbar-brand" href="index.html"><span class="hidden-sm hidden-md hidden-lg">Đại học Trà Vinh</span><span class="hidden-xs">Trường Đại học Trà Vinh</span></a>
+            <a class="navbar-brand" href="index.html"><span class="hidden-md hidden-lg">ĐH Trà Vinh</span><span class="hidden-xs hidden-sm">Trường Đại học Trà Vinh</span></a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -58,10 +61,11 @@
             </form> 
             -->
             <ul class="nav navbar-nav navbar-right">              
-              <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html"> Nghiên cứu</a></li>
-              <li><a href="ngoai-ngu.html"> Ngoại ngữ</a></li> 
-              <li><a href="mon-hoc.html"> Môn học</a></li>  
-              <li><a href="nam-hoc.html"> Năm học</a></li>
+              <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html">Phân quyền</a></li>
+              <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html">Nghiên cứu</a></li>
+              <li><a href="ngoai-ngu.html">Ngoại ngữ</a></li> 
+              <li><a href="mon-hoc.html">Môn học</a></li>  
+              <li><a href="nam-hoc.html">Năm học</a></li>
               <!-- <li><a href="#"><b class="glyphicon glyphicon-off"></b> Thoát</a></li> -->
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-lock"></b> Đăng nhập</a>
@@ -195,11 +199,12 @@
               </div>
               <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
                 <div class="dropdown action">
-                  <a href="#" class="dropdown-toggle text-success" data-toggle="dropdown"><b class="glyphicon glyphicon-triangle-bottom"></b></a>
+                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
                       <a href="#">Lưu</a>
                     </li>
+                    <li class="divider"></li>
                     <li>
                       <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
                     </li>
@@ -261,20 +266,18 @@
               </div>
               <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
                 <div class="dropdown action">
-                  <a href="#" class="dropdown-toggle text-success" data-toggle="dropdown"><b class="glyphicon glyphicon-triangle-bottom"></b></a>
+                  <b class="glyphicon glyphicon-triangle-bottom dropdown-toggle" data-toggle="dropdown"></b>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
                       <a href="#">Lưu</a>
                     </li>
+                    <li class="divider"></li>
                     <li>
                       <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
                     </li>
                   </ul>
-                </div>               
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                &nbsp;&nbsp;
-              </div>
+                </div>                
+              </div>              
             </div>
             <div class="row">
               <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">

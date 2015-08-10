@@ -6,6 +6,15 @@
   background-color: rgba(86, 61, 124, 0.15);
   border: 1px solid rgba(86, 61, 124, 0.2);
 }
+#alert{
+  display: block;
+  position: fixed;
+  width: 100%;
+  z-index: 1100;
+  opacity: .95;
+  text-align: center;
+  margin-top: -80px;
+}
 #content {
   padding: 0px 15px 0px 15px;
 }
@@ -39,6 +48,9 @@ table.pointer tbody tr:hover{
   width:110px;
 }
 
+.dropdown-menu.dropdown-action {
+    top: 60%;
+  }
 
 @media (min-width: 1200px) {
   .dropdown-menu.dropdown-action {
@@ -65,10 +77,6 @@ table.pointer tbody tr:hover{
     left: -140px;
   }
 }
-
-
-
-
 
 @media only screen and (max-width: 767px) {  
   /*table responsive columns convert to row*/

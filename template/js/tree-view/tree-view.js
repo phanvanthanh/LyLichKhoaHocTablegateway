@@ -1,4 +1,7 @@
-
+jQuery(document).ready(function(){
+    // tree phân quyền
+    $('#tree').treed();
+});
 
 // CHÚ Ý:
 // NẾU MUỐN XÀI TREE THÌ MỞ NHỮNG CÁI ĐÃ ĐƯỢC ĐÓNG TRONG DẤU /* */ RA
