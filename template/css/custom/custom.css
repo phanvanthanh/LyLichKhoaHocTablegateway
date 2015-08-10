@@ -39,9 +39,7 @@ table.pointer tbody tr:hover{
   width:110px;
 }
 
-.dropdown-menu.dropdown-action {
-  padding: 15px 15px 15px 15px;
-}
+
 @media (min-width: 1200px) {
   .dropdown-menu.dropdown-action {
     left: -120px;

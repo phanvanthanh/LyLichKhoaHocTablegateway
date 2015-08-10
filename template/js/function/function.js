@@ -74,6 +74,19 @@ function tableResponsive(){
         jQuery('table.cf body tr td:first-child').removeClass('active');     
     }
 }
+ 
+function yesOrNo(){
+    jQuery('.yes-no').on('click', function(){
+        var data=jQuery(this).attr('data-yes-no');
+        var type=jQuery(this).attr('type-yes-no');
+        if(type.trim()=='y'){
+            jQuery(data).removeClass('hidden-xs hidden-sm hidden-md hidden-lg');
+        }
+        else{
+            jQuery(data).addClass('hidden-xs hidden-sm hidden-md hidden-lg');
+        }
+    });
+}
 
 
 (function(){
