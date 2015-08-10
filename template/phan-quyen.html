@@ -57,11 +57,11 @@
               <button type="submit" class="btn btn-default">Submit</button>
             </form> 
             -->
-            <ul class="nav navbar-nav navbar-right">              
-              <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html"> Nghiên cứu</a></li>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html"> Nghiên cứu</a></li>               
               <li><a href="ngoai-ngu.html"> Ngoại ngữ</a></li> 
               <li><a href="mon-hoc.html"> Môn học</a></li>  
-              <li><a href="nam-hoc.html"> Năm học</a></li>
+              <li><a href="nam-hoc.html"> Năm học</a></li>             
               <!-- <li><a href="#"><b class="glyphicon glyphicon-off"></b> Thoát</a></li> -->
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-lock"></b> Đăng nhập</a>
@@ -101,97 +101,94 @@
     </div><!-- header -->
     <div id="content">
       <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">                       
-          <div class="danh-sach-giang-vien">
-            <div class="panel panel-default table-responsive">
-              <div class="panel-heading">
-                <h3 class="panel-title">Danh sách giảng viên</h3>
-                <div class="pull-right pull-right-btn-filter">
-                  <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
-                    <i class="glyphicon glyphicon-filter"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="panel-body">
-                <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Tìm kiếm giảng viên" />
-              </div>
-              <table class="table table-bordered table-hover pointer" id="task-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Họ và tên</th>
-                    <th class="hidden-xs hidden-sm">Khoa</th>
-                    <th class="hidden-xs hidden-sm hidden-md">Bộ môn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr onclick="setLocation('index.html')">
-                    <td>1</td>
-                    <td>Site Wireframes</td>
-                    <td class="hidden-xs hidden-sm">John Smith</td>
-                    <td class="hidden-xs hidden-sm hidden-md">in progress</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>2</td>
-                    <td>Mobile Landing Page</td>
-                    <td class="hidden-xs hidden-sm">Kilgore Trout</td>
-                    <td class="hidden-xs hidden-sm hidden-md">completed</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>3</td>
-                    <td>Add SEO tags</td>
-                    <td class="hidden-xs hidden-sm">Bob Loblaw</td>
-                    <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>4</td>
-                    <td>Migrate to Bootstrap 3</td>
-                    <td class="hidden-xs hidden-sm">Emily Hoenikker</td>
-                    <td class="hidden-xs hidden-sm hidden-md">in progress</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>5</td>
-                    <td>Update jQuery library</td>
-                    <td class="hidden-xs hidden-sm">Holden Caulfield</td>
-                    <td class="hidden-xs hidden-sm hidden-md">deployed</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>6</td>
-                    <td>Issues in IE7</td>
-                    <td class="hidden-xs hidden-sm">Jane Doe</td>
-                    <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>7</td>
-                    <td>Bugs from Sprint 14</td>
-                    <td class="hidden-xs hidden-sm">Kilgore Trout</td>
-                    <td class="hidden-xs hidden-sm hidden-md">completed</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+          <h3>Phân quyền</h3>
+        </div>
+      </div>
+      <div class="row">        
+        <div class="col-xs-8 col-sm-6 col-md-7 col-lg-7 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+          <div class="form-group has-success">
+            <select class="form-control">
+              <option value="">Chọn</option>
+              <option value="1">Phạm Tiết Khánh</option>
+              <option value="2">Nguyễn Hoàng Duy Thiện</option>
+              <option value="3">Lữ Minh Liềng</option>
+              <option value="4">Phan Văn Thanh</option>
+              <option value="5">Lưu Kim Loan</option>
+            </select>
           </div>
         </div>
-
-
-        <div class="col-xs-12 col-sm-1 col-md-2 col-lg-2">&nbsp;</div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3>Đăng nhập</h3><br>         
-              <div class="form-group has-success">
-                <input type="text" class="form-control" placeholder="Tên đăng nhập">
-              </div>
-              <div class="form-group has-success">
-                <input type="password" class="form-control" placeholder="Mật khẩu">
-              </div>
-              <div class="form-group has-success">
-                <a href="index.html" class="btn btn-default active">Hủy</a>&nbsp;<button class="btn btn-default">Đăng nhập</button>
-              </div>
-            </div>            
+        <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1 text-right">
+          <button class="btn btn-default">Lưu</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <th class="active">STT</th>
+                  <th class="active">Tên quyền</th>
+                  <th class="active text-center td-kich-hoat">Kích hoạt</th>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td class="text-center" data-title="STT">1</td>
+                  <td data-title="Quyền">Sửa thông tin cá nhân</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">2</td>
+                  <td data-title="Quyền">Sửa thông tin cá nhân của tất cả các thành viên</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">3</td>
+                  <td data-title="Quyền">Quản lý môn học</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">4</td>
+                  <td data-title="Quyền">Quản lý năm học</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">5</td>
+                  <td data-title="Quyền">Quản lý ngoại ngữ</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">6</td>
+                  <td data-title="Quyền">Quản lý nghiên cứu khoa học</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" data-title="STT">7</td>
+                  <td data-title="Quyền">Quản lý phân quyền</td>
+                  <td data-title="Kích hoạt">                    
+                    <input type="checkbox" class="checkbox">                  
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>  
+      </div>
+          
     </div><!-- content -->
     <div id="footer">
       

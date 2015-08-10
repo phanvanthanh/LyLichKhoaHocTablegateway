@@ -4,7 +4,8 @@ $(document).ready(function(){
     stickyDanhSachGiangVien();
     tableResponsive();
     yesOrNo();
-    
+    // tree phân quyền
+    $('#tree').treed();    
 
     // attach table filter plugin to inputs
     $('[data-action="filter"]').filterTable();    

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lý Lich Khoa Học</title>
     <!-- Bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+    <link rel="stylesheet" type="text/css" href="css/tree-view/tree-view.css">   
     <link rel="stylesheet" type="text/css" href="css/datetime-picker/bootstrap-datetimepicker.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/flat-ui/flat-ui.css" > -->
     <link rel="stylesheet" type="text/css" href="css/custom/custom.css">
@@ -14,7 +15,8 @@
     <!-- Bootstrap js -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/sticky/jquery.sticky.js"></script>
+    <script src="js/tree-view/tree-view.js"></script>
+    <script src="js/sticky/jquery.sticky.js"></script>    
     <script src="js/datetime-picker/bootstrap-datetimepicker.js"></script>
     <!-- <script src="js/flat-ui/flat-ui.min.js"></script>  -->
     <script src="js/function/function.js"></script>
@@ -57,7 +59,7 @@
               <button type="submit" class="btn btn-default">Submit</button>
             </form> 
             -->
-            <ul class="nav navbar-nav navbar-right">              
+            <ul class="nav navbar-nav navbar-right">
               <li><a href="hoat-dong-nghien-cuu-khoa-hoc.html"> Nghiên cứu</a></li>
               <li><a href="ngoai-ngu.html"> Ngoại ngữ</a></li> 
               <li><a href="mon-hoc.html"> Môn học</a></li>  
@@ -101,100 +103,38 @@
     </div><!-- header -->
     <div id="content">
       <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">                       
-          <div class="danh-sach-giang-vien">
-            <div class="panel panel-default table-responsive">
-              <div class="panel-heading">
-                <h3 class="panel-title">Danh sách giảng viên</h3>
-                <div class="pull-right pull-right-btn-filter">
-                  <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
-                    <i class="glyphicon glyphicon-filter"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="panel-body">
-                <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Tìm kiếm giảng viên" />
-              </div>
-              <table class="table table-bordered table-hover pointer" id="task-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Họ và tên</th>
-                    <th class="hidden-xs hidden-sm">Khoa</th>
-                    <th class="hidden-xs hidden-sm hidden-md">Bộ môn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr onclick="setLocation('index.html')">
-                    <td>1</td>
-                    <td>Site Wireframes</td>
-                    <td class="hidden-xs hidden-sm">John Smith</td>
-                    <td class="hidden-xs hidden-sm hidden-md">in progress</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>2</td>
-                    <td>Mobile Landing Page</td>
-                    <td class="hidden-xs hidden-sm">Kilgore Trout</td>
-                    <td class="hidden-xs hidden-sm hidden-md">completed</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>3</td>
-                    <td>Add SEO tags</td>
-                    <td class="hidden-xs hidden-sm">Bob Loblaw</td>
-                    <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>4</td>
-                    <td>Migrate to Bootstrap 3</td>
-                    <td class="hidden-xs hidden-sm">Emily Hoenikker</td>
-                    <td class="hidden-xs hidden-sm hidden-md">in progress</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>5</td>
-                    <td>Update jQuery library</td>
-                    <td class="hidden-xs hidden-sm">Holden Caulfield</td>
-                    <td class="hidden-xs hidden-sm hidden-md">deployed</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>6</td>
-                    <td>Issues in IE7</td>
-                    <td class="hidden-xs hidden-sm">Jane Doe</td>
-                    <td class="hidden-xs hidden-sm hidden-md">failed qa</td>
-                  </tr>
-                  <tr onclick="setLocation('index.html')">
-                    <td>7</td>
-                    <td>Bugs from Sprint 14</td>
-                    <td class="hidden-xs hidden-sm">Kilgore Trout</td>
-                    <td class="hidden-xs hidden-sm hidden-md">completed</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">          
+          <h3>Tree View</h3>
         </div>
-
-
-        <div class="col-xs-12 col-sm-1 col-md-2 col-lg-2">&nbsp;</div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3>Đăng nhập</h3><br>         
-              <div class="form-group has-success">
-                <input type="text" class="form-control" placeholder="Tên đăng nhập">
-              </div>
-              <div class="form-group has-success">
-                <input type="password" class="form-control" placeholder="Mật khẩu">
-              </div>
-              <div class="form-group has-success">
-                <a href="index.html" class="btn btn-default active">Hủy</a>&nbsp;<button class="btn btn-default">Đăng nhập</button>
-              </div>
-            </div>            
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul id="tree">
+            <li><a href="#">TECH</a>
+              <ul>
+                <li>Company Maintenance</li>
+                  <li>Employees
+                    <ul>
+                      <li>Reports
+                        <ul>
+                          <li>Report1</li>
+                          <li>Report2</li>
+                          <li>Report3</li>
+                        </ul>
+                      </li>
+                      <li>Employee Maint.</li>
+                    </ul>
+                  </li>
+                <li>Human Resources</li>
+              </ul>
+            </li>            
+          </ul>
         </div>
-      </div>  
+      </div>
+          
     </div><!-- content -->
     <div id="footer">
-      
+
     </div><!-- footer -->
   </body>
 </html>
