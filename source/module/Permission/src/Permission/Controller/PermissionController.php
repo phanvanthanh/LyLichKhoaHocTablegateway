@@ -15,11 +15,47 @@ use Zend\View\Model\ViewModel;
 use Permission\Model\Entity\JosAdminResource;
 use Permission\Form\EditPermissionForm;
 use Permission\Form\EditResourceForm;
+use Permission\Form\EditPermissionOfUserForm;
 
 class PermissionController extends AbstractActionController
 {
     public function indexAction()
     {
+        $return_array =array();
+        // danh sách resources        
+        $resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
+        $resources=$resource_table->getResourceByArrayConditionAndArrayColumn(array('resource_type'=>'Module', 'parent_id'=>0, 'is_hidden'=>0), array('resource_id', 'resource', 'resource_name'));
+        // Get list giảng viên
+        $jos_users_table = $this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+        $danh_sach_giang_viens=$jos_users_table->getDanhSachGiangVien(); 
+        // edit permission form
+        $edit_permission_form=new EditPermissionForm($danh_sach_giang_viens, $resources, $this->getServiceLocator());
+
+        $return_array['resources']=$resources;
+        $return_array['edit_permission_form']=$edit_permission_form;        
+
+        return $return_array;
+    }
+
+    public function permissionOfUserAction(){
+        $this->layout('layout/ajax_layout');
+        $return_array =array();        
+        $request=$this->getRequest();
+        if($request->isXmlHttpRequest()) // kiểm tra nếu post dữ liệu
+        {
+            $data=$request->getPost(); //nhận dữ liệu post
+            // danh sách resources        
+            $resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
+            $resources=$resource_table->getResourceByArrayConditionAndArrayColumn(array('resource_type'=>'Module', 'parent_id'=>0, 'is_hidden'=>0), array('resource_id', 'resource', 'resource_name'));
+            // edit permission form
+            $edit_permission_of_user_form=new EditPermissionOfUserForm($resources, $this->getServiceLocator());
+
+            $return_array['resources']=$resources;
+            $return_array['edit_permission_of_user_form']=$edit_permission_of_user_form;
+            return $return_array;
+        }
+        $return_array['error']=1;
+        return $return_array;
     }
 
     public function editAction(){

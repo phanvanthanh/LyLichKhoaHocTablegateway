@@ -135,6 +135,8 @@ class JosAdminResourceTable
 
     /*
         sử dụng trong Permission/Controller/Permission updateAction
+        sử dụng trong Permission/Controller/Permission indexAction
+        sử dụng trong Permission/Controller/Permission editAction
     */
     public function getResourceByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*

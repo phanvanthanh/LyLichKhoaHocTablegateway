@@ -1,0 +1,38 @@
+<?php
+	if(!isset($this->error)){		
+?>
+		<!-- <table class="table table-bordered table-hover cf">
+		  	<thead class="cf">
+		    	<tr>
+		      		<th class="active">STT</th>
+		      		<th class="active">Tên quyền</th>
+		      		<th class="active text-center td-kich-hoat">Kích hoạt</th>
+		    	</tr>
+		  	</thead>
+		 	<tbody> -->
+			<?php
+			  	$form = $this->edit_permission_of_user_form;
+			  	$form->setAttribute('action', $this->url("permission/permission", array('action' => 'index')));
+			  	$form->prepare();
+			  	foreach ($this->resources as $key => $resource) {
+			  		$key++;
+			?>
+					<tr>
+				      <td class="text-center" data-title="STT"><?php echo $key; ?></td>
+				      <td data-title="Quyền"><?php echo $resource['resource_name']; ?></td>
+				      <td data-title="Kích hoạt">                    
+				        <?php echo $this->formElement($form->get($resource['resource'])); ?>
+				      </td>
+				    </tr>
+			<?php
+			  		
+			  	}  
+			?>
+			<!-- </tbody>
+					</table> -->
+<?php
+	}
+	else{
+		echo $this->error;
+	}
+?>
