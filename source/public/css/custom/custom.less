@@ -1,0 +1,175 @@
+// less editor online: http://winless.org/online-less-compiler
+
+// Declaring variables
+	@primary:#428bca;
+	@success:#5cb85c;
+	@warning:#f0ad4e;
+	@danger:#d9534f;
+	@inverse:#415b76;
+	@info:#5bc0de;
+	@default:#777;
+	@white: white;
+
+	@new-primary: #1abc9c;
+	@new-success:#2ecc71;
+	@new-warning:#f1c40f;
+	@new-danger:#e74c3c;
+	@new-inverse:#415b76;
+	@new-info:#5dade2;
+	@new-default:#bdc3c7;
+	@new-white:#fff;
+
+  @last-sc:466px;
+  @min-xs:467px;
+	@max-xs:767px;
+	@min-sm:768px;
+	@max-sm:991px;
+	@min-md:992px;
+	@max-md:1199px;
+	@min-lg:1200px;
+
+	@0px: 0px;
+	@5px: 5px;
+	@10px: 10px;
+	@15px: 15px;
+	@20px: 20px;
+	@25px: 25px;
+	@30px: 30px;
+	@35px: 35px;
+	@40px: 40px;
+	@45px: 45px;
+	@50px: 50px;
+
+	@full:100%;
+
+// function
+
+.show-grid [class^="col-"]{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	background-color: rgba(86,61,124,.15);
+	border: 1px solid rgba(86,61,124,.2);
+}
+
+#alert{
+  display: none;  
+}
+
+#content{
+	padding:@0px @15px @0px @15px;
+}
+.form-login{
+	padding:@15px @15px @15px @15px;
+}
+
+.header-thong-tin-ca-nhan{
+	margin-top:@0px;
+}
+
+#header{
+  margin-bottom:80px;
+}
+
+.affix{
+  z-index:1000;
+}
+
+table.pointer tbody tr:hover{
+  cursor: pointer;
+}
+
+
+/*filter danh sach giang vien*/
+.pull-right-btn-filter{
+  margin-top: -20px;
+}
+.clickable{
+  cursor: pointer;   
+}
+.danh-sach-giang-vien .panel .panel-body{
+  display: none;
+}
+
+.td-kich-hoat{
+  width:110px;
+}
+
+.dropdown-menu.dropdown-action{
+    padding: 15px 15px 15px 15px;
+}
+@media (min-width: @min-lg){
+  .dropdown-menu.dropdown-action{
+      left: -120px;
+    }
+}
+
+@media (min-width: @min-md) and (max-width:@max-md){
+  .dropdown-menu.dropdown-action{
+      left: -130px;
+    }
+}
+
+@media (min-width: @min-sm) and (max-width:@max-sm){
+  .dropdown-menu.dropdown-action{
+      left: -140px;
+    }
+}
+
+@media (min-width:@min-xs) and (max-width:@max-xs){
+  .dropdown-menu.dropdown-action{
+      left: -100px;
+    }
+}
+
+@media (max-width:@last-sc){
+  .dropdown-menu.dropdown-action{
+      left: -140px;
+    }
+}
+
+@media only screen and (max-width: @max-xs) {
+  /*table responsive columns convert to row*/
+  /* Force table to not be like tables anymore */
+  #no-more-tables table, 
+  #no-more-tables thead, 
+  #no-more-tables tbody, 
+  #no-more-tables th, 
+  #no-more-tables td, 
+  #no-more-tables tr { 
+    display: block; 
+  }
+ 
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+ 
+  #no-more-tables td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+    white-space: normal;
+    text-align:left;
+  }
+ 
+  #no-more-tables td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align:left;    
+  }
+ 
+  /* Label the data */
+  #no-more-tables td:before { content: attr(data-title); }
+}

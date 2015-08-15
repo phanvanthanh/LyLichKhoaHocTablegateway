@@ -1,0 +1,11 @@
+<?php
+	foreach ($this->container as $page) {
+	?>
+		<li>
+	<?php
+	    echo $this->navigation()->menu()->htmlify($page) . PHP_EOL;
+	?>
+		</li>
+	<?php
+	}	
+?>

@@ -15,6 +15,65 @@ CREATE DATABASE IF NOT EXISTS `ly_lich_khoa_hoc` /*!40100 DEFAULT CHARACTER SET 
 USE `ly_lich_khoa_hoc`;
 
 
+-- Dumping structure for table ly_lich_khoa_hoc.jos_admin_resource
+CREATE TABLE IF NOT EXISTS `jos_admin_resource` (
+  `resource_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Resource ID',
+  `parent_id` int(10) NOT NULL COMMENT 'Resource Parent',
+  `resource_url` varchar(255) DEFAULT NULL,
+  `resource` varchar(255) NOT NULL COMMENT 'Resource',
+  `resource_name` varchar(255) NOT NULL DEFAULT 'Resource New' COMMENT 'Resource Name',
+  `resource_type` varchar(20) NOT NULL COMMENT 'Type resource',
+  `resource_object` varchar(50) NOT NULL DEFAULT 'ACL' COMMENT 'White list or ACL',
+  PRIMARY KEY (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1081 DEFAULT CHARSET=utf8 COMMENT='Admin Resource Table';
+
+-- Dumping data for table ly_lich_khoa_hoc.jos_admin_resource: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jos_admin_resource` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jos_admin_resource` ENABLE KEYS */;
+
+
+-- Dumping structure for table ly_lich_khoa_hoc.jos_admin_role
+CREATE TABLE IF NOT EXISTS `jos_admin_role` (
+  `role_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Role ID',
+  `role_name` varchar(50) DEFAULT NULL COMMENT 'Role Name Is UserType In Jos_Users',
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `role_name` (`role_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Role table';
+
+-- Dumping data for table ly_lich_khoa_hoc.jos_admin_role: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jos_admin_role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jos_admin_role` ENABLE KEYS */;
+
+
+-- Dumping structure for table ly_lich_khoa_hoc.jos_admin_rule
+CREATE TABLE IF NOT EXISTS `jos_admin_rule` (
+  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule ID',
+  `role_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Role ID',
+  `resource_id` varchar(255) DEFAULT NULL COMMENT 'Resource ID',
+  PRIMARY KEY (`rule_id`),
+  KEY `IDX_JOS_RULE_RESOURCE_ID_ROLE_ID` (`resource_id`,`role_id`),
+  KEY `IDX_JOS_RULE_ROLE_ID_RESOURCE_ID` (`role_id`,`resource_id`),
+  CONSTRAINT `FK_JOS_RULE_ROLE_ID_JOS_ROLE_ROLE_ID` FOREIGN KEY (`role_id`) REFERENCES `jos_admin_role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2660 DEFAULT CHARSET=utf8 COMMENT='Admin Rule Table';
+
+-- Dumping data for table ly_lich_khoa_hoc.jos_admin_rule: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jos_admin_rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jos_admin_rule` ENABLE KEYS */;
+
+
+-- Dumping structure for table ly_lich_khoa_hoc.jos_admin_user
+CREATE TABLE IF NOT EXISTS `jos_admin_user` (
+  `user_id` int(11) NOT NULL DEFAULT '1',
+  `username` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lần cuối đăng nhập vào hệ thống';
+
+-- Dumping data for table ly_lich_khoa_hoc.jos_admin_user: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jos_admin_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jos_admin_user` ENABLE KEYS */;
+
+
 -- Dumping structure for table ly_lich_khoa_hoc.jos_attribute
 CREATE TABLE IF NOT EXISTS `jos_attribute` (
   `attribute_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
@@ -60,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `jos_certificate_user` (
   UNIQUE KEY `user_id` (`user_id`,`certificate_id`),
   KEY `FK_jos_certificate_user_jos_certificate` (`certificate_id`),
   CONSTRAINT `FK_jos_certificate_user_jos_certificate` FOREIGN KEY (`certificate_id`) REFERENCES `jos_certificate` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_certificate_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_certificate_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='1 user có những chứng chỉ nào';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_certificate_user: ~0 rows (approximately)
@@ -80,8 +139,8 @@ CREATE TABLE IF NOT EXISTS `jos_future_orther_work` (
   PRIMARY KEY (`value_id`),
   UNIQUE KEY `user_id_content` (`user_id`,`content`,`year_id`),
   KEY `FK_jos_future_orther_work_jos_year` (`year_id`),
-  CONSTRAINT `FK_jos_future_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_future_orther_work_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_future_orther_work_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_jos_future_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác khác';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_future_orther_work: ~0 rows (approximately)
@@ -102,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `jos_future_study` (
   UNIQUE KEY `user_id` (`user_id`,`subject_id`),
   KEY `FK_jos_future_study_jos_subject` (`subject_id`),
   CONSTRAINT `FK_jos_future_study_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_future_study_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_future_study_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nHọc tập nâng cao trình độ';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_future_study: ~0 rows (approximately)
@@ -123,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `jos_future_teaching` (
   UNIQUE KEY `user_id_subject` (`user_id`,`subject_id`),
   KEY `FK_jos_future_teaching_jos_subject` (`subject_id`),
   CONSTRAINT `FK_jos_future_teaching_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_future_teaching_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_future_teaching_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác giảng dạy';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_future_teaching: ~0 rows (approximately)
@@ -143,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `jos_futurre_science_research_of_user` (
   UNIQUE KEY `user_id_content` (`user_id`,`science_activity_id`),
   KEY `FK_jos_futurre_science_research_of_user_jos_science_activity` (`science_activity_id`),
   CONSTRAINT `FK_jos_futurre_science_research_of_user_jos_science_activity` FOREIGN KEY (`science_activity_id`) REFERENCES `jos_science_activity` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_futurre_science_research_of_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_futurre_science_research_of_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác nghiên cứu khoa học';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_futurre_science_research_of_user: ~0 rows (approximately)
@@ -160,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `jos_infomation` (
   PRIMARY KEY (`value_id`),
   UNIQUE KEY `user_id_attribute_id` (`user_id`,`attribute_id`),
   KEY `FK_jos_thong_tin_ca_nhan_jos_attribute` (`attribute_id`),
-  CONSTRAINT `FK_jos_infomation_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_jos_infomation_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_jos_thong_tin_ca_nhan_jos_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `jos_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Thông tin cá nhân, kèm với bảng jos_attribute';
 
@@ -181,8 +240,8 @@ CREATE TABLE IF NOT EXISTS `jos_orther_work` (
   PRIMARY KEY (`value_id`),
   UNIQUE KEY `user_id_content` (`user_id`,`content`),
   KEY `FK_jos_orther_work_jos_year` (`year_id`,`user_id`,`content`),
-  CONSTRAINT `FK_jos_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_orther_work_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_orther_work_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_jos_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Công tác khác';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_orther_work: ~0 rows (approximately)
@@ -218,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `jos_science_research_of_user` (
   UNIQUE KEY `user_id_science_activity_id` (`user_id`,`science_activity_id`),
   KEY `FK_jos_science_research_of_user_jos_science_activity` (`science_activity_id`),
   CONSTRAINT `FK_jos_science_research_of_user_jos_science_activity` FOREIGN KEY (`science_activity_id`) REFERENCES `jos_science_activity` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_science_research_of_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_science_research_of_user_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liên kết bảng jos_user và bảng jos_science_activity';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_science_research_of_user: ~0 rows (approximately)
@@ -239,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `jos_scientific_report` (
   UNIQUE KEY `user_id_name` (`user_id`,`name`,`year_id`),
   KEY `FK_jos_scientific_report_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_scientific_report_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_sientific_report_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_sientific_report_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Báo cáo khoa học đã công bố';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_scientific_report: ~0 rows (approximately)
@@ -276,25 +335,12 @@ CREATE TABLE IF NOT EXISTS `jos_teaching` (
   UNIQUE KEY `user_id_subject` (`user_id`,`subject_id`),
   KEY `FK_jos_teaching_jos_subject` (`subject_id`),
   CONSTRAINT `FK_jos_teaching_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_jos_teaching_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_jos_teaching_jos_user_login` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Công tác giảng dạy';
 
 -- Dumping data for table ly_lich_khoa_hoc.jos_teaching: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_teaching` DISABLE KEYS */;
 /*!40000 ALTER TABLE `jos_teaching` ENABLE KEYS */;
-
-
--- Dumping structure for table ly_lich_khoa_hoc.jos_user
-CREATE TABLE IF NOT EXISTS `jos_user` (
-  `user_id` int(11) NOT NULL DEFAULT '1',
-  `username` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lần cuối đăng nhập vào hệ thống';
-
--- Dumping data for table ly_lich_khoa_hoc.jos_user: ~0 rows (approximately)
-/*!40000 ALTER TABLE `jos_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jos_user` ENABLE KEYS */;
 
 
 -- Dumping structure for table ly_lich_khoa_hoc.jos_users
@@ -361,8 +407,8 @@ INSERT INTO `jos_users` (`id`, `name`, `username`, `email`, `password`, `usertyp
 /*!40000 ALTER TABLE `jos_users` ENABLE KEYS */;
 
 
--- Dumping structure for table ly_lich_khoa_hoc.jos_user_last_login
-CREATE TABLE IF NOT EXISTS `jos_user_last_login` (
+-- Dumping structure for table ly_lich_khoa_hoc.jos_user_year_last_login
+CREATE TABLE IF NOT EXISTS `jos_user_year_last_login` (
   `last_login_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT '75',
   `year_id` year(4) DEFAULT '2015',
@@ -370,13 +416,13 @@ CREATE TABLE IF NOT EXISTS `jos_user_last_login` (
   PRIMARY KEY (`last_login_id`),
   UNIQUE KEY `user_id_year_id` (`user_id`,`year_id`),
   KEY `FK_jos_user_last_login_jos_year` (`year_id`),
-  CONSTRAINT `FK_jos_user_last_login_jos_user` FOREIGN KEY (`user_id`) REFERENCES `jos_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_jos_user_last_login_jos_user` FOREIGN KEY (`user_id`) REFERENCES `jos_admin_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_jos_user_last_login_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Ghi nhận lần cuối đăng nhập của từng user trong từng năm';
 
--- Dumping data for table ly_lich_khoa_hoc.jos_user_last_login: ~0 rows (approximately)
-/*!40000 ALTER TABLE `jos_user_last_login` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jos_user_last_login` ENABLE KEYS */;
+-- Dumping data for table ly_lich_khoa_hoc.jos_user_year_last_login: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jos_user_year_last_login` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jos_user_year_last_login` ENABLE KEYS */;
 
 
 -- Dumping structure for table ly_lich_khoa_hoc.jos_year
@@ -386,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `jos_year` (
   PRIMARY KEY (`year_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table ly_lich_khoa_hoc.jos_year: ~2 rows (approximately)
+-- Dumping data for table ly_lich_khoa_hoc.jos_year: ~1 rows (approximately)
 /*!40000 ALTER TABLE `jos_year` DISABLE KEYS */;
 INSERT INTO `jos_year` (`year_id`, `is_active`) VALUES
 	('2014', 0),

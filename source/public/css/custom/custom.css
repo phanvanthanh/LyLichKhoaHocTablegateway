@@ -1,0 +1,116 @@
+.show-grid [class^="col-"] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  background-color: rgba(86, 61, 124, 0.15);
+  border: 1px solid rgba(86, 61, 124, 0.2);
+}
+#alert{
+  display: none;  
+}
+#content {
+  padding: 0px 15px 0px 15px;
+}
+.dropdown-menu.form-login {
+  padding: 15px 15px 15px 15px;
+}
+.header-thong-tin-ca-nhan {
+  margin-top: 0px;
+}
+#header {
+  margin-bottom: 80px;
+}
+.affix{
+  z-index:1000;
+}
+
+table.pointer tbody tr:hover{
+  cursor: pointer;
+}
+/*filter danh sach giang vien*/
+.pull-right-btn-filter {
+  margin-top: -20px;
+}
+.clickable {
+  cursor: pointer;
+}
+.danh-sach-giang-vien .panel .panel-body {
+  display: none;
+}
+.td-kich-hoat{
+  width:110px;
+}
+
+.dropdown-menu.dropdown-action {
+    top: 60%;
+  }
+
+@media (min-width: 1200px) {
+  .dropdown-menu.dropdown-action {
+    left: -120px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .dropdown-menu.dropdown-action {
+    left: -130px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .dropdown-menu.dropdown-action {
+    left: -140px;
+  }
+}
+@media (min-width: 467px) and (max-width: 767px) {
+  .dropdown-menu.dropdown-action {
+    left: -100px;
+  }
+}
+@media (max-width: 466px) {
+  .dropdown-menu.dropdown-action {
+    left: -140px;
+  }
+}
+
+@media only screen and (max-width: 767px) {  
+  /*table responsive columns convert to row*/
+  /* Force table to not be like tables anymore */
+  #no-more-tables table,
+  #no-more-tables thead,
+  #no-more-tables tbody,
+  #no-more-tables th,
+  #no-more-tables td,
+  #no-more-tables tr {
+    display: block;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  #no-more-tables td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align: left;
+  }
+  #no-more-tables td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+  }
+  /* Label the data */
+  #no-more-tables td:before {
+    content: attr(data-title);
+  }
+}

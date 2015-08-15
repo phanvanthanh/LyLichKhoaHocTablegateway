@@ -1,0 +1,1293 @@
+
+          <!-- 
+          <form id="form-edit" name="form-edit" method="post" action="index.html"> 
+          -->
+            <div class="row">
+              <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
+                <button class="btn btn-default">Lưu</button>
+              </div>                
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
+              </div>
+            </div>          
+            
+            
+            
+            <div class="row">
+              <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
+                <h3><small><b>1. Thông tin cá nhân</b></small></h3>
+              </div>
+              <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
+                <div class="dropdown action">
+                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom"></b></small></h3>
+                  <ul class="dropdown-menu dropdown-action" aria-labelledby>
+                    <li>
+                      <a href="#">Lưu</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
+                    </li>
+                  </ul>
+                </div>               
+              </div>
+            </div>            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Họ và tên
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ngày vào đảng
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Dân tộc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="1">Kinh</option>
+                    <option value="2">Kherme</option>
+                    <option value="3">Tầy</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ngày vào đoàn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                </div>
+              </div>
+            </div>
+
+
+            <h3><small><b>2. Các chứng chỉ</b></small></h3>              
+            <div class="row">
+              <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
+                2.1. 
+              </div>
+              <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
+                <div class="dropdown action">
+                  <b class="glyphicon glyphicon-triangle-bottom dropdown-toggle" data-toggle="dropdown"></b>
+                  <ul class="dropdown-menu dropdown-action" aria-labelledby>
+                    <li>
+                      <a href="#">Lưu</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
+                    </li>
+                  </ul>
+                </div>                
+              </div>              
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nghiệp vụ sư phạm" value="Nghiệp vụ sư phạm" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default yes-no active" data-yes-no=".yes-no-1" type-yes-no="y">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default yes-no" data-yes-no=".yes-no-1" type-yes-no="n">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row yes-no-1">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.2. 
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Triết lý sau đại học" value="Triết lý sau đại học" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.3. 
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ngoại ngữ" value="Ngoại ngữ" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Loại ngoại ngữ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-ngoai-ngu">
+                    <option value="">Chọn</option>
+                    <option value="1">Tiếng anh</option>
+                    <option value="4">Tiếng nhật</option>
+                    <option value="2">Tiếng pháp</option>
+                    <option value="3">Tiếng trung</option>                      
+                    <option value="#modal-ngoai-ngu">Ngoại ngữ khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trình độ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Trình độ">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <h3>B. Kinh nghiệm làm việc</h3>
+
+            <h3><small><b>1. Công tác giảng dạy</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                1.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên môn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-mon-hoc">
+                    <option value="">Chọn</option>
+                    <option value="1">Kỹ thuật máy tính</option>
+                    <option value="2">Lập trình PHP</option>
+                    <option value="3">Lập trình .net</option>
+                    <option value="4">Lập trình hướng đối tường</option>
+                    <option value="#modal-mon-hoc">Môn học khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Số tiết
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                    <option value="60">60</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Bậc học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Đại học">
+                      <input type="checkbox" autocomplete="off" checked>
+                      <span class="hidden-xs">Đại học</span><span class="hidden-sm hidden-md hidden-lg">ĐH</span>
+                    </label>
+                    <label class="btn btn-default" title="Cao đẳng">
+                      <input type="checkbox" autocomplete="off"> 
+                      <span class="hidden-xs">Cao đẳng</span><span class="hidden-sm hidden-md hidden-lg">CĐ</span>
+                    </label>
+                    <label class="btn btn-default" title="Trung cấp">
+                      <input type="checkbox" autocomplete="off"> <span class="hidden-xs">Trung cấp</span><span class="hidden-sm hidden-md hidden-lg">TC</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Hệ đào tạo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Liên thông">
+                      <input type="checkbox" autocomplete="off" checked> 
+                      <span class="hidden-xs">Liên thông</span>
+                      <span class="hidden-sm hidden-md hidden-lg">LT</span>
+                    </label>
+                    <label class="btn btn-default" title="Chính quy">
+                      <input type="checkbox" autocomplete="off">
+                      <span class="hidden-xs">Chính quy</span>
+                      <span class="hidden-sm hidden-md hidden-lg">CQ</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                1.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên môn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-mon-hoc">
+                    <option value="">Chọn</option>
+                    <option value="1">Kỹ thuật máy tính</option>
+                    <option value="2">Lập trình PHP</option>
+                    <option value="3">Lập trình .net</option>
+                    <option value="4">Lập trình hướng đối tường</option>
+                    <option value="#modal-mon-hoc">Môn học khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Số tiết
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                    <option value="60">60</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Bậc học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Đại học">
+                      <input type="checkbox" autocomplete="off" checked>
+                      <span class="hidden-xs">Đại học</span><span class="hidden-sm hidden-md hidden-lg">ĐH</span>
+                    </label>
+                    <label class="btn btn-default" title="Cao đẳng">
+                      <input type="checkbox" autocomplete="off"> 
+                      <span class="hidden-xs">Cao đẳng</span><span class="hidden-sm hidden-md hidden-lg">CĐ</span>
+                    </label>
+                    <label class="btn btn-default" title="Trung cấp">
+                      <input type="checkbox" autocomplete="off"> <span class="hidden-xs">Trung cấp</span><span class="hidden-sm hidden-md hidden-lg">TC</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Hệ đào tạo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Liên thông">
+                      <input type="checkbox" autocomplete="off" checked> 
+                      <span class="hidden-xs">Liên thông</span>
+                      <span class="hidden-sm hidden-md hidden-lg">LT</span>
+                    </label>
+                    <label class="btn btn-default" title="Chính quy">
+                      <input type="checkbox" autocomplete="off">
+                      <span class="hidden-xs">Chính quy</span>
+                      <span class="hidden-sm hidden-md hidden-lg">CQ</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <h3><small><b>2. Công tác nghiên cứu khoa học</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên công tác
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nghiên cứu khoa học" value="Nghiên cứu khoa học" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên công tác
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Sáng tạo thiết bị, mô hình, đồ dùng dạy học" value="Sáng tạo thiết bị, mô hình, đồ dùng dạy học" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+
+            <h3><small><b>3. Công tác khác</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                3.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nhập nội dung công tác" value="">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                3.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nhập nội dung công tác" value="">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+
+            <h3>C. Định hướng phát triển</h3>
+            
+            <h3><small><b>1. Công tác giảng dạy</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                1.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên môn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-mon-hoc">
+                    <option value="">Chọn</option>
+                    <option value="1">Kỹ thuật máy tính</option>
+                    <option value="2">Lập trình PHP</option>
+                    <option value="3">Lập trình .net</option>
+                    <option value="4">Lập trình hướng đối tường</option>
+                    <option value="#modal-mon-hoc">Môn học khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Số tiết
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                    <option value="60">60</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Bậc học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Đại học">
+                      <input type="checkbox" autocomplete="off" checked>
+                      <span class="hidden-xs">Đại học</span><span class="hidden-sm hidden-md hidden-lg">ĐH</span>
+                    </label>
+                    <label class="btn btn-default" title="Cao đẳng">
+                      <input type="checkbox" autocomplete="off"> 
+                      <span class="hidden-xs">Cao đẳng</span><span class="hidden-sm hidden-md hidden-lg">CĐ</span>
+                    </label>
+                    <label class="btn btn-default" title="Trung cấp">
+                      <input type="checkbox" autocomplete="off"> <span class="hidden-xs">Trung cấp</span><span class="hidden-sm hidden-md hidden-lg">TC</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Hệ đào tạo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Liên thông">
+                      <input type="checkbox" autocomplete="off" checked> 
+                      <span class="hidden-xs">Liên thông</span>
+                      <span class="hidden-sm hidden-md hidden-lg">LT</span>
+                    </label>
+                    <label class="btn btn-default" title="Chính quy">
+                      <input type="checkbox" autocomplete="off">
+                      <span class="hidden-xs">Chính quy</span>
+                      <span class="hidden-sm hidden-md hidden-lg">CQ</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                1.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên môn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-mon-hoc">
+                    <option value="">Chọn</option>
+                    <option value="1">Kỹ thuật máy tính</option>
+                    <option value="2">Lập trình PHP</option>
+                    <option value="3">Lập trình .net</option>
+                    <option value="4">Lập trình hướng đối tường</option>
+                    <option value="#modal-mon-hoc">Môn học khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Số tiết
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                    <option value="60">60</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Bậc học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Đại học">
+                      <input type="checkbox" autocomplete="off" checked>
+                      <span class="hidden-xs">Đại học</span><span class="hidden-sm hidden-md hidden-lg">ĐH</span>
+                    </label>
+                    <label class="btn btn-default" title="Cao đẳng">
+                      <input type="checkbox" autocomplete="off"> 
+                      <span class="hidden-xs">Cao đẳng</span><span class="hidden-sm hidden-md hidden-lg">CĐ</span>
+                    </label>
+                    <label class="btn btn-default" title="Trung cấp">
+                      <input type="checkbox" autocomplete="off"> <span class="hidden-xs">Trung cấp</span><span class="hidden-sm hidden-md hidden-lg">TC</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Hệ đào tạo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" title="Liên thông">
+                      <input type="checkbox" autocomplete="off" checked> 
+                      <span class="hidden-xs">Liên thông</span>
+                      <span class="hidden-sm hidden-md hidden-lg">LT</span>
+                    </label>
+                    <label class="btn btn-default" title="Chính quy">
+                      <input type="checkbox" autocomplete="off">
+                      <span class="hidden-xs">Chính quy</span>
+                      <span class="hidden-sm hidden-md hidden-lg">CQ</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <h3><small><b>2. Công tác nghiên cứu khoa học</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên công tác
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nghiên cứu khoa học" value="Nghiên cứu khoa học" disabled>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên công tác
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Sáng tạo thiết bị, mô hình, đồ dùng dạy học" value="Sáng tạo thiết bị, mô hình, đồ dùng dạy học" disabled>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+
+            <h3><small><b>3. Học tập nâng cao trình độ</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                3.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nội dung" value="Nội dung">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nơi học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nơi học" value="Nơi học">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian kết thúc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian kết thúc">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                3.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nội dung" value="Nội dung">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nơi học
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nơi học" value="Nơi học">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian kết thúc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian kết thúc">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>              
+
+            <h3><small><b>4. Các hoạch định khác</b></small></h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                4.1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nội dung" value="Nội dung">
+                </div>
+              </div>
+            </div>                            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian kết thúc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian kết thúc">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                4.2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nội dung
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nội dung" value="Nội dung">
+                </div>
+              </div>
+            </div>                            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian bắt đầu
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian bắt đầu">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Thời gian kết thúc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Thời gian kết thúc">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>              
+
+            <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                1.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên bài báo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Tên bài báo" value="Tên bài báo">
+                </div>
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nơi xuất bản
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nơi xuất bản" value="Nơi xuất bản">
+                </div>
+              </div>
+            </div>                          
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Năm xuất bản
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Năm xuất bản">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên bài báo
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Tên bài báo" value="Tên bài báo">
+                </div>
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Nơi xuất bản
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nơi xuất bản" value="Nơi xuất bản">
+                </div>
+              </div>
+            </div>                          
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Năm xuất bản
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Năm xuất bản">
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>            
+          <!-- 
+          </form>
+          -->
+
+          <div class="modal fade" id="modal-mon-hoc" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Môn học mới</h4>
+            </div>
+            <div class="modal-body">              
+              <div class="row">                  
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <input type="text" class="form-control" placeholder="Nhập tên môn học mới">
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <button class="btn btn-default">Thêm</button>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal-ngoai-ngu" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Thêm ngoại ngữ</h4>
+            </div>
+            <div class="modal-body">              
+              <div class="row">                  
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <input type="text" class="form-control" placeholder="Nhập tên ngoại ngữ mới">
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <button class="btn btn-default">Thêm</button>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>

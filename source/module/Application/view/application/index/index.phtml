@@ -1,44 +1,330 @@
-<div class="jumbotron">
-    <h1><?php echo sprintf($this->translate('Welcome to %sZend Framework 2%s'), '<span class="zf-green">', '</span>') ?></h1>
-    <p><?php echo sprintf($this->translate('Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2.'), '<a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">', '</a>', \Zend\Version\Version::VERSION) ?></p>
-    <p><a class="btn btn-success btn-lg" href="https://github.com/zendframework/zf2" target="_blank"><?php echo $this->translate('Fork Zend Framework 2 on GitHub') ?> &raquo;</a></p>
-</div>
+       
+          <div class="row">
+            
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
+              <a class="btn btn-default" href="edit.html">Sửa</a>
+            </div>              
+            
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+              <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
+            </div>
+            
+            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 text-right">
+              <a class="btn btn-default affix" href="edit.html">Sửa</a>
+            </div>
+            <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 text-right">
+              &nbsp;&nbsp;
+            </div>              
 
-<div class="row">
+          </div>          
+          
+          
+          <h3><small>1. Thông tin cá nhân</small></h3>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="active">Tiêu đề</td>
+                  <td class="active">Nội dung</td>                    
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td>Nội dung</td>
+                  <td>Nội dung</td>                    
+                </tr>
+                <tr>
+                  <td>Nội dung</td>
+                  <td>Nội dung</td>                    
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Follow Development') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/zf2" target="_blank"><?php echo $this->translate('ZF2 Development Portal') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+          <h3><small>2. Các chứng chỉ</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Nội dung</td>
+                  <td class="active">Trạng thái</td>
+                  <td class="active">Ghi chú</td>                   
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Trạng thái">Trạng thái</td>                   
+                  <td data-title="Ghi chú">Ghi chú</td> 
+                </tr>
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Trạng thái">Trạng thái</td>                   
+                  <td data-title="Ghi chú">Ghi chú</td> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Discover Modules') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2.'), '<a href="https://github.com/zendframework/modules.zendframework.com">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank"><?php echo $this->translate('Explore ZF2 Modules') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+          <h3>B. Kinh nghiệm làm việc</h3>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Help &amp; Support') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We\'d love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s.'), '<a href="irc://irc.freenode.net/zftalk">', '</a>', '<a href="http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank"><?php echo $this->translate('Ping us on IRC') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-</div>
+          <h3><small>1. Công tác giảng dạy</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">                  
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Tên môn</td>
+                  <td class="active">Số tiết</td> 
+                  <td class="active">Bậc học</td>
+                  <td class="active">Hệ đào tạo</td>
+                  <td class="active">Ghi chú</td>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Tên môn">Tên môn</td>
+                  <td data-title="Số tiết">Số tiết</td> 
+                  <td data-title="Bậc học">Bậc học</td>
+                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                    
+                </tr>
+                <tr>
+                  <td data-title="STT">2</td>
+                  <td data-title="Tên môn">Tên môn</td>
+                  <td data-title="Số tiết">Số tiết</td> 
+                  <td data-title="Bậc học">Bậc học</td>
+                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                    
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Hoạt động</td>
+                  <td class="active">Trạng thái</td> 
+                  <td class="active">Thời gian bắt đầu</td>
+                  <td class="active">Thời gian kết thúc</td>
+                  <td class="active">Ghi chú</td>                 
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Hoạt động">Hoạt động</td>
+                  <td data-title="Trạng thái">Trạng thái</td> 
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>
+                </tr>
+                <tr>
+                  <td data-title="STT">2</td>
+                  <td data-title="Hoạt động">Hoạt động</td>
+                  <td data-title="Trạng thái">Trạng thái</td> 
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>             
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3><small>3. Công tác khác</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Nội dung</td>
+                  <td class="active">Thời gian</td> 
+                  <td class="active">Ghi chú</td>                
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian">Nội dung</td> 
+                  <td data-title="Ghi chú">Ghi chú</td>                
+                </tr>
+                <tr>
+                  <td data-title="STT">2</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian">Nội dung</td> 
+                  <td data-title="Ghi chú">Ghi chú</td>                
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>C. Định hướng phát triển</h3>
+          
+          <h3><small>1. Công tác giảng dạy</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Tên môn</td>
+                  <td class="active">Số tiết</td> 
+                  <td class="active">Bậc học</td>
+                  <td class="active">Hệ đào tạo</td>
+                  <td class="active">Ghi chú</td>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Tên môn">Tên môn</td>
+                  <td data-title="Số tiết">Số tiết</td> 
+                  <td data-title="Bậc học">Bậc học</td>
+                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+                <tr>
+                  <td data-title="STT">2</td>
+                  <td data-title="Tên môn">Tên môn</td>
+                  <td data-title="Số tiết">Số tiết</td> 
+                  <td data-title="Bậc học">Bậc học</td>
+                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Nội dung</td>
+                  <td class="active">Thời gian bắt đầu</td> 
+                  <td class="active">Ghi chú</td>                 
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                  <td data-title="Ghi chú">Ghi chú</td>                 
+                </tr>
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                  <td data-title="Ghi chú">Ghi chú</td>                 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3><small>3. Học tập nâng cao trình độ</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Nội dung</td>
+                  <td class="active">Nơi học</td> 
+                  <td class="active">Thời gian bắt đầu</td>
+                  <td class="active">Thời gian kết thúc</td>
+                  <td class="active">Ghi chú</td>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Nơi học">Nơi học</td> 
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+                <tr>
+                  <td data-title="STT">2</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Nơi học">Nơi học</td> 
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3><small>4. Các hoạch định khác</small></h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Nội dung</td>
+                  <td class="active">Thời gian bắt đầu</td> 
+                  <td class="active">Thời gian kết thúc</td>
+                  <td class="active">Ghi chú</td>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Nội dung">Nội dung</td>
+                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
+                <tr>
+                  <td class="active">STT</td>
+                  <td class="active">Tên bài báo</td>
+                  <td class="active">Nơi xuất bản</td> 
+                  <td class="active">Năm xuất bản</td>
+                  <td class="active">Ghi chú</td>                  
+                </tr>
+              </thead>
+              <tbody>                  
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Tên bài báo">Tên bài báo</td>
+                  <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+                  <td data-title="Năm xuất bản">Năm xuất bản</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+                <tr>
+                  <td data-title="STT">1</td>
+                  <td data-title="Tên bài báo">Tên bài báo</td>
+                  <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+                  <td data-title="Năm xuất bản">Năm xuất bản</td>
+                  <td data-title="Ghi chú">Ghi chú</td>                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+   
+
