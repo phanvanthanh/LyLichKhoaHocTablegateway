@@ -39,11 +39,21 @@ class UserController extends AbstractActionController
         // tạo form login
         $login_form = $this->getServiceLocator()->get('Permission\Form\LoginForm');
         $return_array=array();
-        $return_array['login_form']=$login_form;
+        $return_array['login_form']=$login_form; 
+        // tạo url mặc định     
+        $url_login='/';
+        $return_array['url_login']=$url_login;
         // Kiểm tra có phải request POST
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
+
+            // lấy địa chỉ mặc định để quay lại
+            if(isset($post['url'])){
+                $url_login=$post['url'];
+                $return_array['url_login']=$post['url'];
+            }
             $login_form->setData($post);
+
             if($login_form->isValid()){
                 $username=$post['username'];
                 $password=$post['password'];
@@ -56,6 +66,7 @@ class UserController extends AbstractActionController
                     $jos_admin_resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
                     $white_list=$jos_admin_resource_table->getResourceByUsername($username);
                     $this->getAuthService()->getStorage()->write(array('username'=>$username,'white_list' => $white_list));         
+                    return $this->redirect()->toUrl($url_login);
                 }
             }                
         }

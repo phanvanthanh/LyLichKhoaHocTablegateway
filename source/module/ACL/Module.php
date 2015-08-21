@@ -36,13 +36,13 @@ class Module
         
         }
         $read=$sm->get("AuthService")->getStorage()->read();
-        $white_lists=$read['white_list']; 
+        $white_lists=$read['white_list'];
         // url cần chuyển tới
         $params=$event->getRouteMatch()->getParams();
         $controller=$params['controller'];
-        $action=$params['action'];
+        $action=$this->fixRoute($params['action']);
         // duyệt qua white_list nếu không nằm trong white list thì không có quyền
-        $is_white_list=0;      
+        $is_white_list=0;  
         foreach ($white_lists as $key => $white_list) {            
             if($white_list['controller']==$controller and $white_list['action']==$action){
                 $is_white_list=1;
@@ -51,8 +51,19 @@ class Module
         }        
         if($is_white_list==0){
             die('Xin loi, Duong dan khong hop le. Vui long kiem tra lai!');
+        }         
+    }
+
+    // sử dụng trong hàm boforeDispatch
+    public function fixRoute($action){
+        $arrays = explode("-", $action);
+        $route=$arrays[0]; unset($arrays[0]);
+        foreach ($arrays as $array) {
+            $first=strtoupper($array[0]);
+            $array[0]=$first;
+            $route.=$array;
         }
-         
+        return $route;
     }
 
     public function getAutoloaderConfig()

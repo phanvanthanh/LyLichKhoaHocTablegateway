@@ -31,7 +31,6 @@ class Module
                 'Permission\Model\JosAdminResourceTable' => 'Permission\Factory\Table\JosAdminResourceTableFactory',
                 'Permission\Model\JosAdminRoleTable' => 'Permission\Factory\Table\JosAdminRoleTableFactory',
                 'Permission\Model\JosAdminRuleTable' => 'Permission\Factory\Table\JosAdminRuleTableFactory',
-                'Permission\Model\JosAdminUserTable' => 'Permission\Factory\Table\JosAdminUserTableFactory',
                 'Permission\Model\JosUsersTable' => 'Permission\Factory\Table\JosUsersTableFactory',
                 // Form
                 'Permission\Form\LoginForm' => 'Permission\Factory\Form\LoginFormFactory',

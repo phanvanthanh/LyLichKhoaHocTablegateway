@@ -7,40 +7,43 @@ use Permission\Form\EditPermissionFormFilter;
 class EditPermissionForm extends Form
 {
 
-    public function __construct($danh_sach_giang_viens, $resources, $serviceLocator)
+    public function __construct($roles, $resources, $serviceLocator)
     {
         parent::__construct("edit_permission_form");
         $this->setAttribute('method', 'post');        
         // danh sách giảng viên option
-        $danh_giang_vien_option=array();
-        foreach ($danh_sach_giang_viens as $danh_sach_giang_vien) {
-            $danh_giang_vien_option[$danh_sach_giang_vien['id']]=$danh_sach_giang_vien['name'];
+        $role_options=array();
+        foreach ($roles as $role) {
+            $role_options[$role['role_id']]=$role['role_name'];
         }
 
         $this->add(array(
-            'name' => 'id_giang_vien',
+            'name' => 'role_id',
             'type' => 'Zend\Form\Element\Select',            
             'options'=>array(
                 'empty_option' => 'Chọn',
-                 'value_options' => $danh_giang_vien_option,
+                 'value_options' => $role_options,
             ),
             'attributes' => array(
-                'title' => 'Danh sách giảng viên',
+                'title' => 'Danh sách quyền',
                 'class' => 'form-control',
-                'id'    => 'id-giang-vien',
+                'id'    => 'role-id',
             ),
-        ));
+        ));        
+
         foreach ($resources as $resource) {
+            $attributes=array();
+            $attributes['class']='checkbox';
+            $attributes['title']=$resource['resource_name'];
+            $options=array();
+            $options['checked_value']       = $resource['resource_id'];
+            $options['unchecked_value']     = 0;
+
             $this->add(array(
-                'name' => $resource['resource'],
+                'name' => $resource['parent_id'].'_'.$resource['resource'],
                 'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'value'     => $resource['resource_id']
-                ),
-                'attributes' => array(
-                    'title' => $resource['resource_name'],
-                    'class' => 'checkbox'
-                )
+                'options' => $options,
+                'attributes' => $attributes,
             ));
         }
 

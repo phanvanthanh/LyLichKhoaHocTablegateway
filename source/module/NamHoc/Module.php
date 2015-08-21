@@ -43,4 +43,15 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                // Table
+                'NamHoc\Model\JosYearTable' => 'NamHoc\Factory\Table\JosYearTableFactory',
+            )
+            
+        );
+    }
 }

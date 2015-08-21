@@ -43,4 +43,15 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                // Table
+                'MonHoc\Model\JosSubjectTable' => 'MonHoc\Factory\Table\JosSubjectTableFactory',
+            )
+            
+        );
+    }
 }

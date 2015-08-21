@@ -1,4 +1,14 @@
+    <?php
+      $jos_years=$this->jos_years;
 
+      $add_form=$this->add_form;
+      $add_form->setAttribute('action', $this->url("nam_hoc/crud", array('action'=>'add')));
+      $add_form->setAttribute('class','form');
+      $add_form->setAttribute('role','form');
+      $add_form->setAttribute('method','post');
+      $add_form->prepare();
+      echo $this->form()->openTag($add_form);
+    ?>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
           <h3>Thông tin năm học</h3>
@@ -7,39 +17,45 @@
       <div class="row">        
         <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10">
           <div class="form-group has-success">
-            <input type="text" class="form-control date-time">
+            <?php echo $this->formInput($add_form->get('year_id')); ?>
           </div>
         </div>
         <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-right">
           <button class="btn btn-default">Thêm</button>
         </div>
       </div>
+    <?php  echo $this->form()->closeTag($add_form); ?>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead class="cf">
                 <tr>
                   <th class="active">STT</th>
                   <th class="active">Năm</th>
-                  <th class="active text-center td-kich-hoat">Kích hoạt</th>                  
+                  <th class="active text-center td-kich-hoat">Xóa</th>
+                  <th class="active text-center td-kich-hoat">Trạng thái</th>
                 </tr>
               </thead>
-              <tbody>                  
-                <tr>
-                  <td>1</td>
-                  <td>2015</td>
-                  <td class="text-center">
-                    <button class="btn btn-default"><span class="glyphicon glyphicon-ok text-success"></span> Hoạt động</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2014</td>
-                  <td class="text-center">
-                    <button class="btn btn-default">&nbsp;&nbsp;&nbsp;Kích hoạt&nbsp;&nbsp;&nbsp;</button>
-                  </td>
-                </tr>
+              <tbody>  
+                <?php foreach ($jos_years as $key => $jos_year) { ?>
+                  <tr>
+                    <td data-title="STT"><?php $key++; echo $key; ?></td>
+                    <td data-title="Năm"><?php echo $jos_year['year_id']; ?></td>
+                    <td class="text-center" data-title="Xóa">
+                      <a class="btn btn-default" href="#" onclick="deleteConfirm('Bạn muốn xóa Năm Học này? Nếu xóa tất cả dữ liệu thuộc năm này sẽ bị xóa hết!', '<?php echo $this->url('nam_hoc/crud', array('action'=>'delete', 'id'=>$jos_year['year_id'])); ?>')">Xóa</a>
+                    </td>
+                    <td class="text-center" data-title="Trạng thái">
+                      <a class="btn btn-default"
+                        <?php if($jos_year['is_active']==1){ ?>
+                          href="#"><span class="glyphicon glyphicon-ok text-success"></span> Hoạt động
+                        <?php } else{ echo 'href="'.$this->url('nam_hoc/crud', array('action'=>'kich-hoat', 'id'=>$jos_year['year_id'])).'"';?>>                          
+                          &nbsp;&nbsp;&nbsp;Kích hoạt&nbsp;&nbsp;&nbsp;
+                        <?php } ?>
+                      </a>
+                    </td>
+                  </tr>
+                <?php } ?>
               </tbody>
             </table>
           </div>

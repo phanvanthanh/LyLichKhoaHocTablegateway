@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#alert").hide();
 
     stickyDanhSachGiangVien();
-    tableResponsive();
+    //tableResponsive();
     yesOrNo(); 
 
     // attach table filter plugin to inputs
@@ -22,6 +22,9 @@ $(document).ready(function(){
     // datetime-picker    
     $('.date-time').datepicker({
         format: "dd/mm/yyyy"
+    });
+    $('.date-time-yyyy').datepicker({
+        format: "yyyy"
     });
 
     // modal
@@ -46,6 +49,50 @@ $(document).ready(function(){
         jQuery('#modal-cap-nhat-quyen').find('#permission-id').val(permission_id);
         jQuery('#modal-cap-nhat-quyen').find('#permission-name').val(permission_data);
         jQuery('#modal-cap-nhat-quyen').modal();
+    });
+
+    jQuery('.modal-cap-nhat-cong-tac-nghien-cuu').on('click', function(){
+        var data=jQuery(this).attr('data-activity');
+        var id=jQuery(this).attr('id-activity');
+        jQuery('#modal-cap-nhat-cong-tac-nghien-cuu').find('#name').val(data);
+        jQuery('#modal-cap-nhat-cong-tac-nghien-cuu').find('#id').val(id);
+        jQuery('#modal-cap-nhat-cong-tac-nghien-cuu').modal();
+    });
+
+    jQuery('a.modal-mon-hoc').on('click', function(){
+        var data=jQuery(this).attr('data-mon-hoc');
+        var id=jQuery(this).attr('id-mon-hoc');
+        jQuery('#modal-mon-hoc').find('#name').val(data);
+        jQuery('#modal-mon-hoc').find('#id').val(id);
+        jQuery('#modal-mon-hoc').modal();
+    });
+
+    jQuery('a.modal-chung-chi-khac').on('click', function(){
+        var data=jQuery(this).attr('data-chung-chi-khac');
+        var id=jQuery(this).attr('id-chung-chi-khac');
+        jQuery('#modal-chung-chi-khac').find('#name').val(data);
+        jQuery('#modal-chung-chi-khac').find('#id').val(id);
+        jQuery('#modal-chung-chi-khac').modal();
+    });
+
+    jQuery('a.modal-attribute').on('click', function(){
+        var attribute_code=jQuery(this).attr('data-attribute-code');
+        var frontend_label=jQuery(this).attr('data-frontend-label');
+        var id=jQuery(this).attr('id-attribute');
+        jQuery('#modal-attribute').find('#attribute-code').val(attribute_code);
+        jQuery('#modal-attribute').find('#frontend-label').val(frontend_label);
+        jQuery('#modal-attribute').find('#attribute-id').val(id);
+        jQuery('#modal-attribute').modal();
+    });
+
+
+    jQuery('.checkbox-is-check').on('click', function(){
+        if(jQuery(this).find('input[type="checkbox"]').prop('checked')){
+            jQuery(this).find('input[type="checkbox"]').removeAttr('checked');
+        }
+        else{
+            jQuery(this).find('input[type="checkbox"]').prop('checked', true);
+        }
     });
      
     

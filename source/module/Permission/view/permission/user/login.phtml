@@ -1,19 +1,36 @@
-    <div class="row">
-        <div class="col-xs-12 hidden-sm hidden-md hidden-lg">&nbsp;</div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3>Đăng nhập</h3><br>         
-              <div class="form-group has-success">
-                <input type="text" class="form-control" placeholder="Tên đăng nhập">
-              </div>
-              <div class="form-group has-success">
-                <input type="password" class="form-control" placeholder="Mật khẩu">
-              </div>
-              <div class="form-group has-success">
-                <a href="index.html" class="btn btn-default active">Hủy</a>&nbsp;<button class="btn btn-default">Đăng nhập</button>
-              </div>
-            </div>            
+<?php
+  $login_form->setAttribute('action', $this->url("permission/user", array('action'=>'login')));
+  $login_form->setAttribute('class','form');
+  $login_form->setAttribute('role','form');
+  $login_form->setAttribute('method','post');
+  $login_form->prepare();
+  echo $this->form()->openTag($login_form);
+?> 
+<div class="row">
+    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">&nbsp;</div>
+    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3>Đăng nhập</h3><br>         
+          <div class="form-group has-success">
+            <?php
+              $login_form->get('url')->setAttribute('value',$this->url_login);
+              echo $this->formInput($login_form->get('url'));
+              echo $this->formInput($login_form->get('username'));
+            ?>
           </div>
-        </div>
-    </div>    
+          <div class="form-group has-success">
+            <?php echo $this->formInput($login_form->get('password')); ?>
+          </div>
+          <div class="form-group has-success">
+            <a href="<php echo $this->url('home'); ?>" class="btn btn-default">Hủy</a>&nbsp;
+            <?php 
+              $login_form->get('submit')->setAttribute('class','btn btn-success');
+              echo $this->formRow($login_form->get('submit')); 
+            ?>
+          </div>
+        </div>            
+      </div>
+    </div>
+</div>    
+<?php echo $this->form()->closeTag($login_form); ?>

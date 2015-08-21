@@ -1,0 +1,93 @@
+    <?php
+      $add_form=$this->add_form;
+      $add_form->setAttribute('action', $this->url("chung_chi_khac/crud", array('action'=>'add')));
+      $add_form->setAttribute('class','form');
+      $add_form->setAttribute('role','form');
+      $add_form->setAttribute('method','post');
+      $add_form->prepare();
+      echo $this->form()->openTag($add_form);
+
+      $certificates=$this->all_certificates;
+    ?>  
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">          
+          <h3>Các chứng chỉ khác</h3>
+        </div>
+      </div>
+      <div class="row">        
+        <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+          <div class="form-group has-success">
+            <?php echo $this->formInput($add_form->get('name')); ?>
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+          <button class="btn btn-default">Thêm</button>
+        </div>
+      </div>
+    <?php  echo $this->form()->closeTag($add_form); ?>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="table-responsive" id="no-more-tables">
+            <table class="table table-bordered table-hover cf">
+              <thead>
+                <tr class="cf">
+                  <th class="active">STT</th>
+                  <th class="active">Tên chứng chỉ</th>
+                  <th class="active text-center td-kich-hoat">Xóa</th>
+                  <th class="active text-center td-kich-hoat">Sửa</th>
+                </tr>
+              </thead>
+              <tbody> 
+                <?php foreach ($certificates as $key => $certificate) { ?>                 
+                <tr>
+                  <td data-title="STT"><?php $key++; echo $key; ?></td>
+                  <td data-title="Tên ngoại ngữ"><?php echo $certificate['name']; ?></td>
+                  <td class="text-center" data-title="Sửa">
+                    <a class="btn btn-default" onclick="deleteConfirm('Nếu xóa chứng chỉ này thì tất cả dữ liệu liên quan đến chứng chỉ này sẽ bị xóa hết. Bạn muốn xóa chứng chỉ này?', '<?php echo $this->url("chung_chi_khac/crud", array("action"=>"delete", "id"=>$certificate["value_id"])); ?>')">Xóa</a>
+                  </td>
+                  <td class="text-center" data-title="Sửa">
+                    <a class="btn btn-default modal-chung-chi-khac" data-chung-chi-khac="<?php echo $certificate['name'] ?>" id-chung-chi-khac="<?php echo $certificate['value_id']; ?>">Sửa</a>
+                  </td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal-chung-chi-khac" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Cập nhật chứng chỉ</h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_form=$this->edit_form;
+                $edit_form->setAttribute('action', $this->url("chung_chi_khac/crud", array('action'=>'edit')));
+                $edit_form->setAttribute('class','form');
+                $edit_form->setAttribute('role','form');
+                $edit_form->setAttribute('method','post');
+                $edit_form->prepare();
+                echo $this->form()->openTag($edit_form);
+              ?>            
+              <div class="row">                  
+                <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                  
+                  <div class="form-group has-success">
+                    <?php echo $this->formHidden($edit_form->get('value_id')); ?>
+                    <?php echo $this->formInput($edit_form->get('name')); ?>                  
+                    
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>

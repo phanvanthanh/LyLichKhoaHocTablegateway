@@ -40,6 +40,11 @@ class LoginForm extends Form
                 'class' => ' form-control'
             )
         ));
+
+        $this->add(array(
+            'name' => 'url',
+            'type' => 'Zend\Form\Element\Hidden'
+        ));
         
         $this->add(array(
             'name' => 'submit',

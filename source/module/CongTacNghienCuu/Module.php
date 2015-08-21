@@ -43,4 +43,15 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                // Table
+                'CongTacNghienCuu\Model\JosScienceActivityTable' => 'CongTacNghienCuu\Factory\Table\JosScienceActivityTableFactory',
+            )
+            
+        );
+    }
 }

@@ -17,6 +17,9 @@ return array(
         'invokables' => array(
             'tree_plugin' => 'Permission\Controller\Plugin\TreePlugin', 
         ),
+        'shared'=>array(
+            'tree_plugin'=>false,
+        ),
     ),
   
 );

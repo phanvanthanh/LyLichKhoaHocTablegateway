@@ -110,13 +110,13 @@ return array(
                 ),
             ),
 
-            'ngoai_ngu' => array(
+            'chung_chi_khac' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/ngoai-ngu',
+                    'route'    => '/chung-chi-khac',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'NgoaiNgu\Controller',
-                        'controller'    => 'NgoaiNgu',
+                        '__NAMESPACE__' => 'ChungChiKhac\Controller',
+                        'controller'    => 'ChungChiKhac',
                         'action'        => 'index',
                     ),
                 ),
@@ -131,7 +131,36 @@ return array(
                                 'id' => '[0-9]+'
                             ),
                             'defaults' => array(
-                                'controller' => 'NgoaiNgu\Controller\NgoaiNgu',
+                                'controller' => 'ChungChiKhac\Controller\ChungChiKhac',
+                                'action' => 'index'
+                            )
+                        )
+                    ),
+                ),
+            ),
+
+            'thuoc_tinh' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/thuoc-tinh',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Attribute\Controller',
+                        'controller'    => 'Attribute',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'crud' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/crud[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Attribute\Controller\Attribute',
                                 'action' => 'index'
                             )
                         )

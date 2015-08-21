@@ -1,6 +1,6 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-          <h3>Cập nhật danh sách quyền</h3>
+          <h3>Cập nhật thông tin tài nguyên</h3>
         </div>
       </div>      
       <div class="row">
@@ -10,7 +10,8 @@
               <thead class="cf">
                 <tr>
                   <th class="active">STT</th>
-                  <th class="active">Tên quyền</th>
+                  <th class="active">Tên tài nguyên</th>
+                  <th class="active">Is white list</th>
                   <th class="active text-center td-kich-hoat">Sửa</th>
                 </tr>
               </thead>
@@ -19,10 +20,20 @@
                   $resources=$this->resources;
                   foreach ($resources as $key => $resource) {
                     $key++;
+                    $level='';
+                    for ($i=0; $i < $resource['level']; $i++) { 
+                      $level.='__ ';
+                    }
                 ?>
                     <tr>
                       <td class="text-center" data-title="STT"><?php echo $key; ?></td>
-                      <td data-title="Quyền"><?php echo $resource['resource_name']; ?></td>
+                      <td data-title="Tên tài nguyên"><?php echo $level.$resource['resource_name']; ?></td>
+                      <td data-title="Is white list" class="text-center">
+                        <?php
+                          $url=$this->url('permission/permission', array('action'=>'change-white-list', 'id'=>$resource['resource_id']));
+                        ?>
+                        <a class="btn <?php echo ($resource['is_white_list']==1) ? 'btn-success':'btn-default'; ?>" href="<?php echo $url; ?>"><?php echo ($resource['is_white_list']==1) ? 'Y':'N'; ?></a>
+                      </td>
                       <td data-title="Kích hoạt" class="text-center">
                         <a class="btn btn-default modal-cap-nhat-quyen" permission-id="<?php echo $resource['resource_id']; ?>" permission-data="<?php echo $resource['resource_name']; ?>">Sửa</a>
                       </td>

@@ -9,7 +9,7 @@ class EditPermissionFormFilter extends InputFilter
     public function __construct($resources)
     {
         $this->add(array(
-            'name' => 'id_giang_vien',
+            'name' => 'role_id',
             'required' => true,
             'filters' => array(
                 array(
@@ -33,7 +33,7 @@ class EditPermissionFormFilter extends InputFilter
         ));
         foreach ($resources as $resource) {
             $this->add(array(
-                'name' => $resource['resource'],
+                'name' => $resource['parent_id'].'_'.$resource['resource'],
                 'required' => false,
                 'filters' => array(
                     array(

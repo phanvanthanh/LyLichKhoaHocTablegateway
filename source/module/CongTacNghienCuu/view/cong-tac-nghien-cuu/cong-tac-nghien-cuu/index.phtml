@@ -1,4 +1,12 @@
-
+    <?php
+      $add_form=$this->add_form;
+      $add_form->setAttribute('action', $this->url("cong_tac_nghien_cuu/crud", array('action'=>'add')));
+      $add_form->setAttribute('class','form');
+      $add_form->setAttribute('role','form');
+      $add_form->setAttribute('method','post');
+      $add_form->prepare();
+      echo $this->form()->openTag($add_form);
+    ?> 
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
           <h3>Thông tin các hoạt động nghiên cứu khoa học</h3>
@@ -7,7 +15,7 @@
       <div class="row">        
         <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10">
           <div class="form-group has-success">
-            <input type="text" class="form-control">
+            <?php echo $this->formInput($add_form->get('name')); ?>
           </div>
         </div>
         <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-right">
@@ -22,34 +30,67 @@
                 <tr>
                   <th class="active">STT</th>
                   <th class="active">Tên hoạt động nghiên cứu</th>
-                  <th class="active text-center td-kich-hoat">Kích hoạt</th>
+                  <th class="active text-center td-kich-hoat">Xóa</th>
+                  <th class="active text-center td-kich-hoat">Sửa</th>
                 </tr>
               </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nghiên cứu">Tìm hiểu thiết bị dạy học</td>
-                  <td class="text-center" data-title="Kích hoạt">
-                    <button class="btn btn-default">Tắt</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Nghiên cứu">Cách thức dạy học mới</td>
-                  <td class="text-center" data-title="Kích hoạt">
-                    <button class="btn btn-default">Tắt</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="STT">3</td>
-                  <td data-title="Nghiên cứu">Nghiên cứu sáng tạo đồ dùng dạy học</td>
-                  <td class="text-center" data-title="Kích hoạt">
-                    <button class="btn btn-default">Bật</button>
-                  </td>
-                </tr>                
+              <tbody>  
+              <?php
+                $science_activitys=$this->science_activitys;
+                foreach ($science_activitys as $key => $science_activity) {
+                  $key++;
+              ?>
+                  <tr>
+                    <td data-title="STT"><?php echo $key; ?></td>
+                    <td data-title="Nghiên cứu"><?php echo $science_activity['name']; ?></td>
+                    <td class="text-center" data-title="Xóa">
+                      <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa hoạt động nghiên cứu này?', '<?php echo $this->url('cong_tac_nghien_cuu/crud', array('action'=>'delete', 'id'=>$science_activity['value_id'])); ?>')">Xóa</a>
+                    </td>
+                    <td class="text-center" data-title="Sửa">
+                      <a class="btn btn-default modal-cap-nhat-cong-tac-nghien-cuu" data-activity="<?php echo $science_activity['name']; ?>" id-activity="<?php echo $science_activity['value_id']; ?>">Sửa</a>
+                    </td>
+                  </tr>
+              <?php
+                }
+              ?>              
               </tbody>
             </table>
           </div>
         </div>
       </div>
-         
+    <?php  echo $this->form()->closeTag($add_form); ?>
+    <div class="modal fade" id="modal-cap-nhat-cong-tac-nghien-cuu" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Cập nhật công tác nghiên cứu</h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_form=$this->edit_form;
+                $edit_form->setAttribute('action', $this->url("cong_tac_nghien_cuu/crud", array('action'=>'edit')));
+                $edit_form->setAttribute('class','form');
+                $edit_form->setAttribute('role','form');
+                $edit_form->setAttribute('method','post');
+                $edit_form->prepare();
+                echo $this->form()->openTag($edit_form);
+              ?>            
+              <div class="row">                  
+                <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                  
+                  <div class="form-group has-success">
+                    <?php echo $this->formHidden($edit_form->get('id')); ?>
+                    <?php echo $this->formInput($edit_form->get('name')); ?>                  
+                    
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_form); ?>
+            </div>            
+          </div>
+        </div>
+    </div>

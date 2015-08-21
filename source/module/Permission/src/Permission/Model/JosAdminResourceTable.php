@@ -37,7 +37,6 @@ class JosAdminResourceTable
 	       
         $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
         $resultSets = $statement->execute();
-        $allRow = $this->getResourceByWhiteList(1);
         foreach ($resultSets as $key => $resultSet) {
             $allRow[$resultSet['resource_id']] = $resultSet;
         }
@@ -45,7 +44,6 @@ class JosAdminResourceTable
     }
 
     /*
-        sử dụng trong getResourceByUsername
         sử dụng trong ACL/Module.php
     */
     public function getResourceByWhiteList($is_white_list)
@@ -81,6 +79,7 @@ class JosAdminResourceTable
     /*
         sử dụng trong Permission/Controller/Permission updateAction
         sử dụng trong Permission/Controller/Permission editAction
+        sử dụng trong Permission/Controller/Permission changeWhiteListAction
     */
     public function saveResource(JosAdminResource $resource)
     {
@@ -137,6 +136,7 @@ class JosAdminResourceTable
         sử dụng trong Permission/Controller/Permission updateAction
         sử dụng trong Permission/Controller/Permission indexAction
         sử dụng trong Permission/Controller/Permission editAction
+        sử dụng trong Permission/Controller/Permission changeWhiteListAction
     */
     public function getResourceByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*
@@ -160,6 +160,30 @@ class JosAdminResourceTable
         foreach ($resultSets as $key => $resultSet) {
             $allRow[] = $resultSet;
         }
+        return $allRow;
+    }
+
+    /*
+        sử dụng trong Permission/Controller/Permission permissionOfUserAction
+    */
+    public function getResourceByRoleId($role_id, $array_columns=array()){        
+        $adapter = $this->tableGateway->adapter;
+        $sql = new Sql($adapter);        
+        // select
+        $sqlSelect = $sql->select();
+        $sqlSelect->from(array('t1'=>'jos_admin_resource'));
+        if($array_columns){
+            $sqlSelect->columns($array_columns);
+        }
+        $sqlSelect->join(array('t2'=>'jos_admin_rule'),  new Expression('t1.resource_id=t2.resource_id and t2.role_id='.$role_id), array('rule_id'), 'LEFT');
+        $sqlSelect->where(array('t1.is_hidden'=>0));
+        $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
+        $resultSets = $statement->execute();
+        $allRow = array();
+        foreach ($resultSets as $key => $resultSet) {
+            $allRow[] = $resultSet;
+        }
+
         return $allRow;
     }
 }

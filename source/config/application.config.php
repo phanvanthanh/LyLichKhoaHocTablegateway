@@ -6,14 +6,14 @@ return array(
         'Permission',        
         'Application',
         'CongTacNghienCuu',
-        'NgoaiNgu',
+        'ChungChiKhac',
         'MonHoc',
-        'NamHoc',
+        'NamHoc','Attribute',
     ),
     'module_listener_options' => array(        
         'module_paths' => array(
             './module',
-            './vendor',            
+            './vendor','./module',            
         ),
         'config_glob_paths' => array(
             'config/autoload/{,*.}{global,local}.php',

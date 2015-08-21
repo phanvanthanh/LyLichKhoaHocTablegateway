@@ -10,7 +10,7 @@ class EditPermissionOfUserFormFilter extends InputFilter
     {        
         foreach ($resources as $resource) {
             $this->add(array(
-                'name' => $resource['resource'],
+                'name' => $resource['parent_id'].'_'.$resource['resource'],
                 'required' => false,
                 'filters' => array(
                     array(

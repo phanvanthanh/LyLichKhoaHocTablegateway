@@ -88,9 +88,9 @@ return array(
                 'order' => 2
             ),  
             array(
-                'label' => 'Ngoại ngữ', 
-                'title' => 'Ngoại ngữ', 
-                'route' => 'ngoai_ngu/crud',
+                'label' => 'Chứng chỉ', 
+                'title' => 'Chứng chỉ', 
+                'route' => 'chung_chi_khac/crud',
                 'order' => 3
             ), 
             array(
@@ -98,7 +98,13 @@ return array(
                 'title' => 'Năm học', 
                 'route' => 'nam_hoc/crud',
                 'order' => 4
-            ),        
+            ),  
+            array(
+                'label' => 'Thuộc tính', 
+                'title' => 'Thuộc tính', 
+                'route' => 'thuoc_tinh/crud',
+                'order' => 5
+            ),      
         ),
     ),
 );
