@@ -1,8 +1,12 @@
-       
+        <?php
+          $id=$this->id;
+        ?>
           <div class="row">
             
             <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-              <a class="btn btn-default" href="edit.html">Sửa</a>
+              <?php if($id){ ?>  
+                <a class="btn btn-default" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
+              <?php } ?>
             </div>              
             
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -10,7 +14,9 @@
             </div>
             
             <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 text-right">
-              <a class="btn btn-default affix" href="edit.html">Sửa</a>
+              <?php if($id){ ?> 
+                <a class="btn btn-default affix" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
+              <?php } ?>
             </div>
             <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 text-right">
               &nbsp;&nbsp;

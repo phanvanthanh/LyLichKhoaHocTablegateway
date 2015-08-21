@@ -3,16 +3,10 @@
           <form id="form-edit" name="form-edit" method="post" action="index.html"> 
           -->
             <div class="row">
-              <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-                <button class="btn btn-default">Lưu</button>
-              </div>                
-
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
               </div>
-            </div>          
-            
-            
+            </div> 
             
             <div class="row">
               <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
@@ -23,7 +17,7 @@
                   <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#">Lưu</a>
+                      <a href="#" ajax-input=".ajax-thong-tin-ca-nhan"  data-toggle="modal" data-target="#processing-modal">Lưu</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -39,7 +33,7 @@
               </div>
               <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
                 <div class="form-group has-success">
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control ajax-thong-tin-ca-nhan">
                 </div>
               </div>
             </div>
@@ -49,7 +43,7 @@
               </div>
               <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
                 <div class="form-group has-success">                  
-                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                  <input type="text" class="form-control date-time ajax-thong-tin-ca-nhan" placeholder="Ngày vào đảng">
                 </div>
               </div>
             </div>
@@ -59,7 +53,7 @@
               </div>
               <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
                 <div class="form-group has-success">
-                  <select class="form-control">
+                  <select class="form-control ajax-thong-tin-ca-nhan">
                     <option value="">Chọn</option>
                     <option value="1">Kinh</option>
                     <option value="2">Kherme</option>
@@ -74,7 +68,7 @@
               </div>
               <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
                 <div class="form-group has-success">                  
-                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                  <input type="text" class="form-control date-time ajax-thong-tin-ca-nhan" placeholder="Ngày vào đảng">
                 </div>
               </div>
             </div>
@@ -1290,4 +1284,18 @@
             </div>            
           </div>
         </div>
+      </div>
+
+      <!-- Static Modal -->
+      <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-body">
+                      <div class="text-center">
+                          <img src="<?php echo $this->basePath().'/img/default/loading.gif' ?>" class="icon" />
+                          <h4>Đang xử lý... <button type="button" class="close hidden-xs hidden-sm hidden-md hidden-lg" style="float: none;" data-dismiss="modal" aria-hidden="true">×</button></h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>

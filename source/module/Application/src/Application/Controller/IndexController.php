@@ -16,7 +16,18 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-       
+    	//danh sách trả về
+    	$return_array=array();
+
+       	// lấy id giảng viên
+       	$id=$this->params('id');
+       	$return_array['id']=$id;
+       	//die(var_dump($id));
+
+       	// trả dữ liệu ra view
+       	return $return_array;
+
+
     }
 
     public function editAction()
