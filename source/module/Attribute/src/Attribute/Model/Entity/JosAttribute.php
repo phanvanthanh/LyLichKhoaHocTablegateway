@@ -10,6 +10,8 @@ class JosAttribute
 
     protected $year_id;
 
+    protected $frontend_input;
+
     protected $frontend_label;
 
     protected $value_table;
@@ -19,6 +21,7 @@ class JosAttribute
         $this->attribute_id = (isset($data['attribute_id'])) ? $data['attribute_id'] : null;
         $this->attribute_code = (isset($data['attribute_code'])) ? $data['attribute_code'] : null;
         $this->year_id = (isset($data['year_id'])) ? $data['year_id'] : null;
+        $this->frontend_input = (isset($data['frontend_input'])) ? $data['frontend_input'] : 'Text';
         $this->frontend_label = (isset($data['frontend_label'])) ? $data['frontend_label'] : null;
         $this->value_table = (isset($data['value_table'])) ? $data['value_table'] : null;
     }
@@ -47,6 +50,13 @@ class JosAttribute
     }
     public function getYearId(){
         return $this->year_id;
+    }
+
+    public function setFrontendInput($frontend_input){
+        $this->frontend_input=$frontend_input;
+    }
+    public function getFrontendInput(){
+        return $this->frontend_input;
     }
 
     public function setFrontendLabel($frontend_label){

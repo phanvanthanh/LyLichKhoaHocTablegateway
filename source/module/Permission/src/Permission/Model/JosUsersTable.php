@@ -38,6 +38,9 @@ class JosUsersTable
         return $allRow;
     }
 
+    /*
+        sử dụng trong Application\Controller\Index indexAction
+    */
     public function getGiangVienByArrayConditionAndArrayColumns($array_conditions, $array_columns){
          /*
             chuyền vào 2 tham số:   1 tham số là mảng điều kiện, 

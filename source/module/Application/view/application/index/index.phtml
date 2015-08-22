@@ -1,11 +1,18 @@
-        <?php
-          $id=$this->id;
-        ?>
+<!-- Nếu tồn tại có chọn 1 giảng viên nào nó thì mới hiển thị thông tin -->
+<!-- nếu tồn tại id và đã đăng nhập và user_id đang đăng nhập bằng vs id -->
+<!-- id=user_id thì sẽ hiển thị nút sửa -->
+<!-- hoặc nếu user đăng nhập có quyền sửa tất cả thông tin của tất cả user thì sẻ button edit sẽ chuyển tới action EditAllProfile ngược lại thì tới action edit thôi -->
+<?php $id=$this->id; ?>
+<?php $user_id=$this->user_id; ?>
+<?php $edit_all_profile=$this->edit_all_profile; ?>
+<?php if($id){ ?>
           <div class="row">
             
             <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-              <?php if($id){ ?>  
-                <a class="btn btn-default" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
+              <?php if($id==$user_id or $edit_all_profile==1){ ?> 
+                <?php $action='edit'; ?>
+                <?php if($edit_all_profile==1){ $action='edit-all-profile'; } ?>
+                <a class="btn btn-default" href="<?php echo $this->url('application/crud', array('action'=>$action, 'id'=>$id)); ?>">Sửa</a>
               <?php } ?>
             </div>              
             
@@ -14,8 +21,10 @@
             </div>
             
             <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 text-right">
-              <?php if($id){ ?> 
-                <a class="btn btn-default affix" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
+              <?php if($id==$user_id or $edit_all_profile==1){ ?> 
+                <?php $action='edit'; ?>
+                <?php if($edit_all_profile==1){ $action='edit-all-profile'; } ?>
+                <a class="btn btn-default affix" href="<?php echo $this->url('application/crud', array('action'=>$action, 'id'=>$id)); ?>">Sửa</a>
               <?php } ?>
             </div>
             <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 text-right">
@@ -333,4 +342,4 @@
             </table>
           </div>
    
-
+<?php } ?>

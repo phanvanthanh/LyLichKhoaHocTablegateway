@@ -11,6 +11,17 @@ return array(
             'Route' => __DIR__ . '/../view',
         ),
     ),
+    'source_model' => array(
+        'attribute' => array(
+            'frontend_input' => array(
+                'Text'  => 'Text',
+                'Select'=> 'Select',
+                'Date'  => 'Date',
+                'Email' => 'Email'
+            ),            
+        ),
+    ),
+
     'router' => array(
         'routes' => array(
             'home' => array(

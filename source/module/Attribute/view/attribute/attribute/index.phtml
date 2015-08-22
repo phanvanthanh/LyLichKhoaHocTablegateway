@@ -20,7 +20,7 @@
             <?php echo $this->formInput($add_form->get('attribute_code')); ?>
           </div>
         </div>
-      </div>
+      </div>      
       <div class="row">        
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form-group has-success">
@@ -29,13 +29,39 @@
         </div>
       </div>
       <div class="row">        
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-          <button class="btn btn-default">Thêm</button>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group has-success">
+            <?php echo $this->formSelect($add_form->get('frontend_input')); ?>
+          </div>
         </div>
       </div>
-      <div class="row">        
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">&nbsp;</div>
+
+      <div class="row hidden-xs hidden-sm hidden-md hidden-lg">        
+        <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">
+          <div class="form-group has-success">
+            <input type="text" class="form-control" placeholder="Nhập giá trị">
+          </div>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+          <div class="form-group has-success">
+            <input type="text" class="form-control" placeholder="Nhập tên hiển thị">
+          </div>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+          <div class="form-group has-success text-right">
+            <button class="btn btn-default">+</button>
+          </div>
+        </div>
       </div>
+
+      <div class="row">        
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+          <div class="form-group has-success">
+            <button class="btn btn-default">Thêm</button>
+          </div>
+        </div>
+      </div>
+      
     <?php  echo $this->form()->closeTag($add_form); ?>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

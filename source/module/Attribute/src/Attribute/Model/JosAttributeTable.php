@@ -90,6 +90,7 @@ class JosAttributeTable
         $data = array(
             'attribute_code'    => $attribute->getAttributeCode(),
             'year_id'           => $attribute->getYearId(),
+            'frontend_input'    => $attribute->getFrontendInput(),
             'frontend_label'    => $attribute->getFrontendLabel(),
             'value_table'       => $attribute->getValueTable()            
         );   

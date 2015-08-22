@@ -63,13 +63,7 @@ class Layout extends AbstractHelper implements ServiceLocatorAwareInterface
             if(isset($params['id']) and $params['id']){
                 $id_giang_vien_mac_dinh=$params['id'];
                 $return_array['id_giang_vien_mac_dinh']=$id_giang_vien_mac_dinh;
-            }
-            else{
-                if(isset($danh_sach_giang_viens[0]['id']) and $danh_sach_giang_viens[0]['id']){
-                    $id_giang_vien_mac_dinh=$danh_sach_giang_viens[0]['id'];
-                    $return_array['id_giang_vien_mac_dinh']=$id_giang_vien_mac_dinh;
-                }            
-            }
+            }            
         }
         // nếu đã đăng nhập
         $auth = new AuthenticationService();
@@ -80,7 +74,7 @@ class Layout extends AbstractHelper implements ServiceLocatorAwareInterface
             $user_is_logining=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']), array('id'));
             if($user_is_logining){
                 $return_array['user_id']=$user_is_logining[0]['id'];
-            }
+            }            
         }
         $return_array['danh_sach_giang_viens']=$danh_sach_giang_viens;
         $return_array['login_form']=$login_form;        

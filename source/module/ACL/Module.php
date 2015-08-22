@@ -42,7 +42,7 @@ class Module
         $controller=$params['controller'];
         $action=$this->fixRoute($params['action']);
         // duyệt qua white_list nếu không nằm trong white list thì không có quyền
-        $is_white_list=0;  
+        $is_white_list=0;
         foreach ($white_lists as $key => $white_list) {            
             if($white_list['controller']==$controller and $white_list['action']==$action){
                 $is_white_list=1;

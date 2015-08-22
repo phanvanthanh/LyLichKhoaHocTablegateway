@@ -19,13 +19,37 @@ class IndexController extends AbstractActionController
     	//danh sách trả về
     	$return_array=array();
 
-       	// lấy id giảng viên
-       	$id=$this->params('id');
-       	$return_array['id']=$id;
-       	//die(var_dump($id));
+     	// lấy id giảng viên
+     	$id=$this->params('id');
+     	$return_array['id']=$id;
+      // nếu chưa đăng nhập
+      $user_id=0;
+      $return_array['edit_all_profile']=0;
+      // nếu đã đăng nhập
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // tạo điểm truy cập jos_users table
+        $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+        // lấy id user theo username
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']), array('id'));
+        // nếu username tồn tại trong csdl
+        if($user){
+          // đặt lại user_id
+          $user_id=$user[0]['id'];
+        }       
+        // Kiểm tra nếu có quyền editAllProfile        
+        foreach ($read['white_list'] as $key => $white_list) {
+            if($white_list['action']=='editAllProfile'){
+                $return_array['edit_all_profile']=1;
+                break;
+            }
+        }
+      }
+      $return_array['user_id']=$user_id;
+      
 
-       	// trả dữ liệu ra view
-       	return $return_array;
+     	// trả dữ liệu ra view
+     	return $return_array;
 
 
     }

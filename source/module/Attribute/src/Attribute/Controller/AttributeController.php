@@ -28,11 +28,11 @@ class AttributeController extends AbstractActionController
         $return_array['all_attributes']=$all_attributes;
 
         // add form
-        $add_form=new AddAttributeForm();
+        $add_form=new AddAttributeForm($this->getServiceLocator());
         $return_array['add_form']=$add_form;
 
         // edit form
-        $edit_form=new EditAttributeForm();
+        $edit_form=new EditAttributeForm($this->getServiceLocator());
         $return_array['edit_form']=$edit_form;
 
 
@@ -41,7 +41,7 @@ class AttributeController extends AbstractActionController
 
     public function addAction(){
         // add form
-        $add_form=new AddAttributeForm();
+        $add_form=new AddAttributeForm($this->getServiceLocator());
 
         $request=$this->getRequest();
         if($request->isPost()){
@@ -88,7 +88,7 @@ class AttributeController extends AbstractActionController
 
     public function editAction(){
         // edit form
-        $edit_form=new EditAttributeForm();
+        $edit_form=new EditAttributeForm($this->getServiceLocator());
 
         $request=$this->getRequest();
         if($request->isPost()){
