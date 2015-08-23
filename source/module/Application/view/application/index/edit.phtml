@@ -1,7 +1,5 @@
-
-          <!-- 
-          <form id="form-edit" name="form-edit" method="post" action="index.html"> 
-          -->
+          <?php $id=$this->id; ?>
+            <input type="hidden" id="id" value="<?php echo $id; ?>">
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
@@ -14,65 +12,38 @@
               </div>
               <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
                 <div class="dropdown action">
-                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom"></b></small></h3>
+                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom cursor-pointer"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#" ajax-input=".ajax-thong-tin-ca-nhan"  data-toggle="modal" data-target="#processing-modal">Lưu</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
-                    </li>
+                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'edit-infor')); ?>" ajax-input=".ajax-thong-tin-ca-nhan"  data-toggle="modal" data-target="#processing-modal">Lưu</a>
+                    </li>                    
                   </ul>
                 </div>               
               </div>
-            </div>            
-            <div class="row">
-              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                Họ và tên
-              </div>
-              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                <div class="form-group has-success">
-                  <input type="text" class="form-control ajax-thong-tin-ca-nhan">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                Ngày vào đảng
-              </div>
-              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                <div class="form-group has-success">                  
-                  <input type="text" class="form-control date-time ajax-thong-tin-ca-nhan" placeholder="Ngày vào đảng">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                Dân tộc
-              </div>
-              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                <div class="form-group has-success">
-                  <select class="form-control ajax-thong-tin-ca-nhan">
-                    <option value="">Chọn</option>
-                    <option value="1">Kinh</option>
-                    <option value="2">Kherme</option>
-                    <option value="3">Tầy</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                Ngày vào đoàn
-              </div>
-              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                <div class="form-group has-success">                  
-                  <input type="text" class="form-control date-time ajax-thong-tin-ca-nhan" placeholder="Ngày vào đảng">
-                </div>
-              </div>
-            </div>
-
+            </div> 
+            <?php
+              $all_attributes=$this->all_attributes;
+              $edit_infor_form=$this->edit_infor_form;
+              //$edit_infor_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit')));
+              $edit_infor_form->setAttribute('class','form');
+              $edit_infor_form->setAttribute('role','form');
+              $edit_infor_form->setAttribute('method','post');
+              $edit_infor_form->prepare();
+              echo $this->form()->openTag($edit_infor_form);
+            ?>   
+              <?php foreach ($all_attributes as $key => $all_attribute) { ?>         
+                <div class="row">
+                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                    <?php echo $this->formLabel($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
+                  </div>
+                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                    <div class="form-group has-success">
+                      <?php echo $this->formElement($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
+                    </div>
+                  </div>
+                </div>  
+              <?php } ?>          
+            <?php echo $this->form()->closeTag($edit_infor_form); ?>
 
             <h3><small><b>2. Các chứng chỉ</b></small></h3>              
             <div class="row">
@@ -1299,3 +1270,39 @@
               </div>
           </div>
       </div>
+
+<script>
+  jQuery(document).ready(function(){
+    jQuery('.ajax').on('click', function(){
+      var url           = jQuery(this).attr('ajax-route');  
+      var class_input   = jQuery(this).attr('ajax-input');          
+      var param={'id' : jQuery('#id').val(), };
+      jQuery(class_input).each(function(){        
+        var name        = jQuery(this).attr('name');
+        var value       = jQuery(this).val();
+        var array       =[]; array[name]=value;
+        jQuery.extend(true, param, array);
+      });
+      var xhr;
+      xhr = jQuery.ajax({
+        url:url,
+        type:'POST',
+        dataType:'json', 
+        data: param,        
+        beforeSend: function(){
+          console.log('beforeSend');
+          jQuery('#processing-modal').modal('toggle');
+        },
+        success: function(data){
+          console.log(data);
+          console.log('success');
+          jQuery('#processing-modal').modal('hide');
+        },
+        error: function(xhr,status,errmgs){
+          console.log('error');
+          jQuery('#processing-modal').modal('hide');
+        }
+      });    
+    });
+  });
+</script>

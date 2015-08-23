@@ -21,6 +21,7 @@ class JosAttributeTable
         sử dụng trong Attribute/Controller/Attribute addAction
         sử dụng trong Attribute/Controller/Attribute deleteAction
         sử dụng trong Attribute/Controller/Attribute editAction
+        sử dụng trong Attribute/Controller/Attribute editOptionAction
     */
     public function getAttributeByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*
@@ -49,6 +50,7 @@ class JosAttributeTable
 
    /*
         Attribute\Controller\AttributeController indexAction
+        Application\Controller\IndexController editAction
     */
     public function getAttributeByYearActive($array_columns=array()){
         $adapter = $this->tableGateway->adapter;

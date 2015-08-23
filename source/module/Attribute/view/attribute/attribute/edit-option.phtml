@@ -1,0 +1,57 @@
+<?php 
+  $options=$this->options; 
+  $attribute_id=$this->attribute_id;
+?>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h3>Quản lý tùy chọn của thuộc tính</h3>
+    </div>
+  </div>
+  <?php
+    $edit_form=$this->edit_form;
+    $edit_form->setAttribute('action', $this->url("thuoc_tinh/crud", array('action'=>'edit-option', 'id'=>$attribute_id)));
+    $edit_form->setAttribute('class','form');
+    $edit_form->setAttribute('role','form');
+    $edit_form->setAttribute('method','post');
+    $edit_form->prepare();
+    echo $this->form()->openTag($edit_form);
+    echo $this->formHidden($edit_form->get('attribute_id'));
+  ?> 
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group has-success">
+          <a class="btn btn-default" href="<?php echo $this->url('thuoc_tinh/crud', array('action'=>'index')); ?>">Quay lại</a>
+        </div>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-right">
+        <div class="form-group has-success">
+          <button type="submit" class="btn btn-default">Lưu</button>
+          <a class="btn btn-default frontend-input-add-option" count-option="<?php echo count($options); ?>">+</a>
+        </div>
+      </div>
+    </div>   
+    <div class="frontend-input">
+      <?php foreach ($options as $key => $option) { ?>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3><small>Option <?php $key++; echo $key; ?></small></h3>
+          </div>       
+          <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">
+            <div class="form-group has-success">
+              <input type="text" name="frontend_input_value[]" id="frontend_input_value" class="form-control" placeholder="Nhập giá trị" value="<?php echo $option['key']; ?>">
+            </div>
+          </div>
+          <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+            <div class="form-group has-success">
+              <input type="text" name="frontend_input_label[]" id="frontend_input_label" class="form-control" placeholder="Nhập tên hiển thị" value="<?php echo $option['label']; ?>">
+            </div>
+          </div>
+          <div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+            <div class="form-group has-success text-right">
+              <a class="btn btn-default frontend-input-remove">-</a>
+            </div>
+          </div>
+        </div> 
+      <?php } ?>
+    </div>
+  <?php echo $this->form()->closeTag($edit_form); ?>

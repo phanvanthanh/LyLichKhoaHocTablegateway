@@ -44,7 +44,12 @@ table.pointer tbody tr:hover{
 
 .dropdown-menu.dropdown-action {
     top: 60%;
-  }
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
 
 @media (min-width: 1200px) {
   .dropdown-menu.dropdown-action {

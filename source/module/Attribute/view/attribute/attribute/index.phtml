@@ -7,7 +7,8 @@
       $add_form->prepare();
       echo $this->form()->openTag($add_form);
 
-      $all_attributes=$this->all_attributes; 
+      $all_attributes=$this->all_attributes;
+      $jos_attribute_options=$this->jos_attribute_option; 
     ?>  
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -36,22 +37,24 @@
         </div>
       </div>
 
-      <div class="row hidden-xs hidden-sm hidden-md hidden-lg">        
-        <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">
-          <div class="form-group has-success">
-            <input type="text" class="form-control" placeholder="Nhập giá trị">
+      <div class="frontend-input hidden-xs hidden-sm hidden-md hidden-lg">
+        <div class="row">        
+          <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">
+            <div class="form-group has-success">
+              <input type="text" name="frontend_input_value[]" id="frontend_input_value" class="form-control" placeholder="Nhập giá trị">
+            </div>
           </div>
-        </div>
-        <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
-          <div class="form-group has-success">
-            <input type="text" class="form-control" placeholder="Nhập tên hiển thị">
+          <div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+            <div class="form-group has-success">
+              <input type="text" name="frontend_input_label[]" id="frontend_input_label" class="form-control" placeholder="Nhập tên hiển thị">
+            </div>
           </div>
-        </div>
-        <div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
-          <div class="form-group has-success text-right">
-            <button class="btn btn-default">+</button>
+          <div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">
+            <div class="form-group has-success text-right">
+              <a class="btn btn-default frontend-input-add">+</a>
+            </div>
           </div>
-        </div>
+        </div> 
       </div>
 
       <div class="row">        
@@ -72,6 +75,8 @@
                   <th class="active">STT</th>
                   <th class="active">Mã thuộc tính</th>
                   <th class="active">Tên thuộc tính</th>
+                  <th class="active">Loại thuộc tính</th>
+                  <th class="active text-center td-kich-hoat">Option</th>
                   <th class="active text-center td-kich-hoat">Xóa</th>
                   <th class="active text-center td-kich-hoat">Sửa</th>
                 </tr>
@@ -80,13 +85,25 @@
                 <?php foreach ($all_attributes as $key => $all_attribute) { ?>               
                 <tr>
                   <td data-title="STT"><?php $key++; echo $key; ?></td>
-                  <td data-title="Mã thuộc tính"><?php echo $all_attribute['attribute_code']; ?></td>
-                  <td data-title="Tên thuộc tính"><?php echo $all_attribute['frontend_label']; ?></td>
-                  <td class="text-center" data-title="Sửa">
+                  <td data-title="Mã thuộc tính">
+                    <?php echo $all_attribute['attribute_code']; ?>
+                  </td>
+                  <td data-title="Tên thuộc tính">
+                    <?php echo $all_attribute['frontend_label']; ?>
+                  </td>
+                  <td data-title="Loại thuộc tính">
+                    <?php echo $all_attribute['frontend_input']; ?>                                          
+                  </td>
+                  <td class="text-center" data-title="Option">
+                    <?php if($all_attribute['frontend_input']=='Select'){ ?>
+                      <a class="btn btn-default" href="<?php echo $this->url('thuoc_tinh/crud', array('action'=>'edit-option', 'id'=>$all_attribute['attribute_id'])); ?>">Option</a>
+                    <?php } ?>
+                  </td>
+                  <td class="text-center" data-title="Xóa">
                     <a class="btn btn-default" onclick="deleteConfirm('Bạn mốn xóa thuộc tính này?', '<?php echo $this->url('thuoc_tinh/crud', array('action'=>'delete', 'id'=>$all_attribute['attribute_id'])); ?>')">Xóa</a>
                   </td>
                   <td class="text-center" data-title="Sửa">
-                    <a class="btn btn-default modal-attribute" data-attribute-code="<?php echo $all_attribute['attribute_code'] ?>" id-attribute="<?php echo $all_attribute['attribute_id']; ?>" data-frontend-label="<?php echo $all_attribute['frontend_label']; ?>">Sửa</a>
+                    <a class="btn btn-default modal-attribute" data-attribute-code="<?php echo $all_attribute['attribute_code'] ?>" id-attribute="<?php echo $all_attribute['attribute_id']; ?>" data-frontend-label="<?php echo $all_attribute['frontend_label']; ?>" data-frontend-input="<?php echo $all_attribute['frontend_input']; ?>">Sửa</a>
                   </td>
                 </tr>
                 <?php } ?>                
@@ -124,10 +141,16 @@
                 </div>                
               </div>
               <div class="row">                  
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                  
                   <div class="form-group has-success">
                     <?php echo $this->formInput($edit_form->get('frontend_label')); ?>
+                  </div>
+                </div>
+              </div>
+              <div class="row">        
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group has-success">
+                    <?php echo $this->formSelect($edit_form->get('frontend_input')); ?>
                   </div>
                 </div>
               </div>

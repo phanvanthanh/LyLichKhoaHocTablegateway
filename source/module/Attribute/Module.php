@@ -50,6 +50,7 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 // Table
                 'Attribute\Model\JosAttributeTable' => 'Attribute\Factory\Table\JosAttributeTableFactory',
+                'Attribute\Model\JosAttributeOptionTable' => 'Attribute\Factory\Table\JosAttributeOptionTableFactory',
             )
             
         );

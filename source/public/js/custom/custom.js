@@ -75,17 +75,99 @@ $(document).ready(function(){
         jQuery('#modal-chung-chi-khac').modal();
     });
 
+
+    // modal atribute and frontend input 
     jQuery('a.modal-attribute').on('click', function(){
         var attribute_code=jQuery(this).attr('data-attribute-code');
         var frontend_label=jQuery(this).attr('data-frontend-label');
+        var frontend_input=jQuery(this).attr('data-frontend-input');
         var id=jQuery(this).attr('id-attribute');
         jQuery('#modal-attribute').find('#attribute-code').val(attribute_code);
         jQuery('#modal-attribute').find('#frontend-label').val(frontend_label);
         jQuery('#modal-attribute').find('#attribute-id').val(id);
+        jQuery('#modal-attribute').find('#frontend-input').val(frontend_input);
         jQuery('#modal-attribute').modal();
     });
+    
+    jQuery('#frontend-input').on('change', function(){
+        var value=jQuery(this).val();
+        if(value=='Select'){
+            jQuery('.frontend-input').removeClass('hidden-xs hidden-sm hidden-md hidden-lg');
+        }
+        else{
+            jQuery('.frontend-input').addClass('hidden-xs hidden-sm hidden-md hidden-lg');
+        }
+    });
 
+    var frontend_input_html='<div class="row">'       
+        +'<div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">'
+        +   '<div class="form-group has-success">'
+        +       '<input type="text" name="frontend_input_value[]" class="form-control" placeholder="Nhập giá trị">'
+        +   '</div>'
+        +   '</div>'
+        +   '<div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">'
+        +   '<div class="form-group has-success">'
+        +     '<input type="text" name="frontend_input_label[]" class="form-control" placeholder="Nhập tên hiển thị">'
+        +   '</div>'
+        + '</div>'
+        + '<div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">'            
+        + '<div class="form-group has-success text-right">'
+        +     '<a class="btn btn-default frontend-input-remove">-</a>'
+        +   '</div>'
+        + '</div>'
+        +'</div>';
+    
+    jQuery('.frontend-input-add').on('click', function(){
+        var value=jQuery('#frontend_input_value').val();
+        var label=jQuery('#frontend_input_label').val();
+        if(value=='' || label==''){
+            return false;
+        }
+        jQuery('#frontend_input_value').val('');
+        jQuery('#frontend_input_label').val('');
+        jQuery('.frontend-input').append(frontend_input_html);
+        jQuery('.frontend-input>div:last-child').find('input[name="frontend_input_value[]"]').val(value);
+        jQuery('.frontend-input>div:last-child').find('input[name="frontend_input_label[]"]').val(label);
+        jQuery('.frontend-input-remove').on('click', function(){
+            jQuery(this).closest('div.row').remove();
+        });
+    });
 
+    jQuery('.frontend-input-remove').on('click', function(){
+        jQuery(this).closest('div.row').remove();
+    });
+
+    var count_option=jQuery('.frontend-input-add-option').attr('count-option');
+    
+    jQuery('.frontend-input-add-option').on('click', function(){
+        count_option++;
+        var frontend_option_html='<div class="row">' 
+            +'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">'
+            +   '<h3><small>Option '+count_option+'</small></h3>'
+            +'</div>'      
+            +'<div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-1 col-lg-offset-1">'
+            +   '<div class="form-group has-success">'
+            +       '<input type="text" name="frontend_input_value[]" class="form-control" placeholder="Nhập giá trị">'
+            +   '</div>'
+            +   '</div>'
+            +   '<div class="col-xs-10 col-sm-10 col-md-5 col-lg-5 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">'
+            +   '<div class="form-group has-success">'
+            +     '<input type="text" name="frontend_input_label[]" class="form-control" placeholder="Nhập tên hiển thị">'
+            +   '</div>'
+            + '</div>'
+            + '<div class="col-xs-10 col-sm-10 col-md-1 col-lg-1 col-xs-offset-2 col-sm-offset-2 col-md-offset-0 col-lg-offset-0">'            
+            + '<div class="form-group has-success text-right">'
+            +     '<a class="btn btn-default frontend-input-remove">-</a>'
+            +   '</div>'
+            + '</div>'
+            +'</div>';
+        jQuery('.frontend-input').append(frontend_option_html);
+        jQuery('.frontend-input-remove').on('click', function(){
+            jQuery(this).closest('div.row').remove();
+        });
+    });
+
+    /**/
     jQuery('.checkbox-is-check').on('click', function(){
         if(jQuery(this).find('input[type="checkbox"]').prop('checked')){
             jQuery(this).find('input[type="checkbox"]').removeAttr('checked');
@@ -94,6 +176,7 @@ $(document).ready(function(){
             jQuery(this).find('input[type="checkbox"]').prop('checked', true);
         }
     });
+        
      
     
 });

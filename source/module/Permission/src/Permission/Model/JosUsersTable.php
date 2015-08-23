@@ -40,8 +40,10 @@ class JosUsersTable
 
     /*
         sử dụng trong Application\Controller\Index indexAction
+        sử dụng trong Application\Controller\Index editAction
+        sử dụng trong Application\Controller\Index editInforAction
     */
-    public function getGiangVienByArrayConditionAndArrayColumns($array_conditions, $array_columns){
+    public function getGiangVienByArrayConditionAndArrayColumns($array_conditions=array(), $array_columns=array()){
          /*
             chuyền vào 2 tham số:   1 tham số là mảng điều kiện, 
                                     1 tham số là mảng cột cần lấy ra

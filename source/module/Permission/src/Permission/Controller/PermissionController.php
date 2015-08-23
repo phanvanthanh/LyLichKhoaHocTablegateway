@@ -73,7 +73,7 @@ class PermissionController extends AbstractActionController
 
     public function permissionOfUserAction(){
         $this->layout('layout/ajax_layout');
-        $return_array =array();        
+        $return_array =array();         
         $request=$this->getRequest();
         if($request->isXmlHttpRequest()) // kiểm tra nếu post dữ liệu
         {

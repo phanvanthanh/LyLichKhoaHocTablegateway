@@ -1,0 +1,42 @@
+	<?php
+	// luu l?i thông tin cá nhân
+    public function editInforAction(){
+      $this->layout('layout/ajax_layout');
+      $response=array();
+        
+      $request=$this->getRequest();
+      if($request->isXmlHttpRequest()) // ki?m tra n?u post d? li?u
+      {
+        $post=$request->getPost();
+        $id=$post['id'];
+        // n?u dã dang nh?p
+        $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        if(isset($read['username']) and $read['username']){
+          // t?o di?m truy c?p jos_users table
+          $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+          // ki?m tra user dang dang nh?p
+          $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+          // ki?m tra user có quy?n editAllProfile không
+          $white_lists=$read['white_list'];
+          $edit_all_profile=0;
+          foreach ($white_lists as $key => $white_list) {
+            if($white_list['action']=='editAllProfile'){
+              $edit_all_profile=1;
+            }
+          }
+          // n?u id c?n s?a b?ng v?i user_id dang dang nh?p ho?c có quy?n editAllProfile
+          if($user and $user[0]['id']==$id or $edit_all_profile==1){
+            // có quy?n s?a
+            $response[]=array('error'=>0);
+            $json = new JsonModel($response);
+            return $json;
+          }
+        }        
+      }        
+      // không có quy?n s?a
+      $response[]=array('error'=>1);
+      $json = new JsonModel($response);
+      return $json;
+      
+    }
+	?>
