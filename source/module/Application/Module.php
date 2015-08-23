@@ -41,7 +41,8 @@ class Module
     {
         return array(
             'factories' => array(
-                'Navigation' => 'Application\Navigation\MyNavigationFactory'
+                'Navigation' => 'Application\Navigation\MyNavigationFactory',
+                'Application\Model\JosInfomationTable' => 'Application\Factory\Table\JosInfomationTableFactory',
             )
         );
     }

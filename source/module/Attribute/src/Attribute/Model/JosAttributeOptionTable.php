@@ -21,6 +21,7 @@ class JosAttributeOptionTable
         sử dụng trong Attribute/Controller/Attribute addAction
         sử dụng trong Application/Form/EditInforForm
         sử dụng trong Attribute/Controller/Attribute editOptionAction
+        sử dụng trong Application/Controller/IndexController editInforAction
     */
     public function getAttributeOptionByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*

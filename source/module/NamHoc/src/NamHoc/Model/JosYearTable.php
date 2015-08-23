@@ -27,6 +27,7 @@ class JosYearTable
         sử dụng trong ChungChiKhac/Controller/ChungChiKhac editAction
         sử dụng trong Attribute/Controller/Attribute addAction
         sử dụng trong Attribute/Controller/Attribute editAction
+        sử dụng trong Attribute/Controller/Attribute editInforAction
     */
     public function getYearByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*

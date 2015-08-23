@@ -22,6 +22,7 @@ class JosAttributeTable
         sử dụng trong Attribute/Controller/Attribute deleteAction
         sử dụng trong Attribute/Controller/Attribute editAction
         sử dụng trong Attribute/Controller/Attribute editOptionAction
+        sử dụng trong Application/Controller/IndexController editInforAction
     */
     public function getAttributeByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*
