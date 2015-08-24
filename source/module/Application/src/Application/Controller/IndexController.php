@@ -160,20 +160,20 @@ class IndexController extends AbstractActionController
                 }
                 // kiểm tra bang infor đã có dòng thông tin theo attribute code chưa
                 $infor_exist=$jos_infor_table->getInfomationAttributeByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.attribute_code'=>$key, 't2.year_id'=>$year_id), array(), array());
+                $new_infor=new JosInfomation();
                 // nếu tồn tại thì sửa
-                if(isset($infor_exist[0])){
-                  $new_infor=new JosInfomation();
+                if(isset($infor_exist[0])){                  
                   $new_infor->exchangeArray($infor_exist[0]);
                   $new_infor->setValue($p);
                 }
                 // ngược lại thì add
                 else{
-                  $new_infor=new JosInfomation();
                   $new_infor->setValue($p);
                   $new_infor->setUserId($id);
                   $new_infor->setAttributeId($attribute_exist[0]['attribute_id']);
                 }
                 // lưu lại
+                $jos_infor_table->saveJosInfor($new_infor);
               }
               // cập nhật thành công
               if(!$error){

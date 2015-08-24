@@ -15,7 +15,7 @@
                   <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom cursor-pointer"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'edit-infor')); ?>" ajax-input=".ajax-thong-tin-ca-nhan"  data-toggle="modal" data-target="#processing-modal">Lưu</a>
+                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'edit-infor')); ?>" ajax-input=".ajax-thong-tin-ca-nhan">Lưu</a>
                     </li>                    
                   </ul>
                 </div>               
@@ -1290,17 +1290,30 @@
         dataType:'json', 
         data: param,        
         beforeSend: function(){
-          console.log('beforeSend');
           jQuery('#processing-modal').modal('toggle');
         },
         success: function(data){
           console.log(data);
-          console.log('success');
+          // tắt proccessing
           jQuery('#processing-modal').modal('hide');
+          // kiểm tra lúc lưu có lỗi không
+          jQuery.each(data, function(k, v){
+            if(v.error==0){
+              // thông báo thành công
+              jQuery('#alert').attr('class','alert alert-success').children('span').text('Cập nhật thành công!');
+              jQuery('#alert').slideDown('slow').delay(1000).slideUp('slow');
+            }
+            else{
+              // thông báo lỗi
+            jQuery('#alert').attr('class','alert alert-danger').children('span').text('Lỗi, '+v.error_name);
+            jQuery('#alert').slideDown('slow').delay(3000).slideUp('slow');
+            }
+          });
         },
-        error: function(xhr,status,errmgs){
-          console.log('error');
-          jQuery('#processing-modal').modal('hide');
+        error: function(xhr,status,errmgs){                    
+          // thông báo lỗi
+          jQuery('#alert').attr('class','alert alert-danger').children('span').text('Lỗi, thực thi thất bại. Vui lòng kiểm tra lại!');
+          jQuery('#alert').slideDown('slow').delay(1000).slideUp('slow');          
         }
       });    
     });

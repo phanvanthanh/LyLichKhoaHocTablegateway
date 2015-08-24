@@ -71,4 +71,26 @@ class JosInfomationTable
         }
         return $allRow;
     } 
+
+    public function saveJosInfor(JosInfomation $infor)
+    {
+        $data = array(
+            'attribute_id'      => $infor->getAttributeId(),
+            'user_id'           => $infor->getUserId(),
+            'value'             => $infor->getValue()            
+        );   
+        $value_id = (int) $infor->getValueId();
+        if ($value_id == 0) {
+            $this->tableGateway->insert($data);
+        } else {
+            if ($this->getInfomationByArrayConditionAndArrayColumns(array('value_id'=>$value_id), array('value'))) {
+                $this->tableGateway->update($data, array(
+                    'value_id' => $value_id
+                ));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }
