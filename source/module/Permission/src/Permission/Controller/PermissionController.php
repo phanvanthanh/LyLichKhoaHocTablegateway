@@ -21,7 +21,7 @@ use Permission\Form\EditPermissionOfUserForm;
 class PermissionController extends AbstractActionController
 {
     public function indexAction()
-    {
+    {        
         $return_array =array();
         // danh sách resources        
         $resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
@@ -203,7 +203,8 @@ class PermissionController extends AbstractActionController
             }            
         } 
 
-        
+        // lưu lại những id đã sử dụng, để kiểm tra những id không sử dụng để xóa bỏ
+        $array_id_used=array();
         $array_action_is_white_list=array(); 
         foreach ($array_modules as $key => $array_module) {            
             // kiểm tra tên module có tồn tại trong csdl chưa
@@ -223,6 +224,8 @@ class PermissionController extends AbstractActionController
                 $module=$resource_table->getResourceByArrayConditionAndArrayColumn(array('resource_type'=>'Module', 'resource'=>$key, 'resource_object'=>'ACL'),array('resource_id'));
             }
             $module_id=$module[0]['resource_id'];
+            // id này đã được sử dụng
+            $array_id_used[]=$module_id;
             // luu controller  
             $array_controllers=$array_module;
             foreach ($array_controllers as $ctrl_key => $array_controller) {
@@ -244,6 +247,8 @@ class PermissionController extends AbstractActionController
                 }
                 
                 $controller_id=$controller[0]['resource_id'];
+                // id này đã được sử dụng
+                $array_id_used[]=$controller_id;
                 $array_actions=$array_controller;
                 foreach ($array_actions as $array_action) {
                     $action=$resource_table->getResourceByArrayConditionAndArrayColumn(array('resource'=>$array_action, 'parent_id'=>$controller_id, 'resource_type'=>'Action', 'resource_object'=>'ACL'), array('resource_id'));
@@ -257,11 +262,21 @@ class PermissionController extends AbstractActionController
                         $jos_admin_resource -> setIsWhiteList(0);   
                         $jos_admin_resource -> setIsHidden(0);       
                         $resource_table->saveResource($jos_admin_resource);
+                        $action=$resource_table->getResourceByArrayConditionAndArrayColumn(array('resource'=>$array_action, 'parent_id'=>$controller_id, 'resource_type'=>'Action', 'resource_object'=>'ACL'), array('resource_id'));
+                    }
+
+                    if($action){
+                        // id này đã được sử dụng
+                        $array_id_used[]=$action[0]['resource_id'];
                     }
                 }
             }
         }
 
+        $array_id_not_used=$resource_table->getAllResourceIdUnexistResourceIdInArray($array_id_used);
+        if($array_id_not_used){
+            $resource_table->deleteResourceByResourceId($array_id_not_used);
+        }
         return $this->redirect()->toRoute('permission/permission');
         
     }

@@ -186,4 +186,50 @@ class JosAdminResourceTable
 
         return $allRow;
     }
+
+    /*
+        sử dụng trong permission\controller\permission updateAction
+    */
+    public function getAllResourceIdUnexistResourceIdInArray($arrays=array()){
+        /*
+            khi gọi hàm chuyền vào 2 mảng:
+                mảng 1: danh sách id không lấy ra.
+                mảng 2: tên cột cần lấy ra
+        */
+        $adapter = $this->tableGateway->adapter;
+        $sql = new Sql($adapter);        
+        // select
+        $sqlSelect = $sql->select();
+        $sqlSelect->from(array('t1'=>'jos_admin_resource'));
+        $sqlSelect->columns(array('resource_id'));            
+        $where='1=1 and ';
+        if($arrays){            
+            $count=count($arrays);
+            foreach ($arrays as $key => $array) {
+                $where.='resource_id!='.$array;
+                $key++;
+                if($count>1 and $key<$count){
+                    $where.=' and ';
+                }
+            }
+        }
+        $sqlSelect->where($where);
+        $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
+        $resultSets = $statement->execute();
+        $allRow = array();
+        foreach ($resultSets as $key => $resultSet) {
+            $allRow[] = $resultSet['resource_id'];
+        }
+        return $allRow; 
+    }
+
+    /*
+        sử dụng trong permission\controller\permission updateAction
+    */
+    public function deleteResourceByResourceId($resource_id)
+    {
+        $this->tableGateway->delete(array(
+            'resource_id' => $resource_id
+        ));
+    }
 }
