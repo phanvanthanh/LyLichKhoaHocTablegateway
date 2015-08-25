@@ -88,6 +88,22 @@ function yesOrNo(){
     });
 }
 
+function checkParent(parent){    
+    var parent=parent;
+    jQuery('.checkbox-is-check').each(function(){
+        var value=jQuery(this).find('input[type="checkbox"]').val();
+        if(parseInt(value)==parseInt(parent)){   
+            if(!jQuery(this).find('input[type="checkbox"]').prop('checked')){
+                jQuery(this).find('input[type="checkbox"]').prop('checked', true);
+                var parent_name=jQuery(this).find('input[type="checkbox"]').prop('name');
+                var array_parent=parent_name.split("_");
+                var parent_new=array_parent[0];
+                checkParent(parent_new);
+            }
+        }
+    });
+}
+
 
 (function(){
     'use strict';

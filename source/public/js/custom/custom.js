@@ -174,6 +174,10 @@ $(document).ready(function(){
         }
         else{
             jQuery(this).find('input[type="checkbox"]').prop('checked', true);
+            var parent_name=jQuery(this).find('input[type="checkbox"]').prop('name');
+            var array_parent=parent_name.split("_");
+            var parent=array_parent[0];
+            checkParent(parent);
         }
     });
         

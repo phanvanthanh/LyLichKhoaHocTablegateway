@@ -10,7 +10,7 @@ class EditPermissionOfUserForm extends Form
     public function __construct($resources, $serviceLocator)
     {
         parent::__construct("edit_permission_of_user_form");
-        $this->setAttribute('method', 'post');       
+        $this->setAttribute('method', 'post');  
         foreach ($resources as $resource) {
             $attributes=array();
             $attributes['class']='checkbox';
@@ -18,7 +18,7 @@ class EditPermissionOfUserForm extends Form
             $attributes['checked']=false;
             if($resource['rule_id']){
                 $attributes['checked']=true;
-            }
+            }            
 
             $options=array();
             $options['checked_value']       = $resource['resource_id'];
