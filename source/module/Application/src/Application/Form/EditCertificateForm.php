@@ -12,7 +12,10 @@ class EditCertificateForm extends Form
     {
         parent::__construct("edit_certificate_form");
         $this->setAttribute('method', 'post');
-        //die(var_dump($certificates));
+        // khai báo biến cần sử dụng      
+        $service_config = $serviceLocator->get('config');
+        $function_class = new FunctionClass();
+
         foreach ($certificates as $key => $certificate) {
             $certificate_id='certificate_id_'.$certificate['value_id'];
             $this->add(array(
@@ -20,7 +23,7 @@ class EditCertificateForm extends Form
                 'type'          => 'Zend\Form\Element\Hidden', 
                 'attributes'    => array(
                     'title'     => 'Id chứng chỉ',
-                    'class'     => 'form-control',
+                    'class'     => 'form-control ajax-certificate',
                 ),
             ));  
 
@@ -30,7 +33,7 @@ class EditCertificateForm extends Form
                 'type'          => 'Zend\Form\Element\Text', 
                 'attributes'    => array(
                     'title'     => 'Tên chứng chỉ',
-                    'class'     => 'form-control',
+                    'class'     => 'form-control ajax-certificate',
                     'value'     => $certificate['name'],
                     'disabled'  => true,
                 ),
@@ -38,6 +41,12 @@ class EditCertificateForm extends Form
 
                 
             if($certificate['name']=='Ngoại ngữ'){
+                $options=array();
+                $source_model=array();
+                $source_model['source_model']['cetificate']='ngoai_ngu';
+                // truy cập vào config lấy ra danh sách config
+                $options['value_options'] = $function_class->selectElementArray(array('array_element' => $source_model, 'array' => $service_config ));
+                $options['empty_option']= 'Chọn';
                 // nếu là ngoại ngữ thì cột chú thích (certificate_note) sẽ lưu lại loại ngoại ngữ: có thể là tieng_anh, tieng_nhat, tieng_phap...
                 $certificate_note='certificate_loai_ngoai_ngu_'.$certificate['value_id'];
                 $this->add(array(
@@ -45,15 +54,9 @@ class EditCertificateForm extends Form
                     'type'          => 'Zend\Form\Element\Select', 
                     'attributes'    => array(
                         'title'     => 'Loại ngoại ngữ',
-                        'class'     => 'form-control',
+                        'class'     => 'form-control ajax-certificate',
                     ),
-                    'options'       => array(
-                        'empty_option'  =>'Chọn',                        
-                        'value_options' =>array(
-                            'tieng_anh' =>'Tiếng anh',
-                            'tieng_nhat'=>'Tiếng nhật'
-                        ),
-                    ),
+                    'options'       => $options,
                 )); 
 
                 // cột level sẽ lưu lại trình độ ngoại ngữ đó
@@ -63,7 +66,7 @@ class EditCertificateForm extends Form
                     'type'          => 'Zend\Form\Element\Text', 
                     'attributes'    => array(
                         'title'     => 'Trình độ',
-                        'class'     => 'form-control',
+                        'class'     => 'form-control ajax-certificate',
                     ),
                 ));               
             } 
@@ -75,7 +78,7 @@ class EditCertificateForm extends Form
                     'type'          => 'Zend\Form\Element\Text', 
                     'attributes'    => array(
                         'title'     => 'Ghi chú',
-                        'class'     => 'form-control',
+                        'class'     => 'form-control ajax-certificate',
                     ),
                 ));
 
@@ -85,7 +88,7 @@ class EditCertificateForm extends Form
                     'type'          => 'Zend\Form\Element\Checkbox', 
                     'attributes'    => array(
                         'title'     => 'Ghi chú',
-                        'class'     => 'checkbox',                        
+                        'class'     => 'checkbox ajax-certificate',                        
                     ),
                     'options' => array(
                         'use_hidden_element' => true,
@@ -94,9 +97,7 @@ class EditCertificateForm extends Form
                     )
                 ));
             }
-        }    
-
-        
+        }
 
         $this->setInputFilter(new EditCertificateFormFilter());
         

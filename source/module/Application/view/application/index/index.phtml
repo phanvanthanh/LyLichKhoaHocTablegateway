@@ -42,7 +42,8 @@
               <tbody> 
                 <?php 
                   // thông tin giảng viên
-                  $infor_jos_infors=$this->infor_jos_infors; 
+                  $infor_jos_infors=$this->infor_jos_infors;
+                  $ngoai_ngu=$this->ngoai_ngu; 
                   // thông tin option
                   $infor_array_options=$this->infor_array_options;
                 ?>
@@ -79,19 +80,53 @@
                   <td class="active">Ghi chú</td>                   
                 </tr>
               </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Trạng thái">Trạng thái</td>                   
-                  <td data-title="Ghi chú">Ghi chú</td> 
-                </tr>
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Trạng thái">Trạng thái</td>                   
-                  <td data-title="Ghi chú">Ghi chú</td> 
-                </tr>
+              <tbody> 
+                <?php 
+                  $certificate_infors=$this->certificate_infors; 
+                  foreach ($certificate_infors as $key => $certificate_infor) {
+                ?>
+                  <?php if($certificate_infor['name']!='Ngoại ngữ'){ ?>
+                    <tr>
+                      <td data-title="STT"><?php $key++; echo $key; ?></td>
+                      <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
+                      <td data-title="Trạng thái">
+                        <?php
+                          $trang_thai='Không';
+                          $note='';
+                          if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
+                            $trang_thai='Có';
+                            $note=$certificate_infor['note'];
+                          }
+                          echo $trang_thai;
+                        ?>
+                      </td>                   
+                      <td data-title="Ghi chú"><?php echo $note; ?></td> 
+                    </tr>
+                  <?php }else{ ?>
+                    <tr>
+                      <td data-title="STT"><?php $key++; echo $key; ?></td>
+                      <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
+                      <td data-title="Loại ngoại ngữ">
+                        <?php
+                          $note='';
+                          if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
+                            $note=$ngoai_ngu[$certificate_infor['note']];
+                          }
+                          echo $note;
+                        ?>
+                      </td>                   
+                      <td data-title="Trình độ">
+                        <?php 
+                          if(isset($certificate_infor['level'])){
+                            echo $certificate_infor['level'];
+                          }
+                        ?>
+                      </td> 
+                    </tr>
+                  <?php } ?>
+                <?php
+                  }
+                ?> 
               </tbody>
             </table>
           </div>

@@ -19,6 +19,7 @@ class JosCertificateUserTable
 
     /*
         sử dụng trong Application\Controller\IndexController editAction
+        sử dụng trong Application\Controller\IndexController indexAction
     */
     public function getCertificateUserAndCertificateByArrayConditionAndArrayColumns($array_conditions=array(), $array_columns_1=array(), $array_columns_2=array()){
          /*
@@ -46,5 +47,28 @@ class JosCertificateUserTable
         }
         return $allRow;
     } 
+
+    /*
+        Sử dụng trong Application/Controller/Index editCertificateAction
+    */
+    public function deleteCertificateUser($array)
+    {
+        $this->tableGateway->delete($array);
+    }
+
+    /*
+        Sử dụng trong Application/Controller/Index editCertificateAction
+    */
+    public function saveCertificateUser(JosCertificateUser $certificate_user)
+    {
+        $data = array(
+            'certificate_id' => $certificate_user->getCertificateId(),
+            'user_id' => $certificate_user->getUserId(),
+            'note' => $certificate_user->getNote(),
+            'level' => $certificate_user->getLevel(),
+                   
+        );        
+        $this->tableGateway->insert($data);        
+    }
    	
 }

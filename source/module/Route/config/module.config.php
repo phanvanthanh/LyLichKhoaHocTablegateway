@@ -20,6 +20,15 @@ return array(
                 'Email' => 'Email'
             ),            
         ),
+        'cetificate'    => array(
+            'ngoai_ngu' => array(
+                'TA'  =>'Tiếng anh',
+                'TTQ' =>'Tiếng trung quốc',
+                'TN'  =>'Tiếng nhật',
+                'TP'  =>'Tiếng pháp',
+
+            ),
+        ),
     ),
 
     'router' => array(

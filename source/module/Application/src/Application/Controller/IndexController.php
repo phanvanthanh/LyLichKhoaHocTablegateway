@@ -17,6 +17,8 @@ use Application\Form\EditInforForm;
 use Application\Model\Entity\JosInfomation;
 
 use Application\Form\EditCertificateForm;
+use ChungChiKhac\Model\Entity\JosCertificateUser;
+use Application\FunctionClass\FunctionClass;
 
 class IndexController extends AbstractActionController
 {
@@ -58,7 +60,13 @@ class IndexController extends AbstractActionController
         // lấy year_id default
         $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+        if(!$year or !isset($year[0]['year_id'])){
+          die('Lỗi, Không xác định được năm cần sửa');
+        }
         $year_id=$year[0]['year_id'];
+
+        $service_config = $this->getServiceLocator()->get('config');
+        $function_class = new FunctionClass();
         // THÔNG TIN CÁ NHÂN
           // 1
             // Chú ý: dữ liệu trả về của nhóm thông tin cá nhân là: infor_array_options và infor_jos_infors
@@ -90,15 +98,20 @@ class IndexController extends AbstractActionController
             $return_array['infor_jos_infors']=$infor_jos_infors;
 
           // 2
-            // chú ý:
-
             // điểm truy cập csdl
-            /*$certificate_table_jos_certificate=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateTable');
-            //  lấy tất cả chứng chỉ khác trong năm đang active
-            $certificate_lists=$certificate_table_jos_certificate->getCertificateByYearActive();
-            $return_array['certificate_lists']=$certificate_lists;
-            die(var_dump($certificate_lists));*/
-
+              $certificate_table_jos_certificate=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateTable');
+              $certificate_table_jos_certificate_user=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateUserTable');
+              //  lấy tất cả chứng chỉ trong năm đang active
+              $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('certificate_id', 'level', 'note'), array('name'));
+              if(!$certificate_infors){
+                $certificate_infors=$certificate_table_jos_certificate->getCertificateByYearActive();
+              }
+              $return_array['certificate_infors']=$certificate_infors;
+              $source_model=array();
+              $source_model['source_model']['cetificate']='ngoai_ngu';
+              // truy cập vào config lấy ra danh sách config
+              $ngoai_ngu = $function_class->selectElementArray(array('array_element' => $source_model, 'array' => $service_config ));
+              $return_array['ngoai_ngu']=$ngoai_ngu;
       }
      	// trả dữ liệu ra view
      	return $return_array;
@@ -130,6 +143,9 @@ class IndexController extends AbstractActionController
           // lấy year_id default
           $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
           $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+          if(!$year or !isset($year[0]['year_id'])){
+            die('Lỗi, Không xác định được năm cần sửa');
+          }
           $year_id=$year[0]['year_id'];
           // THÔNG TIN CÁ NHÂN 
             // 1. 
@@ -188,8 +204,9 @@ class IndexController extends AbstractActionController
 
                     $certificate_check='certificate_check_'.$certificate_infor['certificate_id'];
                     $certificate_form_data[$certificate_check]=1;
-                    if($certificate_infor['note']==''){
+                    if($certificate_infor['note']=='0'){
                       $certificate_form_data[$certificate_check]=0;
+                      $certificate_form_data[$certificate_note]='';
                     }
                   } 
                 }
@@ -198,7 +215,6 @@ class IndexController extends AbstractActionController
                 }
               }
               $return_array['certificate_edit_form']=$certificate_edit_form;
-              //die(var_dump($certificate_edit_form));
           // PHẦN KHÁC
           return $return_array;
         }         
@@ -307,7 +323,113 @@ class IndexController extends AbstractActionController
       
     }
 
+    
+
+    public function ajaxCertificateAction(){
+      $this->layout('layout/ajax_layout');
+      $response=array();
+        
+      $request=$this->getRequest();
+      if($request->isXmlHttpRequest()) // kiểm tra nếu post dữ liệu
+      {
+        $post=$request->getPost();
+        $id=$post['id']; unset($post['id']);
+        // nếu đã đăng nhập
+        $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        if(isset($read['username']) and $read['username']){
+          // tạo điểm truy cập jos_users table
+          $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+          // kiểm tra user đang đăng nhập
+          $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+          // kiểm tra user có quyền editAllProfile không
+          $white_lists=$read['white_list'];
+          $edit_all_profile=0;
+          foreach ($white_lists as $key => $white_list) {
+            if($white_list['action']=='editAllProfile'){
+              $edit_all_profile=1;
+            }
+          }
+          // nếu id cần sửa bằng với user_id đang đăng nhập hoặc có quyền editAllProfile
+          if($user and $user[0]['id']==$id or $edit_all_profile==1){
+            // có quyền sửa
+              // lấy year_id default
+              $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                $response[]=array('error'=>1, 'error_name'=>'Lỗi, Không xác định được năm cần sửa.');
+                $json = new JsonModel($response);
+                return $json;
+              }
+              $year_id=$year[0]['year_id'];
+              // điểm truy cập csdl
+              $certificate_table_jos_certificate=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateTable');
+              $certificate_table_jos_certificate_user=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateUserTable');
+              //  lấy tất cả chứng chỉ trong năm đang active
+              $certificate_lists=$certificate_table_jos_certificate->getCertificateByYearActive();
+              // tạo form certificate
+              $certificate_edit_form=new EditCertificateForm($this->getServiceLocator(), $certificate_lists);
+              $certificate_edit_form->setData($post);
+              if($certificate_edit_form->isValid()){
+                $error='';
+                foreach ($certificate_lists as $key => $certificate_list) {
+                  // xóa bỏ dữ liệu
+                  $certificate_table_jos_certificate_user->deleteCertificateUser(array('certificate_id'=>$certificate_list['value_id'], 'user_id'=>$id));
+                  $certificate_user_new=new JosCertificateUser();
+                  if($certificate_list['name']=='Ngoại ngữ'){
+                    $certificate_user_new->setCertificateId($certificate_list['value_id']);
+                    $certificate_user_new->setUserId($id);
+                    $certificate_level  = '';
+                    if(isset($post['certificate_level_'.$certificate_list['value_id']])){
+                      $certificate_level   =$post['certificate_level_'.$certificate_list['value_id']];
+                    }
+                    $certificate_user_new->setLevel($certificate_level);
+                    $certificate_note='';
+                    if(isset($post['certificate_loai_ngoai_ngu_'.$certificate_list['value_id']])){
+                      $certificate_note   =$post['certificate_loai_ngoai_ngu_'.$certificate_list['value_id']];
+                    }
+                    $certificate_user_new->setNote($certificate_note);
+                  }
+                  else{
+                    $certificate_user_new->setCertificateId($certificate_list['value_id']);
+                    $certificate_user_new->setUserId($id);
+                    $certificate_level  = '';
+                    $certificate_user_new->setLevel($certificate_level);
+                    $certificate_note=0;
+                    if(isset($post['certificate_check_'.$certificate_list['value_id']]) and isset($post['certificate_note_'.$certificate_list['value_id']]) and $post['certificate_check_'.$certificate_list['value_id']]==1){
+                      $certificate_note   =$post['certificate_note_'.$certificate_list['value_id']];
+                    }
+                    $certificate_user_new->setNote($certificate_note);
+                  }
+                  $certificate_table_jos_certificate_user->saveCertificateUser($certificate_user_new);
+
+                }
+
+                // cập nhật thành công
+                if(!$error){
+                  $response[]=array('error'=>0);
+                }
+                // có một số lỗi trong quá trình cập nhật
+                else{
+                  $error='dữ liệu cột: '.$error.' nhập không đúng. Vui lòng kiểm tra lại!';
+                  $response[]=array('error'=>1, 'error_name'=>$error);
+                }
+                
+                $json = new JsonModel($response);
+                return $json;
+              } 
+              $response[]=array('error'=>1, 'error_name'=>'form! không hợp lệ vui lòng kiểm tra lại');
+              $json = new JsonModel($response);
+              return $json;
+          }
+        }        
+      }  
+      // không có quyền sửa
+      $response[]=array('error'=>1, 'error_name'=>'Lỗi, Bạn không có quyền truy cập.');
+      $json = new JsonModel($response);
+      return $json;
+    }
+
     public function editAllProfileAction(){
-    	
+      
     }
 }

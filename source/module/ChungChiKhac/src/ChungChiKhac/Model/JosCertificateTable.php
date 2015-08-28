@@ -52,6 +52,7 @@ class JosCertificateTable
         Sử dụng trong ChungChiKhac/Controller/ChungChiKhac indexAction
         Sử dụng trong Application/Controller/IndexController indexAction
         Sử dụng trong Application/Controller/IndexController editAction
+        Sử dụng trong Application/Controller/IndexController editCertificateAction
     */
     public function getCertificateByYearActive($array_columns=array()){
         $adapter = $this->tableGateway->adapter;

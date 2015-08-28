@@ -77,7 +77,7 @@
                   <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom cursor-pointer"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'edit-certificate')); ?>" ajax-input=".ajax-certificate">Lưu</a>
+                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'ajaxCertificate')); ?>" ajax-input=".ajax-certificate">Lưu</a>
                     </li>                    
                   </ul>
                 </div>               
@@ -1287,6 +1287,10 @@
       jQuery(class_input).each(function(){        
         var name        = jQuery(this).attr('name');
         var value       = jQuery(this).val();
+        // code này chạy trong phần chứng chỉ khác
+        if(jQuery(this).attr('type')=='checkbox' && !jQuery(this).is(':checked')){
+          value=0;
+        }
         var array       =[]; array[name]=value;
         jQuery.extend(true, param, array);
       });
