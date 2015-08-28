@@ -50,6 +50,7 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 // Table
                 'ChungChiKhac\Model\JosCertificateTable' => 'ChungChiKhac\Factory\Table\JosCertificateTableFactory',
+                'ChungChiKhac\Model\JosCertificateUserTable' => 'ChungChiKhac\Factory\Table\JosCertificateUserTableFactory',
             )
             
         );

@@ -104,6 +104,24 @@ function checkParent(parent){
     });
 }
 
+function unCheckChild(parent){    
+    var parent=parent;
+    jQuery('.checkbox-is-check').each(function(){
+        var name=jQuery(this).find('input[type="checkbox"]').prop('name');
+        var array_name=name.split("_");
+        var value=array_name[0];
+        if(parseInt(value)==parseInt(parent)){   
+            if(jQuery(this).find('input[type="checkbox"]').prop('checked')){
+                jQuery(this).find('input[type="checkbox"]').prop('checked', false);
+                var parent_new=jQuery(this).find('input[type="checkbox"]').val();
+                /*var array_parent=parent_name.split("_");
+                var parent_new=array_parent[0];*/
+                unCheckChild(parent_new);
+            }
+        }
+    });
+}
+
 
 (function(){
     'use strict';

@@ -171,6 +171,8 @@ $(document).ready(function(){
     jQuery('.checkbox-is-check').on('click', function(){
         if(jQuery(this).find('input[type="checkbox"]').prop('checked')){
             jQuery(this).find('input[type="checkbox"]').removeAttr('checked');
+            var parent=jQuery(this).find('input[type="checkbox"]').val();
+            unCheckChild(parent);
         }
         else{
             jQuery(this).find('input[type="checkbox"]').prop('checked', true);

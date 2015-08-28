@@ -80,7 +80,7 @@ class ChungChiKhacController extends AbstractActionController
             }
         }
         $this->flashMessenger()->addErrorMessage('Lỗi, thực thi không thành công. Vui lòng kiểm tra lại!');
-        return $this->redirect()->toRoute('mon_hoc/crud', array('action'=>'index'));
+        return $this->redirect()->toRoute('chung_chi_khac/crud', array('action'=>'index'));
                 
                 
     }

@@ -98,5 +98,36 @@ class JosAttributeOptionTable
         }
         return true;
     }
+
+    /*
+        sử dụng trong Application\Controller\Index indexAction
+    */
+    public function getAllAttributeOptionByYearActive($array_conditions=array(), $array_columns_1=array(), $array_columns_2=array()){
+        $adapter = $this->tableGateway->adapter;
+        $sql = new Sql($adapter);        
+        // select
+        $sqlSelect = $sql->select();
+        $sqlSelect->from(array('t1'=>'jos_attribute_option'));
+
+        $sqlSelect->join(array('t2'=>'jos_attribute'), 't1.attribute_id=t2.attribute_id', $array_columns_2, 'LEFT');
+        $sqlSelect->join(array('t3'=>'jos_year'), 't2.year_id=t3.year_id', array(), 'LEFT');
+        if($array_columns_1){
+            $sqlSelect->columns($array_columns_1);
+        }
+        $where=array('t3.is_active'=>1);
+        if($array_conditions){
+            foreach ($array_conditions as $key => $value) {
+                $where[$key]=$value;
+            }            
+        }
+        $sqlSelect->where($where);
+        $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
+        $resultSets = $statement->execute();
+        $allRow = array();
+        foreach ($resultSets as $key => $resultSet) {
+            $allRow[] = $resultSet;
+        }
+        return $allRow;
+    }
    	
 }

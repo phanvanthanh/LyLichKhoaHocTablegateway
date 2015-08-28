@@ -44,6 +44,8 @@ class JosInfomationTable
 
     /*
         sử dụng trong Attribute/Controller/Attribute editInforAction
+        sử dụng trong Application/Controller/Index editAction
+        sử dụng trong Application/Controller/Index indexAction
     */
     public function getInfomationAttributeByArrayConditionAndArrayColumns($array_conditions=array(), $array_columns_1=array(), $array_columns_2=array()){
          /*

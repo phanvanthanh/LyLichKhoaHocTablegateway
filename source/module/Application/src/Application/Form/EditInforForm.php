@@ -43,7 +43,7 @@ class EditInforForm extends Form
             ));
         }         
 
-        $this->setInputFilter(new EditInforFormFilter());
+        $this->setInputFilter(new EditInforFormFilter($all_attributes));
         
     }
 }

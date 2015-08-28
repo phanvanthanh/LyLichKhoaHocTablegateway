@@ -51,6 +51,7 @@ class JosAttributeTable
 
    /*
         Attribute\Controller\AttributeController indexAction
+        Application\Controller\IndexController indexAction
         Application\Controller\IndexController editAction
     */
     public function getAttributeByYearActive($array_columns=array()){

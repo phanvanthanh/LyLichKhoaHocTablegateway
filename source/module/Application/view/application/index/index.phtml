@@ -39,15 +39,31 @@
                   <td class="active">Nội dung</td>                    
                 </tr>
               </thead>
-              <tbody>                  
-                <tr>
-                  <td>Nội dung</td>
-                  <td>Nội dung</td>                    
-                </tr>
-                <tr>
-                  <td>Nội dung</td>
-                  <td>Nội dung</td>                    
-                </tr>
+              <tbody> 
+                <?php 
+                  // thông tin giảng viên
+                  $infor_jos_infors=$this->infor_jos_infors; 
+                  // thông tin option
+                  $infor_array_options=$this->infor_array_options;
+                ?>
+                <?php foreach ($infor_jos_infors as $key => $infor_jos_infor) { ?> 
+                  <?php 
+                    // nếu không có value thì không cần kiểm tra frontend_input có phải là kiểu select không
+                    if(!isset($infor_jos_infor['value'])){ 
+                      $infor_jos_infor['frontend_input']=='Text';
+                      $infor_jos_infor['value']='';
+                    }
+                    // nếu kiểu select thì lấy tên hiển thị của option của select
+                    if($infor_jos_infor['frontend_input']=='Select' and $infor_jos_infor['value']){ 
+                      $infor_jos_infor['value']=$infor_array_options[$infor_jos_infor['attribute_code']][$infor_jos_infor['value']];                    
+                    } 
+                  ?>   
+                  <tr>
+                    <td><?php echo $infor_jos_infor['frontend_label'] ?></td>
+                    <td><?php echo $infor_jos_infor['value'] ?></td>
+                  </tr> 
+                <?php } ?>             
+                                 
               </tbody>
             </table>
           </div>

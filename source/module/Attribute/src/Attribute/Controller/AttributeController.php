@@ -110,8 +110,8 @@ class AttributeController extends AbstractActionController
                                 }
                                 $new_attribute_option=new JosAttributeOption();
                                 $new_attribute_option->setAttributeId($attribute[0]['attribute_id']);
-                                $new_attribute_option->setKey($post['frontend_input_label'][$key]);
-                                $new_attribute_option->setLabel($value);
+                                $new_attribute_option->setKey($value);
+                                $new_attribute_option->setLabel($post['frontend_input_label'][$key]);
                                 $jos_attribute_option_table->saveAttributeOption($new_attribute_option);
                             }
                         }
