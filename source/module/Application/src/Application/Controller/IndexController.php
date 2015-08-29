@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
       if($id){
         // nếu chưa đăng nhập
         $user_id=0;
-        $return_array['edit_all_profile']=0;
+        $return_array['can_edit']=0;
         // nếu đã đăng nhập
         $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
         if(isset($read['username']) and $read['username']){
@@ -49,77 +49,155 @@ class IndexController extends AbstractActionController
           }       
           // Kiểm tra nếu có quyền editAllProfile        
           foreach ($read['white_list'] as $key => $white_list) {
-              if($white_list['action']=='editAllProfile'){
-                  $return_array['edit_all_profile']=1;
-                  break;
-              }
+            if($white_list['action']=='editAllProfile'){
+                $return_array['can_edit']=1;
+                break;
+            }
           }
         }
-        $return_array['user_id']=$user_id; 
+        if($user_id==$id){
+          $return_array['can_edit']=1;
+        }
 
-        // lấy year_id default
+        // biến cần sử dụng
+        $service_config = $this->getServiceLocator()->get('config');
+        $function_class = new FunctionClass();
+
         $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+        $infor_table_jos_attribute_option=$this->getServiceLocator()->get('Attribute\Model\JosAttributeOptionTable');
+        $infor_table_jos_infor=$this->getServiceLocator()->get('Application\Model\JosInfomationTable');
+        $jos_attribute_table=$this->getServiceLocator()->get('Attribute\Model\JosAttributeTable');
+        $certificate_table_jos_certificate=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateTable');
+        $certificate_table_jos_certificate_user=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateUserTable');
+                 
+        // lấy dữ liệu mặc định default        
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
         if(!$year or !isset($year[0]['year_id'])){
           die('Lỗi, Không xác định được năm cần sửa');
         }
         $year_id=$year[0]['year_id'];
 
-        $service_config = $this->getServiceLocator()->get('config');
-        $function_class = new FunctionClass();
-        // THÔNG TIN CÁ NHÂN
-          // 1
-            // Chú ý: dữ liệu trả về của nhóm thông tin cá nhân là: infor_array_options và infor_jos_infors
-            // kết nối bảng dữ liệu
-            $infor_table_jos_attribute_option=$this->getServiceLocator()->get('Attribute\Model\JosAttributeOptionTable');
-            $infor_table_jos_infor=$this->getServiceLocator()->get('Application\Model\JosInfomationTable');
-            $jos_attribute_table=$this->getServiceLocator()->get('Attribute\Model\JosAttributeTable');
-            // lấy dữ liệu attribute option
-            $infor_array_get_options=$infor_table_jos_attribute_option->getAllAttributeOptionByYearActive(array(), array('key', 'label'), array('attribute_code'));
-            $infor_array_options=array();
-            $infor_var_attribute_code='';
-            foreach ($infor_array_get_options as $infor_array_get_option) {
-              if($infor_var_attribute_code!=$infor_array_get_option['attribute_code']){
-                $infor_var_attribute_code=$infor_array_get_option['attribute_code'];
-                if(!isset($infor_array_options[$infor_var_attribute_code])){
-                  $infor_array_options[$infor_var_attribute_code]=array();
-                }              
+        /*
+          THÔNG TIN CÁ NHÂN: phần 1
+        */
+          // lấy dữ liệu attribute option
+          $infor_array_get_options=$infor_table_jos_attribute_option->getAllAttributeOptionByYearActive(array(), array('key', 'label'), array('attribute_code'));
+          $infor_array_options=array();
+          $infor_var_attribute_code='';
+          foreach ($infor_array_get_options as $infor_array_get_option) {
+            if($infor_var_attribute_code!=$infor_array_get_option['attribute_code']){
+              $infor_var_attribute_code=$infor_array_get_option['attribute_code'];
+              if(!isset($infor_array_options[$infor_var_attribute_code])){
+                $infor_array_options[$infor_var_attribute_code]=array();
+              }              
+            }
+            $infor_array_options[$infor_var_attribute_code][$infor_array_get_option['key']]=$infor_array_get_option['label'];
+          }
+          $return_array['infor_array_options']=$infor_array_options;
+          // lấy dữ liệu information            
+          $infor_jos_infors=$infor_table_jos_infor->getInfomationAttributeByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('value'), array('attribute_code', 'frontend_label', 'frontend_input'));
+          
+          // nếu chưa có jos infor nào thì hiển thị dữ liệu rỗng cho từng attribute code
+          if(!$infor_jos_infors){
+            // lấy tất cả attribute ở năm đang active 
+            $all_attributes=$jos_attribute_table->getAttributeByYearActive();
+            $infor_jos_infors=$all_attributes;           
+          }
+          $return_array['infor_jos_infors']=$infor_jos_infors;
+          // nếu người dùng hiện tại có quyền sửa
+          if($return_array['can_edit']==1){
+            if(!isset($all_attributes)){
+              $all_attributes=$jos_attribute_table->getAttributeByYearActive();
+            }
+            $return_array['all_attributes']=$all_attributes;
+            // cập nhật thông tin cá nhân form     
+            $edit_infor_form=new EditInforForm($this->getServiceLocator(), $all_attributes);
+            // lấy dữ liệu information
+            $jos_infor_table=$this->getServiceLocator()->get('Application\Model\JosInfomationTable');
+            $jos_infors=$jos_infor_table->getInfomationAttributeByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('value'), array('attribute_code'));
+            // nếu tồn tại dữ liệu của người dùng này, thì tùy chỉnh lại dữ liệu để set vào form edit infor form
+            if($jos_infors){
+              foreach ($jos_infors as $key => $jos_infor) {
+                $data_edit_infor_form[$jos_infor['attribute_code']]=$jos_infor['value'];
               }
-              $infor_array_options[$infor_var_attribute_code][$infor_array_get_option['key']]=$infor_array_get_option['label'];
+              if($data_edit_infor_form){
+                $edit_infor_form->setData($data_edit_infor_form);
+              }
+            }                          
+            $return_array['edit_infor_form']=$edit_infor_form;
+          }
+        /*
+          THÔNG TIN CÁ NHÂN: phần 2
+        */
+          //  lấy tất cả chứng chỉ của user trong năm đang active
+          $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('certificate_id', 'level', 'note'), array('name'));
+          // nếu không có dữ liệu thì lấy mặc định ra hiển thị đỡ
+          if(!$certificate_infors){
+            $certificate_lists=$certificate_table_jos_certificate->getCertificateByYearActive();
+            $certificate_infors=$certificate_lists;
+          }
+          $return_array['certificate_infors']=$certificate_infors;
+          $source_model=array();
+          $source_model['source_model']['cetificate']='ngoai_ngu';
+          // truy cập vào config lấy ra danh sách config
+          $ngoai_ngu = $function_class->selectElementArray(array('array_element' => $source_model, 'array' => $service_config ));
+          $return_array['ngoai_ngu']=$ngoai_ngu;
+          // nếu người dùng hiện tại có quyền sửa
+          if($return_array['can_edit']==1){
+            //  lấy tất cả chứng chỉ trong năm đang active
+            if(!isset($certificate_lists)){
+              $certificate_lists=$certificate_table_jos_certificate->getCertificateByYearActive();
             }
-            $return_array['infor_array_options']=$infor_array_options;
-            // lấy dữ liệu information            
-            $infor_jos_infors=$infor_table_jos_infor->getInfomationAttributeByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('value'), array('attribute_code', 'frontend_label', 'frontend_input'));
-            // nếu chưa có jos infor nào thì hiển thị dữ liệu rỗng cho từng attribute code
-            if(!$infor_jos_infors){
-              // lấy tất cả attribute ở năm đang active            
-              $infor_jos_infors=$jos_attribute_table->getAttributeByYearActive(array('attribute_code', 'frontend_label', 'frontend_input'));
-            }
-            $return_array['infor_jos_infors']=$infor_jos_infors;
+            $return_array['certificate_lists']=$certificate_lists;
+            // tạo form certificate
+            $certificate_edit_form=new EditCertificateForm($this->getServiceLocator(), $certificate_lists);
+            // lấy dữ liệu đã nhập trước đó set vào form để hiển thị
+            $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('certificate_id', 'level', 'note'), array('name'));
+            $certificate_form_data=array();
+            if($certificate_infors){
+              foreach ($certificate_infors as $key => $certificate_infor) {
+                $certificate_id='certificate_id_'.$certificate_infor['certificate_id'];
+                $certificate_form_data[$certificate_id]=$certificate_infor['certificate_id'];
+                
+                $certificate_name='certificate_name_'.$certificate_infor['certificate_id'];
+                $certificate_form_data[$certificate_name]=$certificate_infor['name'];
+                
+                if($certificate_infor['name']=='Ngoại ngữ'){
+                  //var_dump($certificate_infor['note']);
+                  $certificate_loai_ngoai_ngu='certificate_loai_ngoai_ngu_'.$certificate_infor['certificate_id'];
+                  $certificate_form_data[$certificate_loai_ngoai_ngu]=$certificate_infor['note'];
 
-          // 2
-            // điểm truy cập csdl
-              $certificate_table_jos_certificate=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateTable');
-              $certificate_table_jos_certificate_user=$this->getServiceLocator()->get('ChungChiKhac\Model\JosCertificateUserTable');
-              //  lấy tất cả chứng chỉ trong năm đang active
-              $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('certificate_id', 'level', 'note'), array('name'));
-              if(!$certificate_infors){
-                $certificate_infors=$certificate_table_jos_certificate->getCertificateByYearActive();
+                  $certificate_level='certificate_level_'.$certificate_infor['certificate_id'];
+                  $certificate_form_data[$certificate_level]=$certificate_infor['level'];
+                }
+                else{
+                  $certificate_note='certificate_note_'.$certificate_infor['certificate_id'];
+                  $certificate_form_data[$certificate_note]=$certificate_infor['note'];
+
+                  $certificate_check='certificate_check_'.$certificate_infor['certificate_id'];
+                  $certificate_form_data[$certificate_check]=1;
+                  if($certificate_infor['note']=='0'){
+                    $certificate_form_data[$certificate_check]=0;
+                    $certificate_form_data[$certificate_note]='';
+                  }
+                } 
               }
-              $return_array['certificate_infors']=$certificate_infors;
-              $source_model=array();
-              $source_model['source_model']['cetificate']='ngoai_ngu';
-              // truy cập vào config lấy ra danh sách config
-              $ngoai_ngu = $function_class->selectElementArray(array('array_element' => $source_model, 'array' => $service_config ));
-              $return_array['ngoai_ngu']=$ngoai_ngu;
+              if($certificate_form_data){
+                $certificate_edit_form->setData($certificate_form_data);
+              }
+            }
+            $return_array['certificate_edit_form']=$certificate_edit_form;
+          }
+
+        
       }
      	// trả dữ liệu ra view
      	return $return_array;
 
 
     }
-
-    public function editAction()
+    
+    /*public function editAction()
     {
       $id=$this->params('id');
       $return_array['id']=$id;
@@ -223,8 +301,8 @@ class IndexController extends AbstractActionController
       return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id));
 
     }
-
-    // lưu lại thông tin cá nhân
+    */
+    /*// lưu lại thông tin cá nhân
     public function editInforAction(){
       $this->layout('layout/ajax_layout');
       $response=array();
@@ -321,11 +399,11 @@ class IndexController extends AbstractActionController
       $json = new JsonModel($response);
       return $json;
       
-    }
+    }*/
 
     
 
-    public function ajaxCertificateAction(){
+    /*public function ajaxCertificateAction(){
       $this->layout('layout/ajax_layout');
       $response=array();
         
@@ -427,9 +505,9 @@ class IndexController extends AbstractActionController
       $response[]=array('error'=>1, 'error_name'=>'Lỗi, Bạn không có quyền truy cập.');
       $json = new JsonModel($response);
       return $json;
-    }
+    }*/
 
-    public function editAllProfileAction(){
+    /*public function editAllProfileAction(){
       
-    }
+    }*/
 }

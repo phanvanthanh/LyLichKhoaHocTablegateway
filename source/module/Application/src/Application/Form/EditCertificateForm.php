@@ -99,7 +99,7 @@ class EditCertificateForm extends Form
             }
         }
 
-        $this->setInputFilter(new EditCertificateFormFilter());
+        $this->setInputFilter(new EditCertificateFormFilter($certificates));
         
     }
 }

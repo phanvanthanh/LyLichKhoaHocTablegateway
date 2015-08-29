@@ -48,6 +48,7 @@ class JosSubjectTable
 
     /*
         sử dụng trong MonHoc\Controller\MonHoc indexAction
+        sử dụng trong Application\Form\EditCongTacGiangDayForm
     */
     public function getSubjectByYearActive($array_columns=array()){
         $adapter = $this->tableGateway->adapter;

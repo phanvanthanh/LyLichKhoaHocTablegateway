@@ -23,11 +23,44 @@ return array(
         'cetificate'    => array(
             'ngoai_ngu' => array(
                 'TA'  =>'Tiếng anh',
-                'TTQ' =>'Tiếng trung quốc',
+                'TT'  =>'Tiếng trung quốc',
                 'TN'  =>'Tiếng nhật',
                 'TP'  =>'Tiếng pháp',
 
             ),
+        ),
+        'application'   => array(
+            'bac_hoc'  => array(
+                'ĐH'    => 'Đại học',
+                'CĐ'    => 'Cao đẳng',
+                'TC'    => 'Trung cấp'            
+            ),  
+            'so_tiet'   => array(
+                15  => 15,
+                30  => 30,
+                45  => 45,
+                60  => 60,
+                75  => 75,
+                90  => 90,
+                105 => 105,
+                120 => 120,
+                135 => 135,
+                150 => 150,
+                165 => 165,
+                180 => 180,
+                195 => 195,
+                210 => 210,
+                225 => 225,
+                240 => 240,
+                255 => 255,
+                270 => 270,
+                285 => 285,
+                300 => 300,                    
+            ),    
+            'he_dao_tao' => array(
+                'CQ'    => 'Chính quy',
+                'LT'    => 'Liên thông'
+            ),          
         ),
     ),
 

@@ -3,390 +3,587 @@
 <!-- id=user_id thì sẽ hiển thị nút sửa -->
 <!-- hoặc nếu user đăng nhập có quyền sửa tất cả thông tin của tất cả user thì sẻ button edit sẽ chuyển tới action edit luôn -->
 <?php $id=$this->id; ?>
-<?php $user_id=$this->user_id; ?>
-<?php $edit_all_profile=$this->edit_all_profile; ?>
+<?php $can_edit=$this->can_edit; ?>
 <?php if($id){ ?>
-          <div class="row">
-            
-            <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-              <?php if($id==$user_id or $edit_all_profile==1){ ?> 
-                <a class="btn btn-default" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
-              <?php } ?>
-            </div>              
-            
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-              <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
-            </div>
-            
-            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 text-right">
-              <?php if($id==$user_id or $edit_all_profile==1){ ?>
-                <a class="btn btn-default affix" href="<?php echo $this->url('application/crud', array('action'=>'edit', 'id'=>$id)); ?>">Sửa</a>
-              <?php } ?>
-            </div>
-            <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 text-right">
-              &nbsp;&nbsp;
-            </div>              
+  <?php 
+    if($can_edit==1){
+      // biến sử dụng chung
+      $all_attributes=$this->all_attributes;
+      $certificate_lists=$this->certificate_lists;
+    }
+  ?>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
+      </div> 
+    </div> 
 
-          </div>          
-          
-          
-          <h3><small>1. Thông tin cá nhân</small></h3>
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="active">Tiêu đề</td>
-                  <td class="active">Nội dung</td>                    
-                </tr>
-              </thead>
-              <tbody> 
-                <?php 
-                  // thông tin giảng viên
-                  $infor_jos_infors=$this->infor_jos_infors;
-                  $ngoai_ngu=$this->ngoai_ngu; 
-                  // thông tin option
-                  $infor_array_options=$this->infor_array_options;
-                ?>
-                <?php foreach ($infor_jos_infors as $key => $infor_jos_infor) { ?> 
-                  <?php 
-                    // nếu không có value thì không cần kiểm tra frontend_input có phải là kiểu select không
-                    if(!isset($infor_jos_infor['value'])){ 
-                      $infor_jos_infor['frontend_input']=='Text';
-                      $infor_jos_infor['value']='';
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3><small><b>1. Thông tin cá nhân</b></small></h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-infor-1"><b class="glyphicon glyphicon-pencil"></b></a>
+        <?php } ?>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="active">Tiêu đề</td>
+            <td class="active">Nội dung</td>                    
+          </tr>
+        </thead>
+        <tbody> 
+          <?php 
+            // thông tin giảng viên
+            $infor_jos_infors=$this->infor_jos_infors;
+            $ngoai_ngu=$this->ngoai_ngu; 
+            // thông tin option
+            $infor_array_options=$this->infor_array_options;
+          ?>
+          <?php foreach ($infor_jos_infors as $key => $infor_jos_infor) { ?> 
+            <?php 
+              // nếu không có value thì không cần kiểm tra frontend_input có phải là kiểu select không
+              if(!isset($infor_jos_infor['value'])){ 
+                $infor_jos_infor['frontend_input']=='Text';
+                $infor_jos_infor['value']='';
+              }
+              // nếu kiểu select thì lấy tên hiển thị của option của select
+              if($infor_jos_infor['frontend_input']=='Select' and $infor_jos_infor['value']){ 
+                $infor_jos_infor['value']=$infor_array_options[$infor_jos_infor['attribute_code']][$infor_jos_infor['value']];                    
+              } 
+            ?>   
+            <tr>
+              <td><?php echo $infor_jos_infor['frontend_label'] ?></td>
+              <td><?php echo $infor_jos_infor['value'] ?></td>
+            </tr> 
+          <?php } ?>             
+                           
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3><small>2. Các chứng chỉ</small></h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-infor-2"><b class="glyphicon glyphicon-pencil"></b></a>
+        <?php } ?>
+      </div>
+    </div>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Nội dung</td>
+            <td class="active">Trạng thái</td>
+            <td class="active">Ghi chú</td>                   
+          </tr>
+        </thead>
+        <tbody> 
+          <?php 
+            $certificate_infors=$this->certificate_infors; 
+            foreach ($certificate_infors as $key => $certificate_infor) {
+          ?>
+            <?php if($certificate_infor['name']!='Ngoại ngữ'){ ?>
+              <tr>
+                <td data-title="STT"><?php $key++; echo $key; ?></td>
+                <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
+                <td data-title="Trạng thái">
+                  <?php
+                    $trang_thai='Không';
+                    $note='';
+                    if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
+                      $trang_thai='Có';
+                      $note=$certificate_infor['note'];
                     }
-                    // nếu kiểu select thì lấy tên hiển thị của option của select
-                    if($infor_jos_infor['frontend_input']=='Select' and $infor_jos_infor['value']){ 
-                      $infor_jos_infor['value']=$infor_array_options[$infor_jos_infor['attribute_code']][$infor_jos_infor['value']];                    
-                    } 
-                  ?>   
-                  <tr>
-                    <td><?php echo $infor_jos_infor['frontend_label'] ?></td>
-                    <td><?php echo $infor_jos_infor['value'] ?></td>
-                  </tr> 
-                <?php } ?>             
-                                 
-              </tbody>
-            </table>
-          </div>
+                    echo $trang_thai;
+                  ?>
+                </td>                   
+                <td data-title="Ghi chú"><?php echo $note; ?></td> 
+              </tr>
+            <?php }else{ ?>
+              <tr>
+                <td data-title="STT"><?php $key++; echo $key; ?></td>
+                <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
+                <td data-title="Loại ngoại ngữ">
+                  <?php
+                    if(isset($certificate_infor['note']) and $certificate_infor['note']!='0' and isset($ngoai_ngu[$certificate_infor['note']])){
+                      echo $ngoai_ngu[$certificate_infor['note']];
+                    }
+                  ?>
+                </td>                   
+                <td data-title="Trình độ">
+                  <?php 
+                    if(isset($certificate_infor['level'])){
+                      echo $certificate_infor['level'];
+                    }
+                  ?>
+                </td> 
+              </tr>
+            <?php } ?>
+          <?php
+            }
+          ?> 
+        </tbody>
+      </table>
+    </div>
 
-          <h3><small>2. Các chứng chỉ</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Nội dung</td>
-                  <td class="active">Trạng thái</td>
-                  <td class="active">Ghi chú</td>                   
-                </tr>
-              </thead>
-              <tbody> 
-                <?php 
-                  $certificate_infors=$this->certificate_infors; 
-                  foreach ($certificate_infors as $key => $certificate_infor) {
-                ?>
-                  <?php if($certificate_infor['name']!='Ngoại ngữ'){ ?>
-                    <tr>
-                      <td data-title="STT"><?php $key++; echo $key; ?></td>
-                      <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
-                      <td data-title="Trạng thái">
+    <h3>B. Kinh nghiệm làm việc</h3>
+
+    <h3><small>1. Công tác giảng dạy</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">                  
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Tên môn</td>
+            <td class="active">Số tiết</td> 
+            <td class="active">Bậc học</td>
+            <td class="active">Hệ đào tạo</td>
+            <td class="active">Ghi chú</td>                  
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Tên môn">Tên môn</td>
+            <td data-title="Số tiết">Số tiết</td> 
+            <td data-title="Bậc học">Bậc học</td>
+            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+            <td data-title="Ghi chú">Ghi chú</td>                    
+          </tr>
+          <tr>
+            <td data-title="STT">2</td>
+            <td data-title="Tên môn">Tên môn</td>
+            <td data-title="Số tiết">Số tiết</td> 
+            <td data-title="Bậc học">Bậc học</td>
+            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+            <td data-title="Ghi chú">Ghi chú</td>                    
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Hoạt động</td>
+            <td class="active">Trạng thái</td> 
+            <td class="active">Thời gian bắt đầu</td>
+            <td class="active">Thời gian kết thúc</td>
+            <td class="active">Ghi chú</td>                 
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Hoạt động">Hoạt động</td>
+            <td data-title="Trạng thái">Trạng thái</td> 
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>
+          </tr>
+          <tr>
+            <td data-title="STT">2</td>
+            <td data-title="Hoạt động">Hoạt động</td>
+            <td data-title="Trạng thái">Trạng thái</td> 
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>             
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><small>3. Công tác khác</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Nội dung</td>
+            <td class="active">Thời gian</td> 
+            <td class="active">Ghi chú</td>                
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian">Nội dung</td> 
+            <td data-title="Ghi chú">Ghi chú</td>                
+          </tr>
+          <tr>
+            <td data-title="STT">2</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian">Nội dung</td> 
+            <td data-title="Ghi chú">Ghi chú</td>                
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>C. Định hướng phát triển</h3>
+    
+    <h3><small>1. Công tác giảng dạy</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Tên môn</td>
+            <td class="active">Số tiết</td> 
+            <td class="active">Bậc học</td>
+            <td class="active">Hệ đào tạo</td>
+            <td class="active">Ghi chú</td>                  
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Tên môn">Tên môn</td>
+            <td data-title="Số tiết">Số tiết</td> 
+            <td data-title="Bậc học">Bậc học</td>
+            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+          <tr>
+            <td data-title="STT">2</td>
+            <td data-title="Tên môn">Tên môn</td>
+            <td data-title="Số tiết">Số tiết</td> 
+            <td data-title="Bậc học">Bậc học</td>
+            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Nội dung</td>
+            <td class="active">Thời gian bắt đầu</td> 
+            <td class="active">Ghi chú</td>                 
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+            <td data-title="Ghi chú">Ghi chú</td>                 
+          </tr>
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+            <td data-title="Ghi chú">Ghi chú</td>                 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><small>3. Học tập nâng cao trình độ</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Nội dung</td>
+            <td class="active">Nơi học</td> 
+            <td class="active">Thời gian bắt đầu</td>
+            <td class="active">Thời gian kết thúc</td>
+            <td class="active">Ghi chú</td>                  
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Nơi học">Nơi học</td> 
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+          <tr>
+            <td data-title="STT">2</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Nơi học">Nơi học</td> 
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><small>4. Các hoạch định khác</small></h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Nội dung</td>
+            <td class="active">Thời gian bắt đầu</td> 
+            <td class="active">Thời gian kết thúc</td>
+            <td class="active">Ghi chú</td>                  
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Nội dung">Nội dung</td>
+            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
+            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table table-bordered table-hover cf">
+        <thead class="cf">
+          <tr>
+            <td class="active">STT</td>
+            <td class="active">Tên bài báo</td>
+            <td class="active">Nơi xuất bản</td> 
+            <td class="active">Năm xuất bản</td>
+            <td class="active">Ghi chú</td>                  
+          </tr>
+        </thead>
+        <tbody>                  
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Tên bài báo">Tên bài báo</td>
+            <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+            <td data-title="Năm xuất bản">Năm xuất bản</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+          <tr>
+            <td data-title="STT">1</td>
+            <td data-title="Tên bài báo">Tên bài báo</td>
+            <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
+            <td data-title="Năm xuất bản">Năm xuất bản</td>
+            <td data-title="Ghi chú">Ghi chú</td>                  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <?php if($can_edit==1){ ?>
+    <!-- 
+      THÔNG TIN CÁ NHÂN
+      Phần 1: Thông tin cá nhân
+    -->  
+    <div class="modal fade" id="modal-infor-1" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
+          </div>
+          <div class="modal-body"> 
+            <?php              
+              $edit_infor_form=$this->edit_infor_form;
+              $edit_infor_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-infor')));
+              $edit_infor_form->setAttribute('class','form');
+              $edit_infor_form->setAttribute('role','form');
+              $edit_infor_form->setAttribute('method','post');
+              $edit_infor_form->prepare();
+              echo $this->form()->openTag($edit_infor_form);
+            ?>   
+            <?php foreach ($all_attributes as $key => $all_attribute) { ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php echo $this->formLabel($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
+                  </div>
+                </div>
+              </div>  
+            <?php } ?>          
+            <div class="row">                  
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                <button type="submit" class="btn btn-default">Lưu</button>
+              </div>
+            </div>
+            <?php echo $this->form()->closeTag($edit_infor_form); ?>
+          </div>            
+        </div>
+      </div>
+    </div>
+
+    <!-- 
+      THÔNG TIN CÁ NHÂN
+      Phần 2: Các chứng chỉ
+     -->  
+    <div class="modal fade" id="modal-infor-2" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
+          </div>
+          <div class="modal-body"> 
+            <?php
+              $certificate_edit_form=$this->certificate_edit_form;
+              $edit_infor_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-infor')));
+              $certificate_edit_form->setAttribute('class','form');
+              $certificate_edit_form->setAttribute('role','form');
+              $certificate_edit_form->setAttribute('method','post');
+              $certificate_edit_form->prepare();
+              echo $this->form()->openTag($certificate_edit_form);
+            ?>   
+            <?php
+              foreach ($certificate_lists as $key => $certificate_list) {
+            ?>
+              <?php if($key>0){ ?>
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <hr/>
+                </div>              
+              </div>
+              <?php } ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    // input id
+                    $certificate_id='certificate_id_'.$certificate_list['value_id'];
+                    echo $this->formHidden($certificate_edit_form->get($certificate_id));
+                    // Label name
+                    $certificate_name='certificate_name_'.$certificate_list['value_id'];
+                    $certificate_edit_form->get($certificate_name)->setLabel('Tên chứng chỉ');
+                    echo $this->formLabel($certificate_edit_form->get($certificate_name)); 
+                  ?>
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php
+                      // input name
+                      echo $this->formElement($certificate_edit_form->get($certificate_name));
+                    ?>
+                  </div>
+                </div>
+              </div>
+              <?php
+                if($certificate_list['name']!='Ngoại ngữ'){
+              ?>
+                <div class="row">
+                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">                    
+                    <?php 
+                      // label checkbox
+                      $checkbox='certificate_check_'.$certificate_list['value_id']; 
+                      $certificate_edit_form->get($checkbox)->setLabel('Có/Không');
+                      echo $this->formLabel($certificate_edit_form->get($checkbox));
+
+                    ?>
+                  </div>
+                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                    <div class="form-group has-success">
+                      <?php 
+                        // input checkbox  
+                        echo $this->formElement($certificate_edit_form->get($checkbox));
+                      ?>  
+                    </div>
+                  </div>
+                </div> 
+                <div class="row">
+                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                    <?php 
+                      // label note
+                      $note='certificate_note_'.$certificate_list['value_id']; 
+                      $certificate_edit_form->get($note)->setLabel('Ghi chú');
+                      echo $this->formLabel($certificate_edit_form->get($note));
+
+                    ?>
+                  </div>
+                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                    <div class="form-group has-success">  
+                      <?php
+                        //  input note  
+                        echo $this->formElement($certificate_edit_form->get($note));
+                      ?>
+                    </div>
+                  </div>
+                </div>
+              <?php
+                }
+                else{
+              ?>
+                  <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                      <?php 
+                        // label loại ngoại ngữ
+                        $loai_ngoai_ngu='certificate_loai_ngoai_ngu_'.$certificate_list['value_id']; 
+                        $certificate_edit_form->get($loai_ngoai_ngu)->setLabel('Loại ngoại ngữ');
+                        echo $this->formLabel($certificate_edit_form->get($loai_ngoai_ngu));
+                      ?>
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                      <div class="form-group has-success">
                         <?php
-                          $trang_thai='Không';
-                          $note='';
-                          if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
-                            $trang_thai='Có';
-                            $note=$certificate_infor['note'];
-                          }
-                          echo $trang_thai;
+                          //  input loại ngoại ngữ  
+                          echo $this->formElement($certificate_edit_form->get($loai_ngoai_ngu));
                         ?>
-                      </td>                   
-                      <td data-title="Ghi chú"><?php echo $note; ?></td> 
-                    </tr>
-                  <?php }else{ ?>
-                    <tr>
-                      <td data-title="STT"><?php $key++; echo $key; ?></td>
-                      <td data-title="Nội dung"><?php echo $certificate_infor['name']; ?></td>
-                      <td data-title="Loại ngoại ngữ">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                      <?php 
+                        // label loại ngoại ngữ
+                        $level='certificate_level_'.$certificate_list['value_id']; 
+                        $certificate_edit_form->get($level)->setLabel('Trình độ');
+                        echo $this->formLabel($certificate_edit_form->get($level));
+                      ?>
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                      <div class="form-group has-success">                  
                         <?php
-                          $note='';
-                          if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
-                            $note=$ngoai_ngu[$certificate_infor['note']];
-                          }
-                          echo $note;
+                          //  input note  
+                          echo $this->formElement($certificate_edit_form->get($level));
                         ?>
-                      </td>                   
-                      <td data-title="Trình độ">
-                        <?php 
-                          if(isset($certificate_infor['level'])){
-                            echo $certificate_infor['level'];
-                          }
-                        ?>
-                      </td> 
-                    </tr>
-                  <?php } ?>
-                <?php
-                  }
-                ?> 
-              </tbody>
-            </table>
-          </div>
-
-          <h3>B. Kinh nghiệm làm việc</h3>
-
-          <h3><small>1. Công tác giảng dạy</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">                  
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Tên môn</td>
-                  <td class="active">Số tiết</td> 
-                  <td class="active">Bậc học</td>
-                  <td class="active">Hệ đào tạo</td>
-                  <td class="active">Ghi chú</td>                  
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Tên môn">Tên môn</td>
-                  <td data-title="Số tiết">Số tiết</td> 
-                  <td data-title="Bậc học">Bậc học</td>
-                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                    
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Tên môn">Tên môn</td>
-                  <td data-title="Số tiết">Số tiết</td> 
-                  <td data-title="Bậc học">Bậc học</td>
-                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                    
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Hoạt động</td>
-                  <td class="active">Trạng thái</td> 
-                  <td class="active">Thời gian bắt đầu</td>
-                  <td class="active">Thời gian kết thúc</td>
-                  <td class="active">Ghi chú</td>                 
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Hoạt động">Hoạt động</td>
-                  <td data-title="Trạng thái">Trạng thái</td> 
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Hoạt động">Hoạt động</td>
-                  <td data-title="Trạng thái">Trạng thái</td> 
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>             
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3><small>3. Công tác khác</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Nội dung</td>
-                  <td class="active">Thời gian</td> 
-                  <td class="active">Ghi chú</td>                
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian">Nội dung</td> 
-                  <td data-title="Ghi chú">Ghi chú</td>                
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian">Nội dung</td> 
-                  <td data-title="Ghi chú">Ghi chú</td>                
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>C. Định hướng phát triển</h3>
-          
-          <h3><small>1. Công tác giảng dạy</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Tên môn</td>
-                  <td class="active">Số tiết</td> 
-                  <td class="active">Bậc học</td>
-                  <td class="active">Hệ đào tạo</td>
-                  <td class="active">Ghi chú</td>                  
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Tên môn">Tên môn</td>
-                  <td data-title="Số tiết">Số tiết</td> 
-                  <td data-title="Bậc học">Bậc học</td>
-                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Tên môn">Tên môn</td>
-                  <td data-title="Số tiết">Số tiết</td> 
-                  <td data-title="Bậc học">Bậc học</td>
-                  <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Nội dung</td>
-                  <td class="active">Thời gian bắt đầu</td> 
-                  <td class="active">Ghi chú</td>                 
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-                  <td data-title="Ghi chú">Ghi chú</td>                 
-                </tr>
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-                  <td data-title="Ghi chú">Ghi chú</td>                 
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3><small>3. Học tập nâng cao trình độ</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Nội dung</td>
-                  <td class="active">Nơi học</td> 
-                  <td class="active">Thời gian bắt đầu</td>
-                  <td class="active">Thời gian kết thúc</td>
-                  <td class="active">Ghi chú</td>                  
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Nơi học">Nơi học</td> 
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-                <tr>
-                  <td data-title="STT">2</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Nơi học">Nơi học</td> 
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3><small>4. Các hoạch định khác</small></h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Nội dung</td>
-                  <td class="active">Thời gian bắt đầu</td> 
-                  <td class="active">Thời gian kết thúc</td>
-                  <td class="active">Ghi chú</td>                  
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Nội dung">Nội dung</td>
-                  <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-                  <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>D. Các bài báo cáo khoa học đã công bố</h3>
-          <div class="table-responsive" id="no-more-tables">
-            <table class="table table-bordered table-hover cf">
-              <thead class="cf">
-                <tr>
-                  <td class="active">STT</td>
-                  <td class="active">Tên bài báo</td>
-                  <td class="active">Nơi xuất bản</td> 
-                  <td class="active">Năm xuất bản</td>
-                  <td class="active">Ghi chú</td>                  
-                </tr>
-              </thead>
-              <tbody>                  
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Tên bài báo">Tên bài báo</td>
-                  <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
-                  <td data-title="Năm xuất bản">Năm xuất bản</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-                <tr>
-                  <td data-title="STT">1</td>
-                  <td data-title="Tên bài báo">Tên bài báo</td>
-                  <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
-                  <td data-title="Năm xuất bản">Năm xuất bản</td>
-                  <td data-title="Ghi chú">Ghi chú</td>                  
-                </tr>
-              </tbody>
-            </table>
-          </div>
-   
+                      </div>
+                    </div>
+                  </div>
+              <?php } ?>
+            <?php 
+              }
+            ?>          
+            <div class="row">                  
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                <button type="submit" class="btn btn-default">Lưu</button>
+              </div>
+            </div>
+            <?php echo $this->form()->closeTag($certificate_edit_form); ?>
+          </div>            
+        </div>
+      </div>
+    </div>
+  <?php } ?>   
 <?php } ?>
