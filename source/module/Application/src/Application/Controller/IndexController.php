@@ -193,9 +193,110 @@ class IndexController extends AbstractActionController
       }
      	// trả dữ liệu ra view
      	return $return_array;
-
-
     }
+
+    // lưu lại thông tin cá nhân
+    public function editInforAction(){
+        
+      $request=$this->getRequest();
+      if($request->isPost() and !isset($post['id'])) // kiểm tra nếu post dữ liệu
+      {
+        // điểm truy cập csdl
+        $jos_attribute_table=$this->getServiceLocator()->get('Attribute\Model\JosAttributeTable');
+        $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+        $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+        $jos_infor_table=$this->getServiceLocator()->get('Application\Model\JosInfomationTable');
+        $jos_attribute_table=$this->getServiceLocator()->get('Attribute\Model\JosAttributeTable');
+        $jos_attribute_option_table=$this->getServiceLocator()->get('Attribute\Model\JosAttributeOptionTable');
+              
+        // post
+        $post=$request->getPost();
+        $id=$post['id']; unset($post['id']);        
+        // nếu đã đăng nhập
+        $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        if(isset($read['username']) and $read['username']){
+          // kiểm tra user đang đăng nhập
+          $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+          // kiểm tra user có quyền editAllProfile không
+          $white_lists=$read['white_list'];
+          $edit_all_profile=0;
+          foreach ($white_lists as $key => $white_list) {
+            if($white_list['action']=='editAllProfile'){
+              $edit_all_profile=1;
+            }
+          }
+          // nếu id cần sửa bằng với user_id đang đăng nhập hoặc có quyền editAllProfile
+          if($user and $user[0]['id']==$id or $edit_all_profile==1){
+            // tạo form
+            $all_attributes=$jos_attribute_table->getAttributeByYearActive();
+            $edit_infor_form=new EditInforForm($this->getServiceLocator(), $all_attributes);
+            $edit_infor_form->setData($post);
+            if($edit_infor_form->isValid()){
+              // lấy year_id default              
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa!');
+              }
+              $year_id=$year[0]['year_id'];
+              $error='';
+              foreach ($post as $key => $p) {
+                // kiểm tra attribute_code post qua có tồn tại không
+                $attribute_exist=$jos_attribute_table->getAttributeByArrayConditionAndArrayColumn(array('year_id'=>$year_id, 'attribute_code'=>$key));
+                //nếu không tồn tại thì bỏ qua
+                if(!$attribute_exist){
+                  $error.=' '.$key.',';
+                  continue;
+                }
+                else{
+                  if($attribute_exist[0]['frontend_input']=='Select'){
+                    // kiểm tra dữ liệu select post qua có tồn tại không
+                    $option_exist=$jos_attribute_option_table->getAttributeOptionByArrayConditionAndArrayColumn(array('attribute_id'=>$attribute_exist[0]['attribute_id'], 'key'=>$p));
+                    if(!$option_exist){
+                      $error.=' '.$key.',';
+                      $p='';
+                    }
+                  }
+                }
+                // kiểm tra bảng infor đã có dòng thông tin theo attribute code chưa
+                $infor_exist=$jos_infor_table->getInfomationAttributeByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.attribute_code'=>$key, 't2.year_id'=>$year_id), array(), array());
+                $new_infor=new JosInfomation();
+                // nếu tồn tại thì sửa
+                if(isset($infor_exist[0])){                  
+                  $new_infor->exchangeArray($infor_exist[0]);
+                  $new_infor->setValue($p);
+                }
+                // ngược lại thì add
+                else{
+                  $new_infor->setValue($p);
+                  $new_infor->setUserId($id);
+                  $new_infor->setAttributeId($attribute_exist[0]['attribute_id']);
+                }
+                // lưu lại
+                $jos_infor_table->saveJosInfor($new_infor);
+              }
+              // cập nhật thành công
+              if(!$error){
+                $this->flashMessenger()->addSuccessMessage('Cập nhật thành công!');
+              }
+              // có một số lỗi trong quá trình cập nhật
+              else{
+                $error='dữ liệu cột: '.$error.' nhập không đúng. Vui lòng kiểm tra lại!';
+                $this->flashMessenger()->addSuccessMessage($error);
+              }              
+              return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id));
+            }
+          }
+        } 
+        if(isset($id)){
+          $this->flashMessenger()->addErrorMessage('111 Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+          return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id));
+        }       
+      }        
+      // không có quyền sửa
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));
+    }
+
     
     /*public function editAction()
     {

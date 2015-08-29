@@ -415,6 +415,7 @@
               $edit_infor_form->prepare();
               echo $this->form()->openTag($edit_infor_form);
             ?>   
+            <input type="hidden" name="id" value="<?php echo $this->id; ?>">
             <?php foreach ($all_attributes as $key => $all_attribute) { ?>
               <div class="row">
                 <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
