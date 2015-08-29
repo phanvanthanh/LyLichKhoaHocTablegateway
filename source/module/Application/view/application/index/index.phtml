@@ -403,7 +403,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
+            <h4 class="modal-title"><strong>CẬP NHẬT THÔNG TIN CÁ NHÂN</strong></h4>
           </div>
           <div class="modal-body"> 
             <?php              
@@ -448,18 +448,19 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
+            <h4 class="modal-title"><strong>CẬP NHẬT THÔNG TIN CÁ NHÂN</strong></h4>
           </div>
           <div class="modal-body"> 
             <?php
               $certificate_edit_form=$this->certificate_edit_form;
-              $edit_infor_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-infor')));
+              $certificate_edit_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-certificate')));
               $certificate_edit_form->setAttribute('class','form');
               $certificate_edit_form->setAttribute('role','form');
               $certificate_edit_form->setAttribute('method','post');
               $certificate_edit_form->prepare();
               echo $this->form()->openTag($certificate_edit_form);
-            ?>   
+            ?>  
+            <input type="hidden" name="id" value="<?php echo $this->id; ?>"> 
             <?php
               foreach ($certificate_lists as $key => $certificate_list) {
             ?>
