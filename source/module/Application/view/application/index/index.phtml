@@ -10,6 +10,9 @@
       // biến sử dụng chung
       $all_attributes=$this->all_attributes;
       $certificate_lists=$this->certificate_lists;
+      $teaching_alls=$this->teaching_alls;
+      $bac_hocs=$this->bac_hoc;
+      $he_dao_taos=$this->he_dao_tao;
     }
   ?>
     <div class="row">
@@ -136,9 +139,25 @@
       </table>
     </div>
 
-    <h3>B. Kinh nghiệm làm việc</h3>
 
-    <h3><small>1. Công tác giảng dạy</small></h3>
+
+
+
+
+
+
+
+    <h3>B. Kinh nghiệm làm việc</h3>    
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3><small>1. Công tác giảng dạy</small></h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-cong-tac-giang-day-add"><b class="glyphicon glyphicon-plus"></b></a>
+        <?php } ?>
+      </div>
+    </div>
     <div class="table-responsive" id="no-more-tables">
       <table class="table table-bordered table-hover cf">
         <thead class="cf">                  
@@ -148,29 +167,50 @@
             <td class="active">Số tiết</td> 
             <td class="active">Bậc học</td>
             <td class="active">Hệ đào tạo</td>
-            <td class="active">Ghi chú</td>                  
+            <td class="active">Ghi chú</td> 
+            <?php if($can_edit==1){ ?>
+              <td class="active td-remove">Xóa</td>
+              <td class="active td-edit">Sửa</td>
+            <?php } ?>                 
           </tr>
         </thead>
-        <tbody>                  
+        <tbody>
+        <?php foreach ($teaching_alls as $key => $teaching) { ?>                  
           <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Tên môn">Tên môn</td>
-            <td data-title="Số tiết">Số tiết</td> 
-            <td data-title="Bậc học">Bậc học</td>
-            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-            <td data-title="Ghi chú">Ghi chú</td>                    
+            <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $teaching['value_id']; ?></span><?php $key++; echo $key; ?></td>
+            <td data-title="Tên môn"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $teaching['subject_id']; ?></span><?php echo $teaching['name']; ?></td>
+            <td data-title="Số tiết"><?php echo $teaching['lesson_number']; ?></td> 
+            <td data-title="Bậc học"><?php echo $teaching['qualifications']; ?></td>
+            <td data-title="Hệ đào tạo"><?php echo $teaching['edu_system']; ?></td>
+            <td data-title="Ghi chú"><?php echo $teaching['note']; ?></td>   
+            <?php if($can_edit==1){ ?>
+              <td data-title="Xóa">
+                <a class="btn btn-default" href="<?php echo $this->url('application/crud', array('action'=>'delete-teaching', 'id'=>$teaching['value_id'])); ?>"><b class="glyphicon glyphicon-remove"></b></a>
+              </td>
+              <td data-title="Sửa">
+                <a class="btn btn-default ctgd-btn-edit" data-toggle="modal" data-target="#modal-cong-tac-giang-day-edit"><b class="glyphicon glyphicon-pencil"></b></a>
+              </td>
+            <?php } ?>                  
           </tr>
-          <tr>
-            <td data-title="STT">2</td>
-            <td data-title="Tên môn">Tên môn</td>
-            <td data-title="Số tiết">Số tiết</td> 
-            <td data-title="Bậc học">Bậc học</td>
-            <td data-title="Hệ đào tạo">Hệ đào tạo</td>
-            <td data-title="Ghi chú">Ghi chú</td>                    
-          </tr>
+          <?php } ?>         
         </tbody>
       </table>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
     <div class="table-responsive" id="no-more-tables">
@@ -587,5 +627,228 @@
         </div>
       </div>
     </div>
+
+    <!-- 
+      KINH NGHIỆM LÀM VIỆC
+      Phần 1: Công tác giảng dạy
+    -->  
+      <!-- add -->
+      <div class="modal fade" id="modal-cong-tac-giang-day-add" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>THÊM CÔNG TÁC GIẢNG DẠY</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $teaching_add_form=$this->teaching_add_form;
+                $teaching_add_form->setAttribute('action', $this->url("application/crud", array('action'=>'add-teaching')));
+                $teaching_add_form->setAttribute('class','form');
+                $teaching_add_form->setAttribute('role','form');
+                $teaching_add_form->setAttribute('method','post');
+                $teaching_add_form->prepare();
+                echo $this->form()->openTag($teaching_add_form);
+              ?>  
+              <input type="hidden" name="id" value="<?php echo $this->id; ?>">
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_add_form->get('ten_mon')->setLabel('Tên môn');
+                    echo $this->formLabel($teaching_add_form->get('ten_mon')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_add_form->get('ten_mon')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_add_form->get('so_tiet')->setLabel('Số tiết');
+                    echo $this->formLabel($teaching_add_form->get('so_tiet')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_add_form->get('so_tiet')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  Bậc học
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <div class="btn-group" data-toggle="buttons">
+                      <?php foreach ($bac_hocs as $key => $bac_hoc) { ?>
+                      <label class="btn btn-default" title="<?php echo $bac_hoc; ?>">
+                        <?php echo $this->formElement($teaching_add_form->get('bac_hoc_'.$key)); ?>
+                        <span class="hidden-xs"><?php echo $bac_hoc; ?></span><span class="hidden-sm hidden-md hidden-lg"><?php echo $key; ?></span>
+                      </label>
+                      <?php } ?>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  Hệ đào tạo
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <div class="btn-group" data-toggle="buttons">
+                      <?php foreach ($he_dao_taos as $key => $he_dao_tao) { ?>
+                      <label class="btn btn-default" title="<?php echo $he_dao_tao; ?>">
+                        <?php echo $this->formElement($teaching_add_form->get('he_dao_tao_'.$key)); ?>
+                        <span class="hidden-xs"><?php echo $he_dao_tao; ?></span><span class="hidden-sm hidden-md hidden-lg"><?php echo $key; ?></span>
+                      </label>
+                      <?php } ?>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_add_form->get('ghi_chu')->setLabel('Ghi chú');
+                    echo $this->formLabel($teaching_add_form->get('ghi_chu')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_add_form->get('ghi_chu')); ?> 
+                  </div>
+                </div>
+              </div>
+                       
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($teaching_add_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+      <!-- edit -->
+      <div class="modal fade" id="modal-cong-tac-giang-day-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>SỬA CÔNG TÁC GIẢNG DẠY</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $teaching_edit_form=$this->teaching_edit_form;
+                $teaching_edit_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-teaching', 'id'=>$this->id)));
+                $teaching_edit_form->setAttribute('class','form');
+                $teaching_edit_form->setAttribute('role','form');
+                $teaching_edit_form->setAttribute('method','post');
+                $teaching_edit_form->prepare();
+                echo $this->form()->openTag($teaching_edit_form);
+                echo $this->formHidden($teaching_edit_form->get('id_cong_tac'));
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_edit_form->get('ten_mon')->setLabel('Tên môn');
+                    echo $this->formLabel($teaching_edit_form->get('ten_mon')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_edit_form->get('ten_mon')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_edit_form->get('so_tiet')->setLabel('Số tiết');
+                    echo $this->formLabel($teaching_edit_form->get('so_tiet')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_edit_form->get('so_tiet')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  Bậc học
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <div class="btn-group" data-toggle="buttons">
+                      <?php foreach ($bac_hocs as $key => $bac_hoc) { ?>
+                      <label class="btn btn-default" title="<?php echo $bac_hoc; ?>">
+                        <?php echo $this->formElement($teaching_edit_form->get('bac_hoc_'.$key)); ?>
+                        <span class="hidden-xs"><?php echo $bac_hoc; ?></span><span class="hidden-sm hidden-md hidden-lg"><?php echo $key; ?></span>
+                      </label>
+                      <?php } ?>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  Hệ đào tạo
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">                  
+                    <div class="btn-group" data-toggle="buttons">
+                      <?php foreach ($he_dao_taos as $key => $he_dao_tao) { ?>
+                      <label class="btn btn-default" title="<?php echo $he_dao_tao; ?>">
+                        <?php echo $this->formElement($teaching_edit_form->get('he_dao_tao_'.$key)); ?>
+                        <span class="hidden-xs"><?php echo $he_dao_tao; ?></span><span class="hidden-sm hidden-md hidden-lg"><?php echo $key; ?></span>
+                      </label>
+                      <?php } ?>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $teaching_edit_form->get('ghi_chu')->setLabel('Ghi chú');
+                    echo $this->formLabel($teaching_edit_form->get('ghi_chu')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($teaching_edit_form->get('ghi_chu')); ?> 
+                  </div>
+                </div>
+              </div>
+                       
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($teaching_edit_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
   <?php } ?>   
 <?php } ?>

@@ -28,6 +28,9 @@ class JosYearTable
         sử dụng trong Attribute/Controller/Attribute addAction
         sử dụng trong Attribute/Controller/Attribute editAction
         sử dụng trong Attribute/Controller/Attribute editInforAction
+        sử dụng trong Application\Controller\Index editInforAction
+        sử dụng trong Application\Controller\Index editCertificateAction
+        sử dụng trong Application\Controller\Index editTeachingAction
     */
     public function getYearByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*

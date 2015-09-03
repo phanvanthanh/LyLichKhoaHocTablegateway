@@ -182,6 +182,15 @@ $(document).ready(function(){
             checkParent(parent);
         }
     });
+
+    /*
+        edit ctgd        
+    */
+
+    jQuery('.ctgd-btn-edit').on('click', function(){
+        var so_tiet=jQuery(this).parent('tr').html();
+        console.log(so_tiet);
+    });
         
      
     

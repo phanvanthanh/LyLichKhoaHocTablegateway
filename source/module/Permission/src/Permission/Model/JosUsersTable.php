@@ -40,8 +40,9 @@ class JosUsersTable
 
     /*
         sử dụng trong Application\Controller\Index indexAction
-        sử dụng trong Application\Controller\Index editAction
+        sử dụng trong Application\Controller\Index editCertificateAction
         sử dụng trong Application\Controller\Index editInforAction
+        sử dụng trong Application\Controller\Index editTeachingAction
     */
     public function getGiangVienByArrayConditionAndArrayColumns($array_conditions=array(), $array_columns=array()){
          /*

@@ -43,6 +43,7 @@ class Module
             'factories' => array(
                 'Navigation' => 'Application\Navigation\MyNavigationFactory',
                 'Application\Model\JosInfomationTable' => 'Application\Factory\Table\JosInfomationTableFactory',
+                'Application\Model\JosTeachingTable' => 'Application\Factory\Table\JosTeachingTableFactory',
             )
         );
     }

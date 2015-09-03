@@ -2,15 +2,15 @@
 namespace Application\Form;
 
 use Zend\Form\Form;
-use Application\Form\EditCongTacGiangDayFormFilter;
+use Application\Form\AddCongTacGiangDayFormFilter;
 use Application\FunctionClass\FunctionClass;
 
-class EditCongTacGiangDayForm extends Form
+class AddCongTacGiangDayForm extends Form
 {
 
     public function __construct($serviceLocator)
     {
-        parent::__construct("edit_cong_tac_giang_day_form");
+        parent::__construct("add_cong_tac_giang_day_form");
         $this->setAttribute('method', 'post');
         // khai báo biến cần sử dụng      
         $service_config = $serviceLocator->get('config');
@@ -108,7 +108,7 @@ class EditCongTacGiangDayForm extends Form
             )
         )); 
 
-        $this->setInputFilter(new EditCongTacGiangDayFormFilter(array('he_dao_tao'=>$he_dao_tao, 'bac_hoc'=>$bac_hoc)));
+        $this->setInputFilter(new AddCongTacGiangDayFormFilter(array('he_dao_tao'=>$he_dao_tao, 'bac_hoc'=>$bac_hoc)));
         
     }
 }

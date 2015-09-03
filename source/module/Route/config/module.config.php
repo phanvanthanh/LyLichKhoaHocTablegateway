@@ -31,8 +31,8 @@ return array(
         ),
         'application'   => array(
             'bac_hoc'  => array(
-                'ĐH'    => 'Đại học',
-                'CĐ'    => 'Cao đẳng',
+                'DH'    => 'Đại học',
+                'CD'    => 'Cao đẳng',
                 'TC'    => 'Trung cấp'            
             ),  
             'so_tiet'   => array(
