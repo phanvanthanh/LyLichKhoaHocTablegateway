@@ -188,8 +188,31 @@ $(document).ready(function(){
     */
 
     jQuery('.ctgd-btn-edit').on('click', function(){
-        var so_tiet=jQuery(this).parent('tr').html();
-        console.log(so_tiet);
+        var id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var ten_mon=jQuery(this).closest('tr').find('td[data-title="Tên môn"] span').text();
+        var so_tiet=jQuery(this).closest('tr').find('td[data-title="Số tiết"]').text();
+        var bac_hoc=jQuery(this).closest('tr').find('td[data-title="Bậc học"]').text();
+        var he_dao_tao=jQuery(this).closest('tr').find('td[data-title="Hệ đào tạo"]').text();
+        var ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        
+        jQuery('#modal-cong-tac-giang-day-edit').find('input[name="id_cong_tac"]').val(id);
+        jQuery('#modal-cong-tac-giang-day-edit').find('select[name="ten_mon"]').val(ten_mon);
+        jQuery('#modal-cong-tac-giang-day-edit').find('select[name="so_tiet"]').val(so_tiet);
+        jQuery('#modal-cong-tac-giang-day-edit').find('input[name="ghi_chu"]').val(ghi_chu);
+        
+        bac_hoc=bac_hoc.split(',');
+        jQuery.each(bac_hoc, function(i, v){
+            v=v.trim();
+            jQuery('#modal-cong-tac-giang-day-edit').find('label[title="'+v+'"]').addClass('active').find('input[type="checkbox"]').val(1).prop('checked', true);
+        });
+
+        he_dao_tao=he_dao_tao.split(',');
+        jQuery.each(he_dao_tao, function(i, v){
+            v=v.trim();
+            jQuery('#modal-cong-tac-giang-day-edit').find('label[title="'+v+'"]').addClass('active').find('input[type="checkbox"]').val(1).prop('checked', true);
+        });
+
+        console.log(id, ten_mon, so_tiet, bac_hoc, he_dao_tao, ghi_chu);
     });
         
      

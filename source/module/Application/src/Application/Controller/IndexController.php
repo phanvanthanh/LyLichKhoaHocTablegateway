@@ -587,7 +587,7 @@ class IndexController extends AbstractActionController
             }
             $year_id=$year[0]['year_id'];
 
-            
+            die(var_dump($post));
           
 
           }
