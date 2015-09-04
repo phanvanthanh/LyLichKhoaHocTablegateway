@@ -44,6 +44,8 @@ class Module
                 'Navigation' => 'Application\Navigation\MyNavigationFactory',
                 'Application\Model\JosInfomationTable' => 'Application\Factory\Table\JosInfomationTableFactory',
                 'Application\Model\JosTeachingTable' => 'Application\Factory\Table\JosTeachingTableFactory',
+                'Application\Model\JosFutureTeachingTable' => 'Application\Factory\Table\JosFutureTeachingTableFactory',
+                'Application\Model\JosScienceResearchOfUserTable' => 'Application\Factory\Table\JosScienceResearchOfUserTableFactory',
             )
         );
     }

@@ -1,10 +1,18 @@
-          <?php $id=$this->id; ?>
-            <input type="hidden" id="id" value="<?php echo $id; ?>">
+
+          <!-- 
+          <form id="form-edit" name="form-edit" method="post" action="index.html"> 
+          -->
             <div class="row">
+              <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
+                <button class="btn btn-default">Lưu</button>
+              </div>                
+
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h3 class="header-thong-tin-ca-nhan">A. Thông tin cá nhân</h3>
               </div>
-            </div> 
+            </div>          
+            
+            
             
             <div class="row">
               <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
@@ -12,206 +20,242 @@
               </div>
               <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
                 <div class="dropdown action">
-                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom cursor-pointer"></b></small></h3>
+                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom"></b></small></h3>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'edit-infor')); ?>" ajax-input=".ajax-thong-tin-ca-nhan">Lưu</a>
-                    </li>                    
+                      <a href="#">Lưu</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
+                    </li>
                   </ul>
                 </div>               
               </div>
-            </div> 
-            <?php
-              $all_attributes=$this->all_attributes;
-              $edit_infor_form=$this->edit_infor_form;
-              //$edit_infor_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit')));
-              $edit_infor_form->setAttribute('class','form');
-              $edit_infor_form->setAttribute('role','form');
-              $edit_infor_form->setAttribute('method','post');
-              $edit_infor_form->prepare();
-              echo $this->form()->openTag($edit_infor_form);
-            ?>   
-              <?php foreach ($all_attributes as $key => $all_attribute) { ?>         
-                <div class="row">
-                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                    <?php echo $this->formLabel($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
-                  </div>
-                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                    <div class="form-group has-success">
-                      <?php echo $this->formElement($edit_infor_form->get($all_attribute['attribute_code'])); ?> 
-                    </div>
-                  </div>
-                </div>  
-              <?php } ?>          
-            <?php echo $this->form()->closeTag($edit_infor_form); ?>
-            <?php
-              $certificate_edit_form=$this->certificate_edit_form;
-              $certificate_edit_form->setAttribute('class','form');
-              $certificate_edit_form->setAttribute('role','form');
-              $certificate_edit_form->setAttribute('method','post');
-              $certificate_edit_form->prepare();
-              echo $this->form()->openTag($certificate_edit_form);
-            ?>
+            </div>            
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Họ và tên
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ngày vào đảng
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Dân tộc
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <select class="form-control">
+                    <option value="">Chọn</option>
+                    <option value="1">Kinh</option>
+                    <option value="2">Kherme</option>
+                    <option value="3">Tầy</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ngày vào đoàn
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control date-time" placeholder="Ngày vào đảng">
+                </div>
+              </div>
+            </div>
+
+
+            <h3><small><b>2. Các chứng chỉ</b></small></h3>              
             <div class="row">
               <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
-                <h3><small><b>2. Chứng chỉ khác</b></small></h3>
+                2.1. 
               </div>
               <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-right">
                 <div class="dropdown action">
-                  <h3 href="#" class="dropdown-toggle" data-toggle="dropdown"><small><b class="glyphicon glyphicon-triangle-bottom cursor-pointer"></b></small></h3>
+                  <b class="glyphicon glyphicon-triangle-bottom dropdown-toggle" data-toggle="dropdown"></b>
                   <ul class="dropdown-menu dropdown-action" aria-labelledby>
                     <li>
-                      <a href="#" class="ajax" ajax-route="<?php echo $this->url('application/crud', array('action'=>'ajaxCertificate')); ?>" ajax-input=".ajax-certificate">Lưu</a>
-                    </li>                    
+                      <a href="#">Lưu</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#" onclick="deleteConfirm('Bạn muốn xóa', 'index.html')">Xóa</a>
+                    </li>
                   </ul>
-                </div>               
-              </div>
-            </div> 
-            <div id="chung-chi-khac">
-            <?php
-              $certificate_lists=$this->certificate_lists;
-              foreach ($certificate_lists as $key => $certificate_list) {
-            ?>
-              <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <?php $key++; echo $key; ?>
-                </div>              
-              </div>
-              <div class="row">
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <?php 
-                    // input id
-                    $certificate_id='certificate_id_'.$certificate_list['value_id'];
-                    echo $this->formHidden($certificate_edit_form->get($certificate_id));
-                    // Label name
-                    $certificate_name='certificate_name_'.$certificate_list['value_id'];
-                    $certificate_edit_form->get($certificate_name)->setLabel('Tên chứng chỉ');
-                    echo $this->formLabel($certificate_edit_form->get($certificate_name)); 
-                  ?>
-                </div>
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">
-                    <?php
-                      // input name
-                      echo $this->formElement($certificate_edit_form->get($certificate_name));
-                    ?>
-                  </div>
-                </div>
-              </div>
-              <?php
-                if($certificate_list['name']!='Ngoại ngữ'){
-              ?>
-                <div class="row">
-                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">                    
-                    <?php 
-                      // label checkbox
-                      $checkbox='certificate_check_'.$certificate_list['value_id']; 
-                      $certificate_edit_form->get($checkbox)->setLabel('Có/Không');
-                      echo $this->formLabel($certificate_edit_form->get($checkbox));
-
-                    ?>
-                  </div>
-                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                    <div class="form-group has-success">
-                      <?php 
-                        // input checkbox  
-                        echo $this->formElement($certificate_edit_form->get($checkbox));
-                      ?>  
-                    </div>
-                  </div>
-                </div> 
-                <div class="row">
-                  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                    <?php 
-                      // label note
-                      $note='certificate_note_'.$certificate_list['value_id']; 
-                      $certificate_edit_form->get($note)->setLabel('Ghi chú');
-                      echo $this->formLabel($certificate_edit_form->get($note));
-
-                    ?>
-                  </div>
-                  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                    <div class="form-group has-success">  
-                      <?php
-                        //  input note  
-                        echo $this->formElement($certificate_edit_form->get($note));
-                      ?>
-                    </div>
-                  </div>
-                </div>
-              <?php
-                }
-                else{
-              ?>
-                  <div class="row">
-                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                      <?php 
-                        // label loại ngoại ngữ
-                        $loai_ngoai_ngu='certificate_loai_ngoai_ngu_'.$certificate_list['value_id']; 
-                        $certificate_edit_form->get($loai_ngoai_ngu)->setLabel('Loại ngoại ngữ');
-                        echo $this->formLabel($certificate_edit_form->get($loai_ngoai_ngu));
-                      ?>
-                    </div>
-                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                      <div class="form-group has-success">
-                        <?php
-                          //  input loại ngoại ngữ  
-                          echo $this->formElement($certificate_edit_form->get($loai_ngoai_ngu));
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                      <?php 
-                        // label loại ngoại ngữ
-                        $level='certificate_level_'.$certificate_list['value_id']; 
-                        $certificate_edit_form->get($level)->setLabel('Trình độ');
-                        echo $this->formLabel($certificate_edit_form->get($level));
-                      ?>
-                    </div>
-                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                      <div class="form-group has-success">                  
-                        <?php
-                          //  input note  
-                          echo $this->formElement($certificate_edit_form->get($level));
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-              <?php } ?>
-            <?php 
-              }
-            ?>
+                </div>                
+              </div>              
             </div>
-            <?php echo $this->form()->closeTag($certificate_edit_form); ?>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Nghiệp vụ sư phạm" value="Nghiệp vụ sư phạm" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default yes-no active" data-yes-no=".yes-no-1" type-yes-no="y">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default yes-no" data-yes-no=".yes-no-1" type-yes-no="n">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row yes-no-1">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
             
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.2. 
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Triết lý sau đại học" value="Triết lý sau đại học" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                2.3. 
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                &nbsp;&nbsp;
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Tên chứng chỉ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ngoại ngữ" value="Ngoại ngữ" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trạng thái
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">
+                  <div class="btn-group form-group has-success" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Có
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Không
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Loại ngoại ngữ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <select class="form-control modal-ngoai-ngu">
+                    <option value="">Chọn</option>
+                    <option value="1">Tiếng anh</option>
+                    <option value="4">Tiếng nhật</option>
+                    <option value="2">Tiếng pháp</option>
+                    <option value="3">Tiếng trung</option>                      
+                    <option value="#modal-ngoai-ngu">Ngoại ngữ khác</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Trình độ
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Trình độ">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                Ghi chú
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                <div class="form-group has-success">                  
+                  <input type="text" class="form-control" placeholder="Ghi chú">
+                </div>
+              </div>
+            </div>
 
             <h3>B. Kinh nghiệm làm việc</h3>
 
@@ -1197,120 +1241,10 @@
                   <input type="text" class="form-control" placeholder="Ghi chú">
                 </div>
               </div>
-            </div>            
+            </div>  
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#processing-modal">
+            <i class="glyphicon glyphicon-play"></i> Start Processing
+          </button>             
           <!-- 
           </form>
           -->
-
-          <div class="modal fade" id="modal-mon-hoc" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Môn học mới</h4>
-            </div>
-            <div class="modal-body">              
-              <div class="row">                  
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">                  
-                    <input type="text" class="form-control" placeholder="Nhập tên môn học mới">
-                  </div>
-                </div>
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <button class="btn btn-default">Thêm</button>
-                </div>
-              </div>
-            </div>            
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="modal-ngoai-ngu" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Thêm ngoại ngữ</h4>
-            </div>
-            <div class="modal-body">              
-              <div class="row">                  
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">                  
-                    <input type="text" class="form-control" placeholder="Nhập tên ngoại ngữ mới">
-                  </div>
-                </div>
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <button class="btn btn-default">Thêm</button>
-                </div>
-              </div>
-            </div>            
-          </div>
-        </div>
-      </div>
-
-      <!-- Static Modal -->
-      <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <div class="text-center">
-                  <img src="<?php echo $this->basePath().'/img/default/loading.gif' ?>" class="icon" />
-                  <h4>Đang xử lý...<button type="button" class="close hidden-xs hidden-sm hidden-md hidden-lg" style="float: none;" data-dismiss="modal" aria-hidden="true">×</button></h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-<script>
-  jQuery(document).ready(function(){
-    jQuery('.ajax').on('click', function(){
-      var url           = jQuery(this).attr('ajax-route');  
-      var class_input   = jQuery(this).attr('ajax-input');          
-      var param={'id' : jQuery('#id').val(), };
-      jQuery(class_input).each(function(){        
-        var name        = jQuery(this).attr('name');
-        var value       = jQuery(this).val();
-        // code này chạy trong phần chứng chỉ khác
-        if(jQuery(this).attr('type')=='checkbox' && !jQuery(this).is(':checked')){
-          value=0;
-        }
-        var array       =[]; array[name]=value;
-        jQuery.extend(true, param, array);
-      });
-      var xhr;
-      xhr = jQuery.ajax({
-        url:url,
-        type:'POST',
-        dataType:'json', 
-        data: param,        
-        beforeSend: function(){
-          jQuery('#processing-modal').modal('toggle');
-        },
-        success: function(data){
-          console.log(data);
-          // tắt proccessing
-          jQuery('#processing-modal').modal('hide');
-          // kiểm tra lúc lưu có lỗi không
-          jQuery.each(data, function(k, v){
-            if(v.error==0){
-              // thông báo thành công
-              jQuery('#alert').attr('class','alert alert-success').children('span').text('Cập nhật thành công!');
-              jQuery('#alert').slideDown('slow').delay(1000).slideUp('slow');
-            }
-            else{
-              // thông báo lỗi
-            jQuery('#alert').attr('class','alert alert-danger').children('span').text('Lỗi, '+v.error_name);
-            jQuery('#alert').slideDown('slow').delay(3000).slideUp('slow');
-            }
-          });
-        },
-        error: function(xhr,status,errmgs){                    
-          // thông báo lỗi
-          jQuery('#alert').attr('class','alert alert-danger').children('span').text('Lỗi, thực thi thất bại. Vui lòng kiểm tra lại!');
-          jQuery('#alert').slideDown('slow').delay(1000).slideUp('slow');          
-        }
-      });    
-    });
-  });
-</script>
