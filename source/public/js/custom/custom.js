@@ -245,6 +245,28 @@ $(document).ready(function(){
         console.log(id, ten_mon, so_tiet, bac_hoc, he_dao_tao, ghi_chu);
     });
         
+    jQuery('.nghien-cuu-btn-edit').on('click', function(){
+        var id_hoat_dong=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var ten_hoat_dong=jQuery(this).closest('tr').find('td[data-title="Tham gia hoạt động"]').text();
+        var trang_thai=jQuery(this).closest('tr').find('td[data-title="Trạng thái"]').text();
+        var bat_dau='';
+        var ket_thuc='';
+        var ghi_chu='';
+        if(trang_thai=='Có'){
+            bat_dau=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text();
+            ket_thuc=jQuery(this).closest('tr').find('td[data-title="Thời gian kết thúc"]').text();
+            ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+            jQuery('#modal-nghien-cuu-edit').find('input[name="trang_thai"]').prop('checked', true).val(1);
+        }
+        console.log(id_hoat_dong, ten_hoat_dong, trang_thai, bat_dau, ket_thuc, ghi_chu);
+        jQuery('#modal-nghien-cuu-edit').find('input[name="id_hoat_dong"]').val(id_hoat_dong);
+        jQuery('#modal-nghien-cuu-edit').find('input[name="ten_hoat_dong"]').val(ten_hoat_dong);
+        jQuery('#modal-nghien-cuu-edit').find('input[name="time_from"]').val(bat_dau);
+        jQuery('#modal-nghien-cuu-edit').find('input[name="time_to"]').val(ket_thuc);
+        jQuery('#modal-nghien-cuu-edit').find('input[name="ghi_chu"]').val(ghi_chu);
+
+
+    });
      
     
 });

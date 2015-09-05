@@ -1,68 +1,11 @@
-	<?php
-	// luu l?i thông tin cá nhân
-    public function editInforAction(){
-      $this->layout('layout/ajax_layout');
-      $response=array();
-        
-      $request=$this->getRequest();
-      if($request->isXmlHttpRequest()) // ki?m tra n?u post d? li?u
-      {
-        $post=$request->getPost();
-        $id=$post['id'];
-        // n?u dã dang nh?p
-        $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
-        if(isset($read['username']) and $read['username']){
-          // t?o di?m truy c?p jos_users table
-          $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
-          // ki?m tra user dang dang nh?p
-          $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
-          // ki?m tra user có quy?n editAllProfile không
-          $white_lists=$read['white_list'];
-          $edit_all_profile=0;
-          foreach ($white_lists as $key => $white_list) {
-            if($white_list['action']=='editAllProfile'){
-              $edit_all_profile=1;
-            }
-          }
-          // n?u id c?n s?a b?ng v?i user_id dang dang nh?p ho?c có quy?n editAllProfile
-          if($user and $user[0]['id']==$id or $edit_all_profile==1){
-            // có quy?n s?a
-            $response[]=array('error'=>0);
-            $json = new JsonModel($response);
-            return $json;
-          }
-        }        
-      }        
-      // không có quy?n s?a
-      $response[]=array('error'=>1);
-      $json = new JsonModel($response);
-      return $json;
-      
-    }
-
-
-
-
-
-
-
-
-
-
-    //code delete
-    public function deleteTeachingAction(){        
+<?php 
+  public function editCongTacNghienCuuKhoaHoc(){
       // điểm truy cập csdl
       $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
       $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
-      $jos_teaching_table=$this->getServiceLocator()->get('Application\Model\JosTeachingTable');      
-      
-      // sửa lại biến teaching_id và teaching_exist
-      $teaching_id=$this->params('id'); 
-      $teaching_exist=$jos_teaching_table->getTeachingByArrayConditionAndArrayColumns(array('value_id'=>$teaching_id), array('user_id'));
-      // nếu đã đăng nhập
+      $id_giang_vien=$this->params('id');
       $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
-      if($teaching_exist and isset($teaching_exist[0]['user_id']) and $teaching_exist[0]['user_id'] and isset($read['username']) and $read['username']){
-        $id=$teaching_exist[0]['user_id'];
+      if(isset($read['username']) and $read['username']){
         // kiểm tra user đang đăng nhập
         $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
         // kiểm tra user có quyền editAllProfile không
@@ -73,18 +16,15 @@
             $edit_all_profile=1;
           }
         }
-        // nếu id cần sửa bằng với user_id đang đăng nhập hoặc có quyền editAllProfile
-        if($user and $user[0]['id']==$id or $edit_all_profile==1){
-          // xóa
-          
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
         }
-        if(isset($user[0]['id']) and $user[0]['id']){
-          $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
-          return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+
+        if($edit_all_profile==1){
+
         }
-      }          
-      // không có quyền sửa
-      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
-      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));
+      }      
     }
-	?>
+  
+?>
