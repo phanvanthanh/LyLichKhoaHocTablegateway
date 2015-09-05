@@ -24,6 +24,7 @@ use Application\Form\EditCongTacGiangDayForm;
 use Application\Form\EditCTNCForm;
 use Application\Model\Entity\JosTeaching;
 use Application\Model\Entity\JosFutureTeaching;
+use Application\Model\Entity\JosScienceResearchOfUser;
 
 class IndexController extends AbstractActionController
 {
@@ -1037,6 +1038,7 @@ class IndexController extends AbstractActionController
                 $science_research_exist=$jos_science_research_of_user_table->getScienceResearchAndScienceActivityByArrayConditionAndArrayColumns(array('t1.user_id'=>$id_giang_vien, 't1.science_activity_id'=>$post['id_hoat_dong'], 't2.year_id'=>$year_id), array(), array());
                 // nếu post trang_thai==1 thì sửa hoặc thêm mới
                 if($post['trang_thai']==1){
+
                   $science_research_new=new JosScienceResearchOfUser();
                   $science_research_new->exchangeArray($post);
                   if($science_research_exist and isset($science_research_exist[0]['value_id'])){
@@ -1045,6 +1047,14 @@ class IndexController extends AbstractActionController
                   $science_research_new->setUserId($id_giang_vien);
                   $science_research_new->setScienceActivityId($post['id_hoat_dong']);
                   $science_research_new->setNote($post['ghi_chu']);
+                  // xử lý lại ngày bắt đầu
+                  $time_from = strtotime($post['time_from']);
+                  $time_from = date('Y-m-d',$time_from);
+                  $science_research_new->setTimeFrom($time_from);
+                  // xử lý lại ngày kết thúc
+                  $time_to = strtotime($post['time_to']);
+                  $time_to = date('Y-m-d',$time_to);
+                  $science_research_new->setTimeTo($time_to);
                   $jos_science_research_of_user_table->saveJosScienceResearch($science_research_new);
                 }
                 else{
@@ -1054,7 +1064,7 @@ class IndexController extends AbstractActionController
                 }
                 $this->flashMessenger()->addSuccessMessage('Chúc mừng, cập nhật thành công!');
                 return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
-              }
+              }              
             }
           }
         }

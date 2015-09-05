@@ -256,7 +256,7 @@ $(document).ready(function(){
             bat_dau=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text();
             ket_thuc=jQuery(this).closest('tr').find('td[data-title="Thời gian kết thúc"]').text();
             ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
-            jQuery('#modal-nghien-cuu-edit').find('input[name="trang_thai"]').prop('checked', true).val(1);
+            jQuery('#modal-nghien-cuu-edit').find('input[name="trang_thai"].checkbox').prop('checked', true).val(1);
         }
         console.log(id_hoat_dong, ten_hoat_dong, trang_thai, bat_dau, ket_thuc, ghi_chu);
         jQuery('#modal-nghien-cuu-edit').find('input[name="id_hoat_dong"]').val(id_hoat_dong);

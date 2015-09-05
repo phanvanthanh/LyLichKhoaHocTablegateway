@@ -33,23 +33,13 @@ class EditCTNCFormFilter extends InputFilter
 
         $this->add(array(
             'name' => 'ten_hoat_dong',
-            'required' => true,
+            'required' => false,
             'filters' => array(
                 array(
                     'name' => 'StringTrim'
                 ),
                 array(
                     'name' => 'StripTags'
-                )
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'options' => array(
-                        'message' => array(
-                            'isEmpty' => 'Vui lòng nhập tên công tác nghiên cứu khoa học',
-                        )
-                    )
                 )
             )
         )); 
