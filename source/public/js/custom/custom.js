@@ -264,7 +264,17 @@ $(document).ready(function(){
         jQuery('#modal-nghien-cuu-edit').find('input[name="time_from"]').val(bat_dau);
         jQuery('#modal-nghien-cuu-edit').find('input[name="time_to"]').val(ket_thuc);
         jQuery('#modal-nghien-cuu-edit').find('input[name="ghi_chu"]').val(ghi_chu);
+    });
 
+    jQuery('.future-hdnckh-btn-edit').on('click', function(){
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var science_activity_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="value_id"]').val(value_id);
+        jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="science_activity_name"]').val(science_activity_name);
+        jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="time_from"]').val(time_from);
+        jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="note"]').val(note);
 
     });
      

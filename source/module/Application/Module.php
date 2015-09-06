@@ -46,6 +46,9 @@ class Module
                 'Application\Model\JosTeachingTable' => 'Application\Factory\Table\JosTeachingTableFactory',
                 'Application\Model\JosFutureTeachingTable' => 'Application\Factory\Table\JosFutureTeachingTableFactory',
                 'Application\Model\JosScienceResearchOfUserTable' => 'Application\Factory\Table\JosScienceResearchOfUserTableFactory',
+                'Application\Model\JosFutureScienceResearchOfUserTable' => 'Application\Factory\Table\JosFutureScienceResearchOfUserTableFactory',
+                'Application\Model\JosOrtherWorkTable' => 'Application\Factory\Table\JosOrtherWorkTableFactory',
+                'Application\Model\JosFutureOrtherWorkTable' => 'Application\Factory\Table\JosFutureOrtherWorkTableFactory',
             )
         );
     }

@@ -22,9 +22,12 @@ use Application\FunctionClass\FunctionClass;
 use Application\Form\AddCongTacGiangDayForm;
 use Application\Form\EditCongTacGiangDayForm;
 use Application\Form\EditCTNCForm;
+use Application\Form\AddFutureHDNCKHForm;
+use Application\Form\EditFutureHDNCKHForm;
 use Application\Model\Entity\JosTeaching;
 use Application\Model\Entity\JosFutureTeaching;
 use Application\Model\Entity\JosScienceResearchOfUser;
+use Application\Model\Entity\JosFutureScienceResearchOfUser;
 
 class IndexController extends AbstractActionController
 {
@@ -79,6 +82,7 @@ class IndexController extends AbstractActionController
         $future_teaching_table=$this->getServiceLocator()->get('Application\Model\JosFutureTeachingTable');     
         $science_research_Table=$this->getServiceLocator()->get('Application\Model\JosScienceResearchOfUserTable');     
         $science_activity_Table=$this->getServiceLocator()->get('CongTacNghienCuu\Model\JosScienceActivityTable');
+        $future_science_research_Table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
         // lấy dữ liệu mặc định default        
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
         if(!$year or !isset($year[0]['year_id'])){
@@ -227,7 +231,7 @@ class IndexController extends AbstractActionController
 
         /*
           KINH NGHIỆM LÀM VIỆC
-            Phần 2: Công tác nghiên cứu khoa học
+            Phần 2: Hoạt động nghiên cứu khoa học
         */
           $science_activity_alls=$science_activity_Table->getScienceActivityByArrayConditionAndArrayColumn(array('year_id'=>$year_id), array());
           $science_research_alls=$science_research_Table->getScienceResearchAndScienceActivityByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array(), array('name'));
@@ -255,9 +259,20 @@ class IndexController extends AbstractActionController
             $future_teaching_add_form=new AddCongTacGiangDayForm($this->getServiceLocator());
             $return_array['future_teaching_edit_form']=$future_teaching_edit_form;
             $return_array['future_teaching_add_form']=$future_teaching_add_form;
-
           }
 
+        /*
+          DỊNH HƯỚNG PHÁT TRIỂN
+            Phần 2: Hoạt động nghiên cứu khoa học
+        */
+          $future_science_research_alls=$future_science_research_Table->getFutureScienceResearchByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
+          $return_array['future_science_research_alls']=$future_science_research_alls;
+          if($return_array['can_edit']==1){
+            $add_future_hdnckh_form=new AddFutureHDNCKHForm();
+            $edit_future_hdnckh_form=new EditFutureHDNCKHForm();
+            $return_array['add_future_hdnckh_form']=$add_future_hdnckh_form;
+            $return_array['edit_future_hdnckh_form']=$edit_future_hdnckh_form;
+          }
 
         
       }// nếu tồn tại $id
@@ -735,6 +750,94 @@ class IndexController extends AbstractActionController
     }
 
     /*
+      KINH NGHIỆM LÀM VIỆC
+        phần 2: hoạt động nghiên cứu khoa học
+    */
+    public function editHoatDongNghienCuuKhoaHocAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_science_research_of_user_table=$this->getServiceLocator()->get('Application\Model\JosScienceResearchOfUserTable');
+      $jos_science_activity_table=$this->getServiceLocator()->get('CongTacNghienCuu\Model\JosScienceActivityTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_ctnc_form=new EditCTNCForm();
+            $edit_ctnc_form->setData($post);
+            if($edit_ctnc_form->isValid()){
+              // lấy year_id default
+              $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // nếu hoạt động nghiên cứu khoa học cần sửa hỏng tồn tại thì không sửa
+              $science_activity_exist=$jos_science_activity_table->getScienceActivityByArrayConditionAndArrayColumn(array('year_id'=>$year_id, 'value_id'=>$post['id_hoat_dong']), array('name'));
+              if($science_activity_exist){  
+                // lấy dữ liệu lên
+                $science_research_exist=$jos_science_research_of_user_table->getScienceResearchAndScienceActivityByArrayConditionAndArrayColumns(array('t1.user_id'=>$id_giang_vien, 't1.science_activity_id'=>$post['id_hoat_dong'], 't2.year_id'=>$year_id), array(), array());
+                // nếu post trang_thai==1 thì sửa hoặc thêm mới
+                if($post['trang_thai']==1){
+
+                  $science_research_new=new JosScienceResearchOfUser();
+                  $science_research_new->exchangeArray($post);
+                  if($science_research_exist and isset($science_research_exist[0]['value_id'])){
+                    $science_research_new->setValueId($science_research_exist[0]['value_id']);
+                  }
+                  $science_research_new->setUserId($id_giang_vien);
+                  $science_research_new->setScienceActivityId($post['id_hoat_dong']);
+                  $science_research_new->setNote($post['ghi_chu']);
+                  // xử lý lại ngày bắt đầu
+                  $time_from = strtotime($post['time_from']);
+                  $time_from = date('Y-m-d',$time_from);
+                  $science_research_new->setTimeFrom($time_from);
+                  // xử lý lại ngày kết thúc
+                  $time_to = strtotime($post['time_to']);
+                  $time_to = date('Y-m-d',$time_to);
+                  $science_research_new->setTimeTo($time_to);
+                  $jos_science_research_of_user_table->saveJosScienceResearch($science_research_new);
+                }
+                else{
+                  if($science_research_exist and isset($science_research_exist[0]['value_id'])){
+                    $jos_science_research_of_user_table->deleteScienceResearchById($science_research_exist[0]['value_id']);
+                  }
+                }
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng, cập nhật thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }              
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
       ĐỊNH HƯỚNG PHÁT TRIỂN
         phần 1: công tác giảng dạy - add
     */
@@ -993,12 +1096,15 @@ class IndexController extends AbstractActionController
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));
     }
 
-    public function editCongTacNghienCuuKhoaHocAction(){
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 2: hoạt động nghiên cứu khoa học - add
+    */
+    public function addFutureHoatDongNghienCuuKhoaHocAction(){
       // điểm truy cập csdl
       $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
       $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
-      $jos_science_research_of_user_table=$this->getServiceLocator()->get('Application\Model\JosScienceResearchOfUserTable');
-      $jos_science_activity_table=$this->getServiceLocator()->get('CongTacNghienCuu\Model\JosScienceActivityTable');
+      $jos_future_science_research_of_user_table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
       $id_giang_vien=$this->params('id');
       $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
       if(isset($read['username']) and $read['username']){
@@ -1021,50 +1127,29 @@ class IndexController extends AbstractActionController
           $request=$this->getRequest();
           if($request->isPost()){
             $post=$request->getPost();
-            $edit_ctnc_form=new EditCTNCForm();
-            $edit_ctnc_form->setData($post);
-            if($edit_ctnc_form->isValid()){
+            $add_future_hdnckh_form=new AddFutureHDNCKHForm();
+            $add_future_hdnckh_form->setData($post);
+            if($add_future_hdnckh_form->isValid()){
               // lấy year_id default
-              $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
               $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
               if(!$year or !isset($year[0]['year_id'])){
                 die('Lỗi, Không xác định được năm cần sửa');
               }
               $year_id=$year[0]['year_id'];
-              // nếu hoạt động nghiên cứu khoa học cần sửa hỏng tồn tại thì không sửa
-              $science_activity_exist=$jos_science_activity_table->getScienceActivityByArrayConditionAndArrayColumn(array('year_id'=>$year_id, 'value_id'=>$post['id_hoat_dong']), array('name'));
-              if($science_activity_exist){  
-                // lấy dữ liệu lên
-                $science_research_exist=$jos_science_research_of_user_table->getScienceResearchAndScienceActivityByArrayConditionAndArrayColumns(array('t1.user_id'=>$id_giang_vien, 't1.science_activity_id'=>$post['id_hoat_dong'], 't2.year_id'=>$year_id), array(), array());
-                // nếu post trang_thai==1 thì sửa hoặc thêm mới
-                if($post['trang_thai']==1){
-
-                  $science_research_new=new JosScienceResearchOfUser();
-                  $science_research_new->exchangeArray($post);
-                  if($science_research_exist and isset($science_research_exist[0]['value_id'])){
-                    $science_research_new->setValueId($science_research_exist[0]['value_id']);
-                  }
-                  $science_research_new->setUserId($id_giang_vien);
-                  $science_research_new->setScienceActivityId($post['id_hoat_dong']);
-                  $science_research_new->setNote($post['ghi_chu']);
-                  // xử lý lại ngày bắt đầu
-                  $time_from = strtotime($post['time_from']);
-                  $time_from = date('Y-m-d',$time_from);
-                  $science_research_new->setTimeFrom($time_from);
-                  // xử lý lại ngày kết thúc
-                  $time_to = strtotime($post['time_to']);
-                  $time_to = date('Y-m-d',$time_to);
-                  $science_research_new->setTimeTo($time_to);
-                  $jos_science_research_of_user_table->saveJosScienceResearch($science_research_new);
-                }
-                else{
-                  if($science_research_exist and isset($science_research_exist[0]['value_id'])){
-                    $jos_science_research_of_user_table->deleteScienceResearchById($science_research_exist[0]['value_id']);
-                  }
-                }
-                $this->flashMessenger()->addSuccessMessage('Chúc mừng, cập nhật thành công!');
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $future_science_research_exist=$jos_future_science_research_of_user_table->getFutureScienceResearchByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'science_activity_name'=>$post['science_activity_name']), array());
+              if(!$future_science_research_exist){
+                $future_science_research_new=new JosFutureScienceResearchOfUser();
+                $future_science_research_new->exchangeArray($post);
+                $future_science_research_new->setUserId($id_giang_vien);
+                $future_science_research_new->setYearId($year_id);
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $future_science_research_new->setTimeFrom($time_from);
+                $jos_future_science_research_of_user_table->saveJosFutureScienceResearch($future_science_research_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới hoạt động nghiên cứu thành công!');
                 return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
-              }              
+              }          
             }
           }
         }
@@ -1076,6 +1161,124 @@ class IndexController extends AbstractActionController
       $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
     }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 2: hoạt động nghiên cứu khoa học - edit
+    */
+    public function editFutureHoatDongNghienCuuKhoaHocAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_science_research_of_user_table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_future_hdnckh_form=new EditFutureHDNCKHForm();
+            $edit_future_hdnckh_form->setData($post);
+            if($edit_future_hdnckh_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $future_science_research_exist=$jos_future_science_research_of_user_table->getFutureScienceResearchByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'science_activity_name'=>$post['science_activity_name']), array());
+              if(!$future_science_research_exist or ($future_science_research_exist and $future_science_research_exist[0]['value_id']==$post['value_id'])){
+                $future_science_research_new=new JosFutureScienceResearchOfUser();
+                $future_science_research_new->exchangeArray($post);
+                $future_science_research_new->setUserId($id_giang_vien);
+                $future_science_research_new->setYearId($year_id);
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $future_science_research_new->setTimeFrom($time_from);
+                $jos_future_science_research_of_user_table->saveJosFutureScienceResearch($future_science_research_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới hoạt động nghiên cứu thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 2: hoạt động nghiên cứu khoa học - delete
+    */
+    public function deleteFutureHoatDongNghienCuuKhoaHocAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_science_research_of_user_table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
+      $id=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+
+        // lấy year_id default
+        $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+        if(!$year or !isset($year[0]['year_id'])){
+          die('Lỗi, Không xác định được năm cần sửa');
+        }
+        $year_id=$year[0]['year_id'];
+        // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+        $future_science_research_exist=$jos_future_science_research_of_user_table->getFutureScienceResearchByArrayConditionAndArrayColumns(array('value_id'=>$id, 'year_id'=>$year_id), array('user_id'));
+        if($future_science_research_exist and $user and isset($user[0]['id'])){
+          if(isset($future_science_research_exist[0]['user_id']) and ($future_science_research_exist[0]['user_id']==$user[0]['id'] or $edit_all_profile==1)){
+            // được quyền xóa
+            $jos_future_science_research_of_user_table->deleteFutureScienceResearchById($id);
+            $this->flashMessenger()->addSuccessMessage('Chúc mừng xóa hoạt động nghiên cứu thành công!');
+            return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+          }
+        }        
+      }
+      if(isset($user[0]['id'])){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    
+
+
     
     public function editAction()
     {

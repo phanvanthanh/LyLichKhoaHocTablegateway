@@ -16,6 +16,7 @@
       $he_dao_taos=$this->he_dao_tao;
       $science_activity_alls=$this->science_activity_alls;
       $science_researchs=$this->science_researchs;
+      $future_science_research_alls=$this->future_science_research_alls; 
     }
   ?>
     <div class="row">
@@ -191,25 +192,9 @@
         </tbody>
       </table>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="row">
       <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
-        <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+        <h3><small>2. Hoạt động nghiên cứu khoa học</small></h3>
       </div>
       <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">&nbsp;</div>
     </div>
@@ -304,18 +289,6 @@
       </table>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
     <h3>C. Định hướng phát triển</h3>        
     <div class="row">
       <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
@@ -366,25 +339,17 @@
       </table>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h3><small>2. Công tác nghiên cứu khoa học</small></h3>
+    
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3><small>2. Hoạt động nghiên cứu khoa học</small></h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-future-hoat-dong-nghien-cuu-khoa-hoc-add"><b class="glyphicon glyphicon-plus"></b></a>
+        <?php } ?>
+      </div>
+    </div>
     <div class="table-responsive" id="no-more-tables">
       <table class="table table-bordered table-hover cf">
         <thead class="cf">
@@ -392,25 +357,82 @@
             <td class="active">STT</td>
             <td class="active">Nội dung</td>
             <td class="active">Thời gian bắt đầu</td> 
-            <td class="active">Ghi chú</td>                 
+            <td class="active">Ghi chú</td>
+            <?php if($can_edit==1){ ?>
+              <td class="active td-remove">Xóa</td>
+              <td class="active td-edit">Sửa</td>
+            <?php } ?>                  
           </tr>
         </thead>
-        <tbody>                  
+        <tbody>  
+          <?php foreach ($future_science_research_alls as $key => $value) { ?>                
           <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Nội dung">Nội dung</td>
-            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-            <td data-title="Ghi chú">Ghi chú</td>                 
+            <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
+            <td data-title="Nội dung"><?php echo $value['science_activity_name']; ?></td>
+            <td data-title="Thời gian bắt đầu"><?php echo $value['time_from']; ?></td>
+            <td data-title="Ghi chú"><?php echo $value['note']; ?></td>  
+            <?php if($can_edit==1){ ?>
+              <td data-title="Xóa">
+                <a class="btn btn-default" onclick="deleteConfirm('Bạn thật sự muốn xóa hoạt động nghiên cứu này?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-hoat-dong-nghien-cuu-khoa-hoc', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
+              </td>
+              <td data-title="Sửa">
+                <a class="btn btn-default future-hdnckh-btn-edit" data-toggle="modal" data-target="#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit"><b class="glyphicon glyphicon-pencil"></b></a>
+              </td>
+            <?php } ?>                
           </tr>
-          <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Nội dung">Nội dung</td>
-            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td> 
-            <td data-title="Ghi chú">Ghi chú</td>                 
-          </tr>
+          <?php } ?>
+          
         </tbody>
       </table>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <h3><small>3. Học tập nâng cao trình độ</small></h3>
     <div class="table-responsive" id="no-more-tables">
@@ -925,13 +947,116 @@
         </div>
       </div>
 
+    <!-- 
+      KINH NGHIỆM LÀM VIỆC
+      Phần 2: Hoạt động nghiên cứu khoa học
+    -->  
+      <!-- edit không có add -->
+      <div class="modal fade" id="modal-nghien-cuu-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>CẬP NHẬT HOẠT ĐỘNG NGHIÊN CỨU KHOA HỌC</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_ctnc_form=$this->edit_ctnc_form;
+                $edit_ctnc_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-hoat-dong-nghien-cuu-khoa-hoc', 'id'=>$this->id)));
+                $edit_ctnc_form->setAttribute('class','form');
+                $edit_ctnc_form->setAttribute('role','form');
+                $edit_ctnc_form->setAttribute('method','post');
+                $edit_ctnc_form->prepare();
+                echo $this->form()->openTag($edit_ctnc_form);
+                echo $this->formHidden($edit_ctnc_form->get('id_hoat_dong'));
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_ctnc_form->get('ten_hoat_dong')->setLabel('Tên hoạt động');
+                    echo $this->formLabel($edit_ctnc_form->get('ten_hoat_dong')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_ctnc_form->get('ten_hoat_dong')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_ctnc_form->get('trang_thai')->setLabel('Trạng thái');
+                    echo $this->formLabel($edit_ctnc_form->get('trang_thai')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_ctnc_form->get('trang_thai')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_ctnc_form->get('time_from')->setLabel('Bắt đầu');
+                    echo $this->formLabel($edit_ctnc_form->get('time_from')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_ctnc_form->get('time_from')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_ctnc_form->get('time_to')->setLabel('Kết thúc');
+                    echo $this->formLabel($edit_ctnc_form->get('time_to')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_ctnc_form->get('time_to')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_ctnc_form->get('ghi_chu')->setLabel('Ghi chú');
+                    echo $this->formLabel($edit_ctnc_form->get('ghi_chu')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_ctnc_form->get('ghi_chu')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_ctnc_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
 
 
 
 
 
 
-      <!-- 
+
+    <!-- 
       ĐỊNH HƯỚNG PHÁT TRIỂN
       Phần 1: Công tác giảng dạy
     -->  
@@ -1156,105 +1281,156 @@
 
     <!-- 
       ĐỊNH HƯỚNG PHÁT TRIỂN
-      Phần 1: Công tác nghiên cứu khoa học
+      Phần 2: Hoạt động nghiên cứu khoa học
     -->  
-      <!-- edit -->
-      <div class="modal fade" id="modal-nghien-cuu-edit" tabindex="-1" role="dialog">
+      <!-- add -->
+      <div class="modal fade" id="modal-future-hoat-dong-nghien-cuu-khoa-hoc-add" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title"><strong>CẬP NHẬT CÔNG TÁC NGHIÊN CỨU KHOA HỌC</strong></h4>
+              <h4 class="modal-title"><strong>THÊM HOẠT ĐỘNG NGHIÊN CỨU KHOA HỌC TRONG TƯƠNG LAI</strong></h4>
             </div>
             <div class="modal-body"> 
               <?php
-                $edit_ctnc_form=$this->edit_ctnc_form;
-                $edit_ctnc_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-cong-tac-nghien-cuu-khoa-hoc', 'id'=>$this->id)));
-                $edit_ctnc_form->setAttribute('class','form');
-                $edit_ctnc_form->setAttribute('role','form');
-                $edit_ctnc_form->setAttribute('method','post');
-                $edit_ctnc_form->prepare();
-                echo $this->form()->openTag($edit_ctnc_form);
-                echo $this->formHidden($edit_ctnc_form->get('id_hoat_dong'));
+                $add_future_hdnckh_form=$this->add_future_hdnckh_form;
+                $add_future_hdnckh_form->setAttribute('action', $this->url("application/crud", array('action'=>'add-future-hoat-dong-nghien-cuu-khoa-hoc', 'id'=>$this->id)));
+                $add_future_hdnckh_form->setAttribute('class','form');
+                $add_future_hdnckh_form->setAttribute('role','form');
+                $add_future_hdnckh_form->setAttribute('method','post');
+                $add_future_hdnckh_form->prepare();
+                echo $this->form()->openTag($add_future_hdnckh_form);
               ?>
               <div class="row">
                 <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
                   <?php 
-                    $edit_ctnc_form->get('ten_hoat_dong')->setLabel('Tên hoạt động');
-                    echo $this->formLabel($edit_ctnc_form->get('ten_hoat_dong')); 
+                    $add_future_hdnckh_form->get('science_activity_name')->setLabel('Tên hoạt động');
+                    echo $this->formLabel($add_future_hdnckh_form->get('science_activity_name')); 
                   ?> 
                 </div>
                 <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
                   <div class="form-group has-success">
-                    <?php echo $this->formElement($edit_ctnc_form->get('ten_hoat_dong')); ?> 
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <?php 
-                    $edit_ctnc_form->get('trang_thai')->setLabel('Trạng thái');
-                    echo $this->formLabel($edit_ctnc_form->get('trang_thai')); 
-                  ?> 
-                </div>
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">
-                    <?php echo $this->formElement($edit_ctnc_form->get('trang_thai')); ?> 
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <?php 
-                    $edit_ctnc_form->get('time_from')->setLabel('Bắt đầu');
-                    echo $this->formLabel($edit_ctnc_form->get('time_from')); 
-                  ?> 
-                </div>
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">
-                    <?php echo $this->formElement($edit_ctnc_form->get('time_from')); ?> 
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <?php 
-                    $edit_ctnc_form->get('time_to')->setLabel('Kết thúc');
-                    echo $this->formLabel($edit_ctnc_form->get('time_to')); 
-                  ?> 
-                </div>
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">
-                    <?php echo $this->formElement($edit_ctnc_form->get('time_to')); ?> 
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-                  <?php 
-                    $edit_ctnc_form->get('ghi_chu')->setLabel('Ghi chú');
-                    echo $this->formLabel($edit_ctnc_form->get('ghi_chu')); 
-                  ?> 
-                </div>
-                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
-                  <div class="form-group has-success">
-                    <?php echo $this->formElement($edit_ctnc_form->get('ghi_chu')); ?> 
+                    <?php echo $this->formElement($add_future_hdnckh_form->get('science_activity_name')); ?> 
                   </div>
                 </div>
               </div>
 
               
-                       
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_hdnckh_form->get('time_from')->setLabel('Bắt đầu');
+                    echo $this->formLabel($add_future_hdnckh_form->get('time_from')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_hdnckh_form->get('time_from')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_hdnckh_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($add_future_hdnckh_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_hdnckh_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
               <div class="row">                  
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                   <button type="submit" class="btn btn-default">Lưu</button>
                 </div>
               </div>
-              <?php echo $this->form()->closeTag($edit_ctnc_form); ?>
+              <?php echo $this->form()->closeTag($add_future_hdnckh_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+    <!-- 
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+      Phần 2: Hoạt động nghiên cứu khoa học
+    -->  
+      <!-- edit -->
+      <div class="modal fade" id="modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>CẬP NHẬT HOẠT ĐỘNG NGHIÊN CỨU KHOA HỌC TRONG TƯƠNG LAI</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_future_hdnckh_form=$this->edit_future_hdnckh_form;
+                $edit_future_hdnckh_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-future-hoat-dong-nghien-cuu-khoa-hoc', 'id'=>$this->id)));
+                $edit_future_hdnckh_form->setAttribute('class','form');
+                $edit_future_hdnckh_form->setAttribute('role','form');
+                $edit_future_hdnckh_form->setAttribute('method','post');
+                $edit_future_hdnckh_form->prepare();
+                echo $this->form()->openTag($edit_future_hdnckh_form);
+                echo $this->formHidden($edit_future_hdnckh_form->get('value_id'));
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_hdnckh_form->get('science_activity_name')->setLabel('Tên hoạt động');
+                    echo $this->formLabel($edit_future_hdnckh_form->get('science_activity_name')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_hdnckh_form->get('science_activity_name')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_hdnckh_form->get('time_from')->setLabel('Bắt đầu');
+                    echo $this->formLabel($edit_future_hdnckh_form->get('time_from')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_hdnckh_form->get('time_from')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_hdnckh_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($edit_future_hdnckh_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_hdnckh_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_future_hdnckh_form); ?>
             </div>            
           </div>
         </div>
