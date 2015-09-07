@@ -277,6 +277,36 @@ $(document).ready(function(){
         jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="note"]').val(note);
 
     });
+
+    jQuery('.orther-work-btn-edit').on('click', function(){
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+
+        jQuery('#modal-orther-work-edit').find('input[name="value_id"]').val(value_id);
+        jQuery('#modal-orther-work-edit').find('input[name="content"]').val(content);
+        jQuery('#modal-orther-work-edit').find('input[name="time_from"]').val(time_from);
+        jQuery('#modal-orther-work-edit').find('input[name="time_to"]').val(time_to);
+        jQuery('#modal-orther-work-edit').find('input[name="note"]').val(note);
+
+    });
+
+    jQuery('.future-orther-work-btn-edit').on('click', function(){
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+
+        jQuery('#modal-future-orther-work-edit').find('input[name="value_id"]').val(value_id);
+        jQuery('#modal-future-orther-work-edit').find('input[name="content"]').val(content);
+        jQuery('#modal-future-orther-work-edit').find('input[name="time_from"]').val(time_from);
+        jQuery('#modal-future-orther-work-edit').find('input[name="time_to"]').val(time_to);
+        jQuery('#modal-future-orther-work-edit').find('input[name="note"]').val(note);
+
+    });
      
     
 });

@@ -24,10 +24,16 @@ use Application\Form\EditCongTacGiangDayForm;
 use Application\Form\EditCTNCForm;
 use Application\Form\AddFutureHDNCKHForm;
 use Application\Form\EditFutureHDNCKHForm;
+use Application\Form\AddOrtherWorkForm;
+use Application\Form\EditOrtherWorkForm;
+use Application\Form\AddFutureOrtherWorkForm;
+use Application\Form\EditFutureOrtherWorkForm;
 use Application\Model\Entity\JosTeaching;
 use Application\Model\Entity\JosFutureTeaching;
 use Application\Model\Entity\JosScienceResearchOfUser;
 use Application\Model\Entity\JosFutureScienceResearchOfUser;
+use Application\Model\Entity\JosOrtherWork;
+use Application\Model\Entity\JosFutureOrtherWork;
 
 class IndexController extends AbstractActionController
 {
@@ -83,6 +89,8 @@ class IndexController extends AbstractActionController
         $science_research_Table=$this->getServiceLocator()->get('Application\Model\JosScienceResearchOfUserTable');     
         $science_activity_Table=$this->getServiceLocator()->get('CongTacNghienCuu\Model\JosScienceActivityTable');
         $future_science_research_Table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
+        $orther_work_table=$this->getServiceLocator()->get('Application\Model\JosOrtherWorkTable');
+        $future_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosFutureOrtherWorkTable');
         // lấy dữ liệu mặc định default        
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
         if(!$year or !isset($year[0]['year_id'])){
@@ -231,7 +239,7 @@ class IndexController extends AbstractActionController
 
         /*
           KINH NGHIỆM LÀM VIỆC
-            Phần 2: Hoạt động nghiên cứu khoa học
+            Phần 2: Công tác nghiên cứu khoa học
         */
           $science_activity_alls=$science_activity_Table->getScienceActivityByArrayConditionAndArrayColumn(array('year_id'=>$year_id), array());
           $science_research_alls=$science_research_Table->getScienceResearchAndScienceActivityByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array(), array('name'));
@@ -247,6 +255,18 @@ class IndexController extends AbstractActionController
             $return_array['edit_ctnc_form']=$edit_ctnc_form;
           }
 
+        /*
+          KINH NGHIỆM LÀM VIỆC
+            Phần 3: Công tác khác
+        */
+          $orther_works=$orther_work_table->getOrtherWorkByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
+          $return_array['orther_works']=$orther_works;
+          if($return_array['can_edit']==1){
+            $add_orther_work_form=new AddOrtherWorkForm();
+            $edit_orther_work_form=new EditOrtherWorkForm();
+            $return_array['add_orther_work_form']=$add_orther_work_form;
+            $return_array['edit_orther_work_form']=$edit_orther_work_form;
+          }
 
         /*
           DỊNH HƯỚNG PHÁT TRIỂN
@@ -263,7 +283,7 @@ class IndexController extends AbstractActionController
 
         /*
           DỊNH HƯỚNG PHÁT TRIỂN
-            Phần 2: Hoạt động nghiên cứu khoa học
+            Phần 2: Công tác nghiên cứu khoa học
         */
           $future_science_research_alls=$future_science_research_Table->getFutureScienceResearchByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
           $return_array['future_science_research_alls']=$future_science_research_alls;
@@ -272,6 +292,19 @@ class IndexController extends AbstractActionController
             $edit_future_hdnckh_form=new EditFutureHDNCKHForm();
             $return_array['add_future_hdnckh_form']=$add_future_hdnckh_form;
             $return_array['edit_future_hdnckh_form']=$edit_future_hdnckh_form;
+          }
+
+        /*
+          DỊNH HƯỚNG PHÁT TRIỂN
+            Phần 4: Công tác khác
+        */
+          $future_orther_works=$future_orther_work_table->getFutureOrtherWorkByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
+          $return_array['future_orther_works']=$future_orther_works;
+          if($return_array['can_edit']==1){
+            $add_future_orther_work_form=new AddFutureOrtherWorkForm();
+            $edit_future_orther_work_form=new EditFutureOrtherWorkForm();
+            $return_array['add_future_orther_work_form']=$add_future_orther_work_form;
+            $return_array['edit_future_orther_work_form']=$edit_future_orther_work_form;
           }
 
         
@@ -751,7 +784,7 @@ class IndexController extends AbstractActionController
 
     /*
       KINH NGHIỆM LÀM VIỆC
-        phần 2: hoạt động nghiên cứu khoa học
+        phần 2: công tác nghiên cứu khoa học
     */
     public function editHoatDongNghienCuuKhoaHocAction(){
       // điểm truy cập csdl
@@ -825,6 +858,148 @@ class IndexController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage('Chúc mừng, cập nhật thành công!');
                 return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
               }              
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      KINH NGHIỆM LÀM VIỆC
+        phần 3: công tác khác - add
+    */
+    public function addOrtherWorkAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosOrtherWorkTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $add_orther_work_form=new AddOrtherWorkForm();
+            $add_orther_work_form->setData($post);
+            if($add_orther_work_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu orther_work đã tồn tại thì không add, ko tồn tại thì add
+              $orther_work_exist=$jos_orther_work_table->getOrtherWorkByArrayConditionAndArrayColumns(array('year_id'=>$year_id, 'user_id'=>$id_giang_vien, 'content'=>$post['content']), array());
+              if(!$orther_work_exist){
+                $orther_work_new=new JosOrtherWork();
+                $orther_work_new->exchangeArray($post);
+                $orther_work_new->setUserId($id_giang_vien);
+                $orther_work_new->setYearId($year_id);
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $orther_work_new->setTimeFrom($time_from);
+                $time_to = strtotime($post['time_to']);
+                $time_to = date('Y-m-d',$time_to);
+                $orther_work_new->setTimeFrom($time_to);
+                $jos_orther_work_table->saveJosOrtherWork($orther_work_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      KINH NGHIỆM LÀM VIỆC
+        phần 2: công tác khác - edit
+    */
+    public function editOrtherWorkAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosOrtherWorkTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_orther_work_form=new EditOrtherWorkForm();
+            $edit_orther_work_form->setData($post);
+            if($edit_orther_work_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $orther_work_exist=$jos_orther_work_table->getOrtherWorkByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'content'=>$post['content']), array());
+              if(!$orther_work_exist or ($orther_work_exist and $orther_work_exist[0]['value_id']==$post['value_id'])){
+                $orther_work_new=new JosOrtherWork();
+                $orther_work_new->exchangeArray($post);
+                $orther_work_new->setUserId($id_giang_vien);
+                $orther_work_new->setYearId($year_id);
+                
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $orther_work_new->setTimeFrom($time_from);
+                
+                var_dump($post['time_to']);
+                $time_to = date('Y-m-d', strtotime($post['time_to']));
+                die(var_dump($time_to));
+                $orther_work_new->setTimeTo($time_to);
+
+                $jos_orther_work_table->saveJosOrtherWork($orther_work_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng cập nhật thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
             }
           }
         }
@@ -1098,7 +1273,7 @@ class IndexController extends AbstractActionController
 
     /*
       ĐỊNH HƯỚNG PHÁT TRIỂN
-        phần 2: hoạt động nghiên cứu khoa học - add
+        phần 2: công tác nghiên cứu khoa học - add
     */
     public function addFutureHoatDongNghienCuuKhoaHocAction(){
       // điểm truy cập csdl
@@ -1164,7 +1339,7 @@ class IndexController extends AbstractActionController
 
     /*
       ĐỊNH HƯỚNG PHÁT TRIỂN
-        phần 2: hoạt động nghiên cứu khoa học - edit
+        phần 2: công tác nghiên cứu khoa học - edit
     */
     public function editFutureHoatDongNghienCuuKhoaHocAction(){
       // điểm truy cập csdl
@@ -1213,7 +1388,7 @@ class IndexController extends AbstractActionController
                 $time_from = date('Y-m-d',$time_from);
                 $future_science_research_new->setTimeFrom($time_from);
                 $jos_future_science_research_of_user_table->saveJosFutureScienceResearch($future_science_research_new);
-                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới hoạt động nghiên cứu thành công!');
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng cập nhật thành công!');
                 return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
               }          
             }
@@ -1271,6 +1446,149 @@ class IndexController extends AbstractActionController
       if(isset($user[0]['id'])){
         $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
         return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 4: công tác khác - add
+    */
+    public function addFutureOrtherWorkAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosFutureOrtherWorkTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $add_future_orther_work_form=new AddFutureOrtherWorkForm();
+            $add_future_orther_work_form->setData($post);
+            if($add_future_orther_work_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu orther_work đã tồn tại thì không add, ko tồn tại thì add
+              $future_orther_work_exist=$jos_future_orther_work_table->getFutureOrtherWorkByArrayConditionAndArrayColumns(array('year_id'=>$year_id, 'user_id'=>$id_giang_vien, 'content'=>$post['content']), array());
+              if(!$future_orther_work_exist){
+                $future_orther_work_new=new JosFutureOrtherWork();
+                $future_orther_work_new->exchangeArray($post);
+                $future_orther_work_new->setUserId($id_giang_vien);
+                $future_orther_work_new->setYearId($year_id);
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $future_orther_work_new->setTimeFrom($time_from);
+                $time_to = strtotime($post['time_to']);
+                $time_to = date('Y-m-d',$time_to);
+                $future_orther_work_new->setTimeFrom($time_to);
+                $jos_future_orther_work_table->saveJosFutureOrtherWork($future_orther_work_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 4: công tác khác - edit
+    */
+    public function editFutureOrtherWorkAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosFutureOrtherWorkTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_future_orther_work_form=new EditFutureOrtherWorkForm();
+            $edit_future_orther_work_form->setData($post);
+            if($edit_future_orther_work_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $future_orther_work_exist=$jos_future_orther_work_table->getFutureOrtherWorkByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'content'=>$post['content']), array());
+              if(!$future_orther_work_exist or ($future_orther_work_exist and $future_orther_work_exist[0]['value_id']==$post['value_id'])){
+                $future_orther_work_new=new JosFutureOrtherWork();
+                $future_orther_work_new->exchangeArray($post);
+                $future_orther_work_new->setUserId($id_giang_vien);
+                $future_orther_work_new->setYearId($year_id);
+                
+                $time_from = strtotime($post['time_from']);
+                $time_from = date('Y-m-d',$time_from);
+                $future_orther_work_new->setTimeFrom($time_from);
+                
+                $time_to = strtotime($post['time_to']);
+                $time_to = strtotime($post['time_to']);
+                $time_to = date('Y-m-d',$time_to);
+                $future_orther_work_new->setTimeTo($time_to);
+                
+                $jos_future_orther_work_table->saveJosFutureOrtherWork($future_orther_work_new);
+                //die(var_dump($future_orther_work_new));
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng cập nhật thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
       }  
       $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
