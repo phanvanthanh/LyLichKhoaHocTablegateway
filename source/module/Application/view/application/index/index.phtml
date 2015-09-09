@@ -19,6 +19,7 @@
       $future_science_research_alls=$this->future_science_research_alls;
       $orther_works=$this->orther_works; 
       $future_orther_works=$this->future_orther_works;
+      $future_studys=$this->future_studys;
     }
   ?>
     <div class="row">
@@ -457,7 +458,17 @@
 
 
 
-    <h3><small>3. Học tập nâng cao trình độ</small></h3>
+    
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3><small>3. Học tập nâng cao trình độ</small></h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-future-study-add"><b class="glyphicon glyphicon-plus"></b></a>
+        <?php } ?>
+      </div>
+    </div>
     <div class="table-responsive" id="no-more-tables">
       <table class="table table-bordered table-hover cf">
         <thead class="cf">
@@ -465,28 +476,36 @@
             <td class="active">STT</td>
             <td class="active">Nội dung</td>
             <td class="active">Nơi học</td> 
-            <td class="active">Thời gian bắt đầu</td>
-            <td class="active">Thời gian kết thúc</td>
-            <td class="active">Ghi chú</td>                  
+            <td class="active">Thời gian</td>
+            <td class="active">Ghi chú</td>  
+            <?php if($can_edit==1){ ?>
+              <td class="active td-remove">Xóa</td>
+              <td class="active td-edit">Sửa</td>
+            <?php } ?>                
           </tr>
         </thead>
-        <tbody>                  
+        <tbody>
+          <?php foreach ($future_studys as $key => $value) { ?>
           <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Nội dung">Nội dung</td>
-            <td data-title="Nơi học">Nơi học</td> 
-            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-            <td data-title="Ghi chú">Ghi chú</td>                  
+            <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
+            <td data-title="Nội dung"><?php echo $value['subject_name']; ?></td>
+            <td data-title="Nơi học"><?php echo $value['address']; ?></td> 
+            <td data-title="Thời gian">
+              <span class="time_from"><?php echo $value['time_from']; ?></span> 
+              đến
+              <span class="time_to"><?php echo $value['time_to']; ?></span> 
+            </td>
+            <td data-title="Ghi chú"><?php echo $value['note']; ?></td> 
+            <?php if($can_edit==1){ ?>
+              <td data-title="Xóa">
+                <a class="btn btn-default" onclick="deleteConfirm('Bạn thật sự muốn xóa môn học này?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-study', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
+              </td>
+              <td data-title="Sửa">
+                <a class="btn btn-default future-study-btn-edit" data-toggle="modal" data-target="#modal-future-study-edit"><b class="glyphicon glyphicon-pencil"></b></a>
+              </td>
+            <?php } ?>                   
           </tr>
-          <tr>
-            <td data-title="STT">2</td>
-            <td data-title="Nội dung">Nội dung</td>
-            <td data-title="Nơi học">Nơi học</td> 
-            <td data-title="Thời gian bắt đầu">Thời gian bắt đầu</td>
-            <td data-title="Thời gian kết thúc">Thời gian kết thúc</td>
-            <td data-title="Ghi chú">Ghi chú</td>                  
-          </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>
@@ -1652,6 +1671,218 @@
                 </div>
               </div>
               <?php echo $this->form()->closeTag($edit_future_hdnckh_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+    <!-- 
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+      Phần 4: Học tập nâng cao trình độ
+    --> 
+      
+      <!-- add -->
+      <div class="modal fade" id="modal-future-study-add" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>THÊM MỚI HỌC TẬP</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $add_future_study_form=$this->add_future_study_form;
+                $add_future_study_form->setAttribute('action', $this->url("application/crud", array('action'=>'add-future-study', 'id'=>$this->id)));
+                $add_future_study_form->setAttribute('class','form');
+                $add_future_study_form->setAttribute('role','form');
+                $add_future_study_form->setAttribute('method','post');
+                $add_future_study_form->prepare();
+                echo $this->form()->openTag($add_future_study_form);
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_study_form->get('subject_name')->setLabel('Nội dung');
+                    echo $this->formLabel($add_future_study_form->get('subject_name')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_study_form->get('subject_name')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_study_form->get('address')->setLabel('Nơi học');
+                    echo $this->formLabel($add_future_study_form->get('address')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_study_form->get('address')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_study_form->get('time_from')->setLabel('Thời gian bắt đầu');
+                    echo $this->formLabel($add_future_study_form->get('time_from')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_study_form->get('time_from')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_study_form->get('time_to')->setLabel('Thời gian kết thúc');
+                    echo $this->formLabel($add_future_study_form->get('time_to')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_study_form->get('time_to')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_future_study_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($add_future_study_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_future_study_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($add_future_study_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+
+    <!-- 
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+      Phần 4: Học tập nâng cao trình độ
+    --> 
+      
+      <!-- edit -->
+      <div class="modal fade" id="modal-future-study-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>CẬP NHẬT HỌC TẬP</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_future_study_form=$this->edit_future_study_form;
+                $edit_future_study_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-future-study', 'id'=>$this->id)));
+                $edit_future_study_form->setAttribute('class','form');
+                $edit_future_study_form->setAttribute('role','form');
+                $edit_future_study_form->setAttribute('method','post');
+                $edit_future_study_form->prepare();
+                echo $this->form()->openTag($edit_future_study_form);
+                echo $this->formHidden($edit_future_study_form->get('value_id'));
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_study_form->get('subject_name')->setLabel('Nội dung');
+                    echo $this->formLabel($edit_future_study_form->get('subject_name')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_study_form->get('subject_name')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_study_form->get('address')->setLabel('Nơi học');
+                    echo $this->formLabel($edit_future_study_form->get('address')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_study_form->get('address')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_study_form->get('time_from')->setLabel('Thời gian bắt đầu');
+                    echo $this->formLabel($edit_future_study_form->get('time_from')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_study_form->get('time_from')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_study_form->get('time_to')->setLabel('Thời gian kết thúc');
+                    echo $this->formLabel($edit_future_study_form->get('time_to')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_study_form->get('time_to')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_future_study_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($edit_future_study_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_future_study_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_future_study_form); ?>
             </div>            
           </div>
         </div>

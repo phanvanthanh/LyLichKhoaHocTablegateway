@@ -28,12 +28,15 @@ use Application\Form\AddOrtherWorkForm;
 use Application\Form\EditOrtherWorkForm;
 use Application\Form\AddFutureOrtherWorkForm;
 use Application\Form\EditFutureOrtherWorkForm;
+use Application\Form\AddFutureStudyForm;
+use Application\Form\EditFutureStudyForm;
 use Application\Model\Entity\JosTeaching;
 use Application\Model\Entity\JosFutureTeaching;
 use Application\Model\Entity\JosScienceResearchOfUser;
 use Application\Model\Entity\JosFutureScienceResearchOfUser;
 use Application\Model\Entity\JosOrtherWork;
 use Application\Model\Entity\JosFutureOrtherWork;
+use Application\Model\Entity\JosFutureStudy;
 
 class IndexController extends AbstractActionController
 {
@@ -91,6 +94,7 @@ class IndexController extends AbstractActionController
         $future_science_research_Table=$this->getServiceLocator()->get('Application\Model\JosFutureScienceResearchOfUserTable');
         $orther_work_table=$this->getServiceLocator()->get('Application\Model\JosOrtherWorkTable');
         $future_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosFutureOrtherWorkTable');
+        $future_study_table=$this->getServiceLocator()->get('Application\Model\JosFutureStudyTable');
         // lấy dữ liệu mặc định default        
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
         if(!$year or !isset($year[0]['year_id'])){
@@ -293,6 +297,20 @@ class IndexController extends AbstractActionController
             $return_array['add_future_hdnckh_form']=$add_future_hdnckh_form;
             $return_array['edit_future_hdnckh_form']=$edit_future_hdnckh_form;
           }
+        /*
+          DỊNH HƯỚNG PHÁT TRIỂN
+            Phần 3: Học tập nâng cao trình độ
+        */
+
+          $future_studys=$future_study_table->getFutureStudyByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
+          $return_array['future_studys']=$future_studys;
+          if($return_array['can_edit']==1){
+            $add_future_study_form=new AddFutureStudyForm();
+            $edit_future_study_form=new EditFutureStudyForm();
+            $return_array['add_future_study_form']=$add_future_study_form;
+            $return_array['edit_future_study_form']=$edit_future_study_form;
+          }
+
 
         /*
           DỊNH HƯỚNG PHÁT TRIỂN
@@ -1497,6 +1515,196 @@ class IndexController extends AbstractActionController
       $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
     }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 3: học tập nâng cao trình độ - add
+    */
+    public function addFutureStudyAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_study_table=$this->getServiceLocator()->get('Application\Model\JosFutureStudyTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $add_future_study_form=new AddFutureStudyForm();
+            $add_future_study_form->setData($post);
+            if($add_future_study_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu orther_work đã tồn tại thì không add, ko tồn tại thì add
+              $future_study_exist=$jos_future_study_table->getFutureStudyByArrayConditionAndArrayColumns(array('year_id'=>$year_id, 'user_id'=>$id_giang_vien, 'subject_name'=>$post['subject_name']), array());
+              if(!$future_study_exist){
+                $future_study_new=new JosFutureStudy();
+                $future_study_new->exchangeArray($post);
+                $future_study_new->setUserId($id_giang_vien);
+                $future_study_new->setYearId($year_id);
+
+                $time_from = date('Y-m-d',strtotime($post['time_from']));
+                $future_study_new->setTimeFrom($time_from);
+
+                $time_to = date('Y-m-d',strtotime($post['time_to']));
+                $future_study_new->setTimeTo($time_to);
+
+                $jos_future_study_table->saveJosFutureStudy($future_study_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 3: học tập nâng cao trình độ - edit
+    */
+    public function editFutureStudyAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_study_table=$this->getServiceLocator()->get('Application\Model\JosFutureStudyTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_future_study_form=new EditFutureStudyForm();
+            $edit_future_study_form->setData($post);
+            if($edit_future_study_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $future_study_exist=$jos_future_study_table->getFutureStudyByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'subject_name'=>$post['subject_name']), array());
+              if(!$future_study_exist or ($future_study_exist and $future_study_exist[0]['value_id']==$post['value_id'])){
+                $future_study_new=new JosFutureStudy();
+                $future_study_new->exchangeArray($post);
+                $future_study_new->setUserId($id_giang_vien);
+                $future_study_new->setYearId($year_id);
+                
+                $time_from = date('Y-m-d',strtotime($post['time_from']));
+                $future_study_new->setTimeFrom($time_from);
+               
+                $time_to = date('Y-m-d',strtotime($post['time_to']));
+                $future_study_new->setTimeTo($time_to);
+                
+                $jos_future_study_table->saveJosFutureStudy($future_study_new);
+                
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng cập nhật thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      ĐỊNH HƯỚNG PHÁT TRIỂN
+        phần 3: học tập nâng cao trình độ - delete
+    */
+    public function deleteFutureStudyAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_future_study_table=$this->getServiceLocator()->get('Application\Model\JosFutureStudyTable');
+      $id=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+
+        // lấy year_id default
+        $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+        if(!$year or !isset($year[0]['year_id'])){
+          die('Lỗi, Không xác định được năm cần sửa');
+        }
+        $year_id=$year[0]['year_id'];
+        // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+        $future_study_exist=$jos_future_study_table->getFutureStudyByArrayConditionAndArrayColumns(array('value_id'=>$id, 'year_id'=>$year_id), array('user_id'));
+        if($future_study_exist and $user and isset($user[0]['id'])){
+          if(isset($future_study_exist[0]['user_id']) and ($future_study_exist[0]['user_id']==$user[0]['id'] or $edit_all_profile==1)){
+            // được quyền xóa
+            $jos_future_study_table->deleteFutureStudyById($id);
+            $this->flashMessenger()->addSuccessMessage('Chúc mừng xóa thành công!');
+            return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+          }
+        }        
+      }
+      if(isset($future_study_exist[0]['user_id'])){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$future_study_exist[0]['user_id']));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
 
     /*
       ĐỊNH HƯỚNG PHÁT TRIỂN

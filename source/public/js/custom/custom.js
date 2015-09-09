@@ -214,7 +214,7 @@ $(document).ready(function(){
     });
 
     /*
-        edit future-ctgd        
+        edit future-công tác giảng dạy trong tương lai        
     */
 
     jQuery('.future-ctgd-btn-edit').on('click', function(){
@@ -305,6 +305,27 @@ $(document).ready(function(){
         jQuery('#modal-future-orther-work-edit').find('input[name="time_from"]').val(time_from);
         jQuery('#modal-future-orther-work-edit').find('input[name="time_to"]').val(time_to);
         jQuery('#modal-future-orther-work-edit').find('input[name="note"]').val(note);
+
+    });
+
+    /*
+        sửa học tập nâng cao trình độ
+    */
+
+    jQuery('.future-study-btn-edit').on('click', function(){
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var subject_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
+        var address=jQuery(this).closest('tr').find('td[data-title="Nơi học"]').text();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+
+        jQuery('#modal-future-study-edit').find('input[name="value_id"]').val(value_id);
+        jQuery('#modal-future-study-edit').find('input[name="subject_name"]').val(subject_name);
+        jQuery('#modal-future-study-edit').find('input[name="address"]').val(address);
+        jQuery('#modal-future-study-edit').find('input[name="time_from"]').val(time_from);
+        jQuery('#modal-future-study-edit').find('input[name="time_to"]').val(time_to);
+        jQuery('#modal-future-study-edit').find('input[name="note"]').val(note);
 
     });
      

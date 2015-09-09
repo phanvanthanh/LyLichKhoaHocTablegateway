@@ -56,7 +56,7 @@ class EditFutureHDNCKHFormFilter extends InputFilter
 
         $this->add(array(
             'name' => 'time_from',
-            'required' => true,
+            'required' => false,
             'filters' => array(
                 array(
                     'name' => 'StringTrim'

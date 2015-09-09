@@ -49,6 +49,7 @@ class Module
                 'Application\Model\JosFutureScienceResearchOfUserTable' => 'Application\Factory\Table\JosFutureScienceResearchOfUserTableFactory',
                 'Application\Model\JosOrtherWorkTable' => 'Application\Factory\Table\JosOrtherWorkTableFactory',
                 'Application\Model\JosFutureOrtherWorkTable' => 'Application\Factory\Table\JosFutureOrtherWorkTableFactory',
+                'Application\Model\JosFutureStudyTable' => 'Application\Factory\Table\JosFutureStudyTableFactory',
             )
         );
     }

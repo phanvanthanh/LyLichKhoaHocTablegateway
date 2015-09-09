@@ -3,12 +3,11 @@ namespace Application\Form;
 
 use Zend\InputFilter\InputFilter;
 
-class EditOrtherWorkFormFilter extends InputFilter
+class EditFutureStudyFormFilter extends InputFilter
 {
 
     public function __construct()
     { 
-
         $this->add(array(
             'name' => 'value_id',
             'required' => true,
@@ -25,14 +24,15 @@ class EditOrtherWorkFormFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'options' => array(
                         'message' => array(
-                            'isEmpty' => 'Vui lòng nhập id công tác',
+                            'isEmpty' => 'Vui lòng nhập id',
                         )
                     )
                 )
             )
-        ));  
+        ));
+
         $this->add(array(
-            'name' => 'content',
+            'name' => 'subject_name',
             'required' => true,
             'filters' => array(
                 array(
@@ -47,9 +47,22 @@ class EditOrtherWorkFormFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'options' => array(
                         'message' => array(
-                            'isEmpty' => 'Vui lòng nhập nội dung công tác',
+                            'isEmpty' => 'Vui lòng nhập tên môn học',
                         )
                     )
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'address',
+            'required' => false,
+            'filters' => array(
+                array(
+                    'name' => 'StringTrim'
+                ),
+                array(
+                    'name' => 'StripTags'
                 )
             )
         ));  
