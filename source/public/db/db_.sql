@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `jos_attribute` (
   CONSTRAINT `FK_jos_attribute_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Sử dụng trong jos_information';
 
--- Dumping data for table lylichkhoahoc.jos_attribute: ~4 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_attribute: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jos_attribute` DISABLE KEYS */;
 INSERT INTO `jos_attribute` (`attribute_id`, `attribute_code`, `year_id`, `frontend_input`, `frontend_label`, `value_table`) VALUES
 	(1, 'ho_va_ten', '2015', 'Text', 'Họ và Tên', 'jos_infomation'),
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `jos_certificate` (
   UNIQUE KEY `name` (`name`,`year_id`),
   KEY `FK_jos_certificate_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_certificate_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Các chứng chỉ';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Các chứng chỉ';
 
 -- Dumping data for table lylichkhoahoc.jos_certificate: ~5 rows (approximately)
 /*!40000 ALTER TABLE `jos_certificate` DISABLE KEYS */;
@@ -244,16 +244,21 @@ CREATE TABLE IF NOT EXISTS `jos_certificate_user` (
   UNIQUE KEY `user_id` (`user_id`,`certificate_id`),
   KEY `FK_jos_certificate_user_jos_certificate` (`certificate_id`),
   CONSTRAINT `FK_jos_certificate_user_jos_certificate` FOREIGN KEY (`certificate_id`) REFERENCES `jos_certificate` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='1 user có những chứng chỉ nào';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='1 user có những chứng chỉ nào';
 
--- Dumping data for table lylichkhoahoc.jos_certificate_user: ~5 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_certificate_user: ~10 rows (approximately)
 /*!40000 ALTER TABLE `jos_certificate_user` DISABLE KEYS */;
 INSERT INTO `jos_certificate_user` (`value_id`, `certificate_id`, `user_id`, `level`, `note`) VALUES
 	(1, 1, 75, NULL, 'Nghiệp vụ sư phạm'),
 	(2, 2, 75, NULL, ''),
 	(3, 3, 75, NULL, ''),
-	(4, 4, 75, NULL, 'tieng_anh'),
-	(5, 5, 75, '', '');
+	(4, 4, 75, NULL, 'TA'),
+	(5, 5, 75, '', ''),
+	(16, 1, 62, '', '0'),
+	(17, 2, 62, '', '0'),
+	(18, 3, 62, '', '0'),
+	(19, 4, 62, 'TOEICE', 'TA'),
+	(20, 5, 62, '', '0');
 /*!40000 ALTER TABLE `jos_certificate_user` ENABLE KEYS */;
 
 
@@ -270,27 +275,61 @@ CREATE TABLE IF NOT EXISTS `jos_future_orther_work` (
   UNIQUE KEY `user_id_content` (`user_id`,`content`,`year_id`),
   KEY `FK_jos_future_orther_work_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_future_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác khác';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác khác';
 
--- Dumping data for table lylichkhoahoc.jos_future_orther_work: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_future_orther_work: ~7 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_orther_work` DISABLE KEYS */;
+INSERT INTO `jos_future_orther_work` (`value_id`, `year_id`, `user_id`, `content`, `time_from`, `time_to`, `note`) VALUES
+	(1, '2015', 75, 'Đi chơi vũng tàu', '2014-09-07', '2015-09-07', 'Vui lắm hén'),
+	(2, '2015', 75, 'Ở nhà chơi không làm gì hết', '2014-09-07', '2015-09-07', 'Chắc buồn lắm hén'),
+	(3, '2016', 75, 'Đi chơi vũng tàu', '2014-09-07', '2015-09-07', 'Vui lắm hén'),
+	(4, '2016', 75, 'Ở nhà chơi không làm gì hết', '2014-09-07', '2015-09-07', 'Chắc buồn lắm hén'),
+	(5, '2015', 75, 'gà', '2015-08-09', '2015-11-09', 'gà'),
+	(6, '2015', 75, 'fff', '2015-08-09', '0000-00-00', 'fff'),
+	(9, '2015', 62, 'ff', '2015-09-02', '2015-09-10', 'ff');
 /*!40000 ALTER TABLE `jos_future_orther_work` ENABLE KEYS */;
+
+
+-- Dumping structure for table lylichkhoahoc.jos_future_science_research_of_user
+CREATE TABLE IF NOT EXISTS `jos_future_science_research_of_user` (
+  `value_id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '1',
+  `science_activity_name` varchar(250) DEFAULT NULL,
+  `year_id` year(4) DEFAULT '2015',
+  `time_from` date DEFAULT NULL,
+  `time_to` date DEFAULT NULL,
+  `note` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `user_id_content` (`user_id`,`science_activity_name`,`year_id`),
+  KEY `FK_jos_futurre_science_research_of_user_jos_science_activity` (`science_activity_name`),
+  KEY `FK_jos_future_science_research_of_user_jos_year` (`year_id`),
+  CONSTRAINT `FK_jos_future_science_research_of_user_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác nghiên cứu khoa học';
+
+-- Dumping data for table lylichkhoahoc.jos_future_science_research_of_user: ~3 rows (approximately)
+/*!40000 ALTER TABLE `jos_future_science_research_of_user` DISABLE KEYS */;
+INSERT INTO `jos_future_science_research_of_user` (`value_id`, `user_id`, `science_activity_name`, `year_id`, `time_from`, `time_to`, `note`) VALUES
+	(1, 75, 'Báo cáo hội thảo chuyên ngành', '2015', '2015-09-06', '2015-09-06', 'dang tien hanh'),
+	(2, 75, 'Báo cáo hội thảo chuyên ngành', '2016', '2015-09-06', '2015-09-06', 'dang tien hanh'),
+	(8, 80, 'hoạt động gì đây 1', '2015', '2015-08-09', NULL, 'hoạt động gì đây 1'),
+	(9, 79, 'F', '2015', '2015-09-16', NULL, 'F');
+/*!40000 ALTER TABLE `jos_future_science_research_of_user` ENABLE KEYS */;
 
 
 -- Dumping structure for table lylichkhoahoc.jos_future_study
 CREATE TABLE IF NOT EXISTS `jos_future_study` (
   `value_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT '1',
-  `subject_id` smallint(6) DEFAULT '1',
+  `subject_name` varchar(250) DEFAULT NULL,
+  `year_id` year(4) DEFAULT '2015',
   `address` varchar(250) DEFAULT NULL,
   `time_from` date DEFAULT NULL,
   `time_to` date DEFAULT NULL,
-  `note` date DEFAULT NULL,
+  `note` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`value_id`),
-  UNIQUE KEY `user_id` (`user_id`,`subject_id`),
-  KEY `FK_jos_future_study_jos_subject` (`subject_id`),
-  CONSTRAINT `FK_jos_future_study_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nHọc tập nâng cao trình độ';
+  UNIQUE KEY `user_id` (`user_id`,`subject_name`,`year_id`),
+  KEY `FK_jos_future_study_jos_subject` (`subject_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nHọc tập nâng cao trình độ';
 
 -- Dumping data for table lylichkhoahoc.jos_future_study: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_study` DISABLE KEYS */;
@@ -310,30 +349,13 @@ CREATE TABLE IF NOT EXISTS `jos_future_teaching` (
   UNIQUE KEY `user_id_subject` (`user_id`,`subject_id`),
   KEY `FK_jos_future_teaching_jos_subject` (`subject_id`),
   CONSTRAINT `FK_jos_future_teaching_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác giảng dạy';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác giảng dạy';
 
 -- Dumping data for table lylichkhoahoc.jos_future_teaching: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_teaching` DISABLE KEYS */;
+INSERT INTO `jos_future_teaching` (`value_id`, `user_id`, `subject_id`, `lesson_number`, `qualifications`, `edu_system`, `note`) VALUES
+	(1, 79, 1, 60, 'Đại học, Cao đẳng', 'Chính quy, Liên thông', '');
 /*!40000 ALTER TABLE `jos_future_teaching` ENABLE KEYS */;
-
-
--- Dumping structure for table lylichkhoahoc.jos_futurre_science_research_of_user
-CREATE TABLE IF NOT EXISTS `jos_futurre_science_research_of_user` (
-  `value_id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '1',
-  `science_activity_id` smallint(6) DEFAULT '1',
-  `time_from` date DEFAULT NULL,
-  `time_to` date DEFAULT NULL,
-  `note` date DEFAULT NULL,
-  PRIMARY KEY (`value_id`),
-  UNIQUE KEY `user_id_content` (`user_id`,`science_activity_id`),
-  KEY `FK_jos_futurre_science_research_of_user_jos_science_activity` (`science_activity_id`),
-  CONSTRAINT `FK_jos_futurre_science_research_of_user_jos_science_activity` FOREIGN KEY (`science_activity_id`) REFERENCES `jos_science_activity` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác nghiên cứu khoa học';
-
--- Dumping data for table lylichkhoahoc.jos_futurre_science_research_of_user: ~0 rows (approximately)
-/*!40000 ALTER TABLE `jos_futurre_science_research_of_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jos_futurre_science_research_of_user` ENABLE KEYS */;
 
 
 -- Dumping structure for table lylichkhoahoc.jos_infomation
@@ -346,26 +368,17 @@ CREATE TABLE IF NOT EXISTS `jos_infomation` (
   UNIQUE KEY `user_id_attribute_id` (`user_id`,`attribute_id`),
   KEY `FK_jos_thong_tin_ca_nhan_jos_attribute` (`attribute_id`),
   CONSTRAINT `FK_jos_thong_tin_ca_nhan_jos_attribute` FOREIGN KEY (`attribute_id`) REFERENCES `jos_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='Thông tin cá nhân, kèm với bảng jos_attribute';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='Thông tin cá nhân, kèm với bảng jos_attribute';
 
--- Dumping data for table lylichkhoahoc.jos_infomation: ~14 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_infomation: ~6 rows (approximately)
 /*!40000 ALTER TABLE `jos_infomation` DISABLE KEYS */;
 INSERT INTO `jos_infomation` (`value_id`, `user_id`, `attribute_id`, `value`) VALUES
-	(1, 75, 1, 'Nguyễn Hoàng Duy Thiện'),
-	(2, 75, 2, '27/08/2015'),
-	(3, 75, 4, 'nam'),
-	(4, 62, 1, 'Admin'),
-	(5, 62, 2, '27/08/2015'),
-	(6, 62, 4, 'nu'),
-	(7, 76, 1, ''),
-	(8, 76, 2, ''),
-	(9, 78, 1, ''),
-	(10, 78, 2, ''),
-	(11, 78, 4, ''),
-	(12, 76, 4, ''),
-	(13, 77, 1, ''),
-	(14, 77, 2, ''),
-	(15, 77, 4, '');
+	(16, 75, 1, 'Nguyễn Hoàng Duy Thiện'),
+	(17, 75, 2, '29/08/2015'),
+	(18, 75, 4, 'nam'),
+	(19, 62, 1, 'Admin'),
+	(20, 62, 2, '28/08/2015'),
+	(21, 62, 4, 'nu');
 /*!40000 ALTER TABLE `jos_infomation` ENABLE KEYS */;
 
 
@@ -379,13 +392,19 @@ CREATE TABLE IF NOT EXISTS `jos_orther_work` (
   `time_to` date DEFAULT NULL,
   `note` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`value_id`),
-  UNIQUE KEY `user_id_content` (`user_id`,`content`),
+  UNIQUE KEY `user_id_content` (`user_id`,`content`,`year_id`),
   KEY `FK_jos_orther_work_jos_year` (`year_id`,`user_id`,`content`),
   CONSTRAINT `FK_jos_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Công tác khác';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Công tác khác';
 
--- Dumping data for table lylichkhoahoc.jos_orther_work: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_orther_work: ~5 rows (approximately)
 /*!40000 ALTER TABLE `jos_orther_work` DISABLE KEYS */;
+INSERT INTO `jos_orther_work` (`value_id`, `year_id`, `user_id`, `content`, `time_from`, `time_to`, `note`) VALUES
+	(8, '2015', 75, 'Công tác 1', '2015-12-09', '1970-01-01', 'Chưa hoàn thành'),
+	(9, '2015', 79, 'ff', '2015-01-09', '2015-09-30', 'ff'),
+	(10, '2015', 79, 'fsd', '2015-09-01', '2015-09-30', 'fff'),
+	(11, '2015', 79, 'sdfasd', '2015-09-10', '2015-09-12', ''),
+	(12, '2015', 79, 'sdfasdfa', '2015-09-09', '2015-09-25', 'sdfa');
 /*!40000 ALTER TABLE `jos_orther_work` ENABLE KEYS */;
 
 
@@ -398,10 +417,15 @@ CREATE TABLE IF NOT EXISTS `jos_science_activity` (
   UNIQUE KEY `name` (`name`,`year_id`),
   KEY `FK_jos_science_activity_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_science_activity_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Các hoạt động nghiên cứu khoa học';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Các hoạt động nghiên cứu khoa học';
 
--- Dumping data for table lylichkhoahoc.jos_science_activity: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_science_activity: ~4 rows (approximately)
 /*!40000 ALTER TABLE `jos_science_activity` DISABLE KEYS */;
+INSERT INTO `jos_science_activity` (`value_id`, `name`, `year_id`) VALUES
+	(2, 'Nghiên cứu khoa học', '2015'),
+	(4, 'Nghiên cứu khoa học', '2016'),
+	(3, 'Sáng tạo thiết bị, ,mô hình, đồ dùng dạy học', '2016'),
+	(1, 'Sáng tạo thiết bị, mô hình, đồ dùng dạy học', '2015');
 /*!40000 ALTER TABLE `jos_science_activity` ENABLE KEYS */;
 
 
@@ -417,10 +441,14 @@ CREATE TABLE IF NOT EXISTS `jos_science_research_of_user` (
   UNIQUE KEY `user_id_science_activity_id` (`user_id`,`science_activity_id`),
   KEY `FK_jos_science_research_of_user_jos_science_activity` (`science_activity_id`),
   CONSTRAINT `FK_jos_science_research_of_user_jos_science_activity` FOREIGN KEY (`science_activity_id`) REFERENCES `jos_science_activity` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Liên kết bảng jos_user và bảng jos_science_activity';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Liên kết bảng jos_user và bảng jos_science_activity';
 
--- Dumping data for table lylichkhoahoc.jos_science_research_of_user: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_science_research_of_user: ~2 rows (approximately)
 /*!40000 ALTER TABLE `jos_science_research_of_user` DISABLE KEYS */;
+INSERT INTO `jos_science_research_of_user` (`value_id`, `user_id`, `science_activity_id`, `time_from`, `time_to`, `note`) VALUES
+	(2, 75, 2, '2014-09-04', '2015-09-14', 'Hoàn thành'),
+	(3, 75, 1, '2015-03-09', '2015-03-09', 'f'),
+	(4, 80, 2, '2015-05-09', '2015-07-09', 'g');
 /*!40000 ALTER TABLE `jos_science_research_of_user` ENABLE KEYS */;
 
 
@@ -432,15 +460,17 @@ CREATE TABLE IF NOT EXISTS `jos_scientific_report` (
   `name` varchar(250) DEFAULT NULL,
   `publish_date` date DEFAULT NULL,
   `publish_place` varchar(250) DEFAULT NULL,
-  `note` int(11) DEFAULT NULL,
+  `note` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`value_id`),
   UNIQUE KEY `user_id_name` (`user_id`,`name`,`year_id`),
   KEY `FK_jos_scientific_report_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_scientific_report_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Báo cáo khoa học đã công bố';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Báo cáo khoa học đã công bố';
 
 -- Dumping data for table lylichkhoahoc.jos_scientific_report: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_scientific_report` DISABLE KEYS */;
+INSERT INTO `jos_scientific_report` (`value_id`, `year_id`, `user_id`, `name`, `publish_date`, `publish_place`, `note`) VALUES
+	(1, '2015', 75, 'Thiêt kế robot 2015', '2015-09-09', 'Mỹ', 'rất thành công');
 /*!40000 ALTER TABLE `jos_scientific_report` ENABLE KEYS */;
 
 
@@ -453,10 +483,15 @@ CREATE TABLE IF NOT EXISTS `jos_subject` (
   UNIQUE KEY `name` (`name`,`year_id`),
   KEY `FK_jos_subject_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_subject_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Môn học';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Môn học';
 
--- Dumping data for table lylichkhoahoc.jos_subject: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_subject: ~4 rows (approximately)
 /*!40000 ALTER TABLE `jos_subject` DISABLE KEYS */;
+INSERT INTO `jos_subject` (`value_id`, `year_id`, `name`) VALUES
+	(1, '2015', 'Nhập môn lập trình'),
+	(3, '2016', 'Nhập môn lập trình'),
+	(2, '2015', 'Tin học đại cương'),
+	(4, '2016', 'Tin học đại cương');
 /*!40000 ALTER TABLE `jos_subject` ENABLE KEYS */;
 
 
@@ -473,10 +508,14 @@ CREATE TABLE IF NOT EXISTS `jos_teaching` (
   UNIQUE KEY `user_id_subject` (`user_id`,`subject_id`),
   KEY `FK_jos_teaching_jos_subject` (`subject_id`),
   CONSTRAINT `FK_jos_teaching_jos_subject` FOREIGN KEY (`subject_id`) REFERENCES `jos_subject` (`value_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Công tác giảng dạy';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Công tác giảng dạy';
 
 -- Dumping data for table lylichkhoahoc.jos_teaching: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_teaching` DISABLE KEYS */;
+INSERT INTO `jos_teaching` (`value_id`, `user_id`, `subject_id`, `lesson_number`, `qualifications`, `edu_system`, `note`) VALUES
+	(1, 78, 1, 60, 'Đại học, Cao đẳng, Trung cấp', 'Chính quy, Liên thông', 'fff'),
+	(2, 80, 1, 60, 'Đại học, Cao đẳng', 'Chính quy, Liên thông', ''),
+	(3, 79, 1, 60, 'Đại học, Cao đẳng', 'Chính quy', '');
 /*!40000 ALTER TABLE `jos_teaching` ENABLE KEYS */;
 
 
@@ -568,7 +607,7 @@ CREATE TABLE IF NOT EXISTS `jos_year` (
   PRIMARY KEY (`year_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table lylichkhoahoc.jos_year: ~2 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_year: ~1 rows (approximately)
 /*!40000 ALTER TABLE `jos_year` DISABLE KEYS */;
 INSERT INTO `jos_year` (`year_id`, `is_active`) VALUES
 	('2015', 1),

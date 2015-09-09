@@ -328,6 +328,25 @@ $(document).ready(function(){
         jQuery('#modal-future-study-edit').find('input[name="note"]').val(note);
 
     });
+
+    /*
+        sửa các bài báo cáo khoa học đã được xuất bản
+    */
+    jQuery('.scientific-report-btn-edit').on('click', function(){
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
+        var name=jQuery(this).closest('tr').find('td[data-title="Tên bài báo"]').text();
+        var publish_place=jQuery(this).closest('tr').find('td[data-title="Nơi xuất bản"]').text();
+        var publish_date=jQuery(this).closest('tr').find('td[data-title="Năm xuất bản"]').text();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        console.log(value_id, name, publish_place, publish_date, note);
+        jQuery('#modal-scientific-report-edit').find('input[name="value_id"]').val(value_id);
+        jQuery('#modal-scientific-report-edit').find('input[name="name"]').val(name);
+        jQuery('#modal-scientific-report-edit').find('input[name="publish_place"]').val(publish_place);
+        jQuery('#modal-scientific-report-edit').find('input[name="publish_date"]').val(publish_date);
+        jQuery('#modal-scientific-report-edit').find('input[name="note"]').val(note);
+
+    });
+
      
     
 });

@@ -50,6 +50,8 @@ class Module
                 'Application\Model\JosOrtherWorkTable' => 'Application\Factory\Table\JosOrtherWorkTableFactory',
                 'Application\Model\JosFutureOrtherWorkTable' => 'Application\Factory\Table\JosFutureOrtherWorkTableFactory',
                 'Application\Model\JosFutureStudyTable' => 'Application\Factory\Table\JosFutureStudyTableFactory',
+                'Application\Model\JosScientificReportTable' => 'Application\Factory\Table\JosScientificReportTableFactory',
+            
             )
         );
     }

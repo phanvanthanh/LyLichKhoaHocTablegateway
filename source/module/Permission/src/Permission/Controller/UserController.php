@@ -57,6 +57,9 @@ class UserController extends AbstractActionController
             if($login_form->isValid()){
                 $username=$post['username'];
                 $password=$post['password'];
+                // lấy dữ liệu theo user name
+                $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+                $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array(), array());
                 // Xác định lớp chứng thực authentication
                 $this->getAuthService()->getAdapter()->setIdentity($username)->setCredential($password);
                 $result = $this->getAuthService()->authenticate();

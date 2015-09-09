@@ -30,6 +30,8 @@ use Application\Form\AddFutureOrtherWorkForm;
 use Application\Form\EditFutureOrtherWorkForm;
 use Application\Form\AddFutureStudyForm;
 use Application\Form\EditFutureStudyForm;
+use Application\Form\AddScientificReportForm;
+use Application\Form\EditScientificReportForm;
 use Application\Model\Entity\JosTeaching;
 use Application\Model\Entity\JosFutureTeaching;
 use Application\Model\Entity\JosScienceResearchOfUser;
@@ -37,6 +39,7 @@ use Application\Model\Entity\JosFutureScienceResearchOfUser;
 use Application\Model\Entity\JosOrtherWork;
 use Application\Model\Entity\JosFutureOrtherWork;
 use Application\Model\Entity\JosFutureStudy;
+use Application\Model\Entity\JosScientificReport;
 
 class IndexController extends AbstractActionController
 {
@@ -95,6 +98,8 @@ class IndexController extends AbstractActionController
         $orther_work_table=$this->getServiceLocator()->get('Application\Model\JosOrtherWorkTable');
         $future_orther_work_table=$this->getServiceLocator()->get('Application\Model\JosFutureOrtherWorkTable');
         $future_study_table=$this->getServiceLocator()->get('Application\Model\JosFutureStudyTable');
+        $scientific_report_table=$this->getServiceLocator()->get('Application\Model\JosScientificReportTable');
+        
         // lấy dữ liệu mặc định default        
         $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
         if(!$year or !isset($year[0]['year_id'])){
@@ -323,6 +328,18 @@ class IndexController extends AbstractActionController
             $edit_future_orther_work_form=new EditFutureOrtherWorkForm();
             $return_array['add_future_orther_work_form']=$add_future_orther_work_form;
             $return_array['edit_future_orther_work_form']=$edit_future_orther_work_form;
+          }
+
+        /*
+          CÁC BÀI BÁO CÁO KHOA HỌC ĐÃ CÔNG BỐ
+        */
+          $scientific_reports=$scientific_report_table->getScientificReportByArrayConditionAndArrayColumns(array('user_id'=>$id, 'year_id'=>$year_id), array());
+          $return_array['scientific_reports']=$scientific_reports;
+          if($return_array['can_edit']==1){
+            $add_scientific_report_form=new AddScientificReportForm();
+            $edit_scientific_report_form=new EditScientificReportForm();
+            $return_array['add_scientific_report_form']=$add_scientific_report_form;
+            $return_array['edit_scientific_report_form']=$edit_scientific_report_form;
           }
 
         
@@ -1895,7 +1912,188 @@ class IndexController extends AbstractActionController
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
     }
 
+
+    /*
+      CÁC BÀI BÁO CÁO ĐÃ CÔNG BỐ
+        add
+    */
+    public function addScientificReportAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_scientific_report_table=$this->getServiceLocator()->get('Application\Model\JosScientificReportTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $add_scientific_report_form=new AddScientificReportForm();
+            $add_scientific_report_form->setData($post);
+            if($add_scientific_report_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu orther_work đã tồn tại thì không add, ko tồn tại thì add
+              $scientific_report_exist=$jos_scientific_report_table->getScientificReportByArrayConditionAndArrayColumns(array('year_id'=>$year_id, 'user_id'=>$id_giang_vien, 'name'=>$post['name']), array());
+              if(!$scientific_report_exist){
+                $scientific_report_new=new JosScientificReport();
+                $scientific_report_new->exchangeArray($post);
+                $scientific_report_new->setUserId($id_giang_vien);
+                $scientific_report_new->setYearId($year_id);
+
+                $publish_date = date('Y-m-d',strtotime($post['publish_date']));
+                $scientific_report_new->setPublishDate($publish_date);                
+
+                $jos_scientific_report_table->saveJosScientificReport($scientific_report_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng thêm mới thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
     
+    /*
+      CÁC BÀI BÁO CÁO ĐÃ CÔNG BỐ
+        edit
+    */
+    public function editScientificReportAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_scientific_report_table=$this->getServiceLocator()->get('Application\Model\JosScientificReportTable');
+      $id_giang_vien=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+        if($user and isset($user[0]['id']) and $id_giang_vien==$user[0]['id']){   
+          // nếu đã đăng nhập            
+          $edit_all_profile=1;
+        }
+        // có quyền
+        if($edit_all_profile==1){
+          $request=$this->getRequest();
+          if($request->isPost()){
+            $post=$request->getPost();
+            $edit_scientific_report_form=new EditScientificReportForm();
+            $edit_scientific_report_form->setData($post);
+            if($edit_scientific_report_form->isValid()){
+              // lấy year_id default
+              $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+              if(!$year or !isset($year[0]['year_id'])){
+                die('Lỗi, Không xác định được năm cần sửa');
+              }
+              $year_id=$year[0]['year_id'];
+              // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+              $scientific_report_exist=$jos_scientific_report_table->getScientificReportByArrayConditionAndArrayColumns(array('user_id'=>$id_giang_vien, 'year_id'=>$year_id, 'name'=>$post['name']), array());
+              if(!$scientific_report_exist or ($scientific_report_exist and $scientific_report_exist[0]['value_id']==$post['value_id'])){
+                $scientific_report_new=new JosScientificReport();
+                $scientific_report_new->exchangeArray($post);
+                $scientific_report_new->setUserId($id_giang_vien);
+                $scientific_report_new->setYearId($year_id);
+                
+                $publish_date = date('Y-m-d',strtotime($post['publish_date']));
+                $scientific_report_new->setPublishDate($publish_date);
+                              
+                $jos_scientific_report_table->saveJosScientificReport($scientific_report_new);
+                $this->flashMessenger()->addSuccessMessage('Chúc mừng cập nhật thành công!');
+                return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+              }          
+            }
+          }
+        }
+      }
+      if(isset($id_giang_vien)){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id_giang_vien));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
+
+    /*
+      CÁC BÀI BÁO CÁO ĐÃ CÔNG BỐ
+        delete
+    */
+    public function deleteScientificReportAction(){
+      // điểm truy cập csdl
+      $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+      $jos_year_table=$this->getServiceLocator()->get('NamHoc\Model\JosYearTable');
+      $jos_scientific_report_table=$this->getServiceLocator()->get('Application\Model\JosScientificReportTable');
+      $id=$this->params('id');
+      $read=$this->getServiceLocator()->get('AuthService')->getStorage()->read();
+      if(isset($read['username']) and $read['username']){
+        // kiểm tra user đang đăng nhập
+        $user=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$read['username']));
+        // kiểm tra user có quyền editAllProfile không
+        $white_lists=$read['white_list'];
+        $edit_all_profile=0;
+        foreach ($white_lists as $key => $white_list) {
+          if($white_list['action']=='editAllProfile'){
+            $edit_all_profile=1;
+          }
+        }
+
+        // lấy year_id default
+        $year=$jos_year_table->getYearByArrayConditionAndArrayColumn(array('is_active'=>1));
+        if(!$year or !isset($year[0]['year_id'])){
+          die('Lỗi, Không xác định được năm cần sửa');
+        }
+        $year_id=$year[0]['year_id'];
+        // Kiểm tra nếu science_research đã tồn tại thì không add, ko tồn tại thì add
+        $scientific_report_exist=$jos_scientific_report_table->getScientificReportByArrayConditionAndArrayColumns(array('value_id'=>$id, 'year_id'=>$year_id), array('user_id'));
+        if($scientific_report_exist and $user and isset($user[0]['id'])){
+          if(isset($scientific_report_exist[0]['user_id']) and ($scientific_report_exist[0]['user_id']==$user[0]['id'] or $edit_all_profile==1)){
+            // được quyền xóa
+            $jos_scientific_report_table->deleteScientificReportById($id);
+            $this->flashMessenger()->addSuccessMessage('Chúc mừng xóa thành công!');
+            return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$scientific_report_exist[0]['user_id']));
+          }
+        }        
+      }
+      if(isset($user[0]['id'])){
+        $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+        return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$user[0]['id']));
+      }  
+      $this->flashMessenger()->addErrorMessage('Bạn không có quyền truy cập. Vui lòng kiểm tra lại!');
+      return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
+    }
 
 
     

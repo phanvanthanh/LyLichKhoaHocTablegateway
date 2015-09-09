@@ -20,6 +20,7 @@
       $orther_works=$this->orther_works; 
       $future_orther_works=$this->future_orther_works;
       $future_studys=$this->future_studys;
+      $scientific_reports=$this->scientific_reports;
     }
   ?>
     <div class="row">
@@ -559,7 +560,17 @@
       </table>
     </div>
 
-    <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+    
+    <div class="row">
+      <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+        <h3>D. Các bài báo cáo khoa học đã công bố</h3>
+      </div>
+      <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">
+        <?php if($can_edit==1){ ?>
+          <a class="btn btn-default" data-toggle="modal" data-target="#modal-scientific-report-add"><b class="glyphicon glyphicon-plus"></b></a>
+        <?php } ?>
+      </div>
+    </div>
     <div class="table-responsive" id="no-more-tables">
       <table class="table table-bordered table-hover cf">
         <thead class="cf">
@@ -568,24 +579,31 @@
             <td class="active">Tên bài báo</td>
             <td class="active">Nơi xuất bản</td> 
             <td class="active">Năm xuất bản</td>
-            <td class="active">Ghi chú</td>                  
+            <td class="active">Ghi chú</td>   
+            <?php if($can_edit==1){ ?>
+              <td class="active td-remove">Xóa</td>
+              <td class="active td-edit">Sửa</td>
+            <?php } ?>                 
           </tr>
         </thead>
-        <tbody>                  
+        <tbody>
+          <?php foreach ($scientific_reports as $key => $value) { ?>                  
           <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Tên bài báo">Tên bài báo</td>
-            <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
-            <td data-title="Năm xuất bản">Năm xuất bản</td>
-            <td data-title="Ghi chú">Ghi chú</td>                  
+            <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
+            <td data-title="Tên bài báo"><?php echo $value['name']; ?></td>
+            <td data-title="Nơi xuất bản"><?php echo $value['publish_place']; ?></td> 
+            <td data-title="Năm xuất bản"><?php echo $value['publish_date']; ?></td>
+            <td data-title="Ghi chú"><?php echo $value['note']; ?></td>    
+            <?php if($can_edit==1){ ?>
+              <td data-title="Xóa">
+                <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa bài báo này?', '<?php echo $this->url('application/crud', array('action'=>'delete-scientific-report', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
+              </td>
+              <td data-title="Sửa">
+                <a class="btn btn-default scientific-report-btn-edit" data-toggle="modal" data-target="#modal-scientific-report-edit"><b class="glyphicon glyphicon-pencil"></b></a>
+              </td>
+            <?php } ?>              
           </tr>
-          <tr>
-            <td data-title="STT">1</td>
-            <td data-title="Tên bài báo">Tên bài báo</td>
-            <td data-title="Nơi xuất bản">Nơi xuất bản</td> 
-            <td data-title="Năm xuất bản">Năm xuất bản</td>
-            <td data-title="Ghi chú">Ghi chú</td>                  
-          </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>
@@ -2066,6 +2084,180 @@
                 </div>
               </div>
               <?php echo $this->form()->closeTag($edit_future_orther_work_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+
+    <!-- 
+      CÁC BÀI BÁO CÁO KHOA HỌC ĐÃ CÔNG BỐ
+    --> 
+      
+      <!-- add -->
+      <div class="modal fade" id="modal-scientific-report-add" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>THÊM BÀI BÁO ĐÃ ĐƯỢC CÔNG BỐ</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $add_scientific_report_form=$this->add_scientific_report_form;
+                $add_scientific_report_form->setAttribute('action', $this->url("application/crud", array('action'=>'add-scientific-report', 'id'=>$this->id)));
+                $add_scientific_report_form->setAttribute('class','form');
+                $add_scientific_report_form->setAttribute('role','form');
+                $add_scientific_report_form->setAttribute('method','post');
+                $add_scientific_report_form->prepare();
+                echo $this->form()->openTag($add_scientific_report_form);
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_scientific_report_form->get('name')->setLabel('Tên bài báo');
+                    echo $this->formLabel($add_scientific_report_form->get('name')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_scientific_report_form->get('name')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_scientific_report_form->get('publish_place')->setLabel('Nơi xuất bản');
+                    echo $this->formLabel($add_scientific_report_form->get('publish_place')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_scientific_report_form->get('publish_place')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_scientific_report_form->get('publish_date')->setLabel('Năm xuất bản');
+                    echo $this->formLabel($add_scientific_report_form->get('publish_date')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_scientific_report_form->get('publish_date')); ?> 
+                  </div>
+                </div>
+              </div>              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $add_scientific_report_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($add_scientific_report_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($add_scientific_report_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($add_scientific_report_form); ?>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <!-- edit -->
+      <div class="modal fade" id="modal-scientific-report-edit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><strong>SỬA BÀI BÁO ĐÃ ĐƯỢC CÔNG BỐ</strong></h4>
+            </div>
+            <div class="modal-body"> 
+              <?php
+                $edit_scientific_report_form=$this->edit_scientific_report_form;
+                $edit_scientific_report_form->setAttribute('action', $this->url("application/crud", array('action'=>'edit-scientific-report', 'id'=>$this->id)));
+                $edit_scientific_report_form->setAttribute('class','form');
+                $edit_scientific_report_form->setAttribute('role','form');
+                $edit_scientific_report_form->setAttribute('method','post');
+                $edit_scientific_report_form->prepare();
+                echo $this->form()->openTag($edit_scientific_report_form);
+                echo $this->formHidden($edit_scientific_report_form->get('value_id'));
+              ?>
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_scientific_report_form->get('name')->setLabel('Tên bài báo');
+                    echo $this->formLabel($edit_scientific_report_form->get('name')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_scientific_report_form->get('name')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_scientific_report_form->get('publish_place')->setLabel('Nơi xuất bản');
+                    echo $this->formLabel($edit_scientific_report_form->get('publish_place')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_scientific_report_form->get('publish_place')); ?> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_scientific_report_form->get('publish_date')->setLabel('Năm xuất bản');
+                    echo $this->formLabel($edit_scientific_report_form->get('publish_date')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_scientific_report_form->get('publish_date')); ?> 
+                  </div>
+                </div>
+              </div>              
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+                  <?php 
+                    $edit_scientific_report_form->get('note')->setLabel('Ghi chú');
+                    echo $this->formLabel($edit_scientific_report_form->get('note')); 
+                  ?> 
+                </div>
+                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10">
+                  <div class="form-group has-success">
+                    <?php echo $this->formElement($edit_scientific_report_form->get('note')); ?> 
+                  </div>
+                </div>
+              </div>   
+              <div class="row">                  
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                  <button type="submit" class="btn btn-default">Lưu</button>
+                </div>
+              </div>
+              <?php echo $this->form()->closeTag($edit_scientific_report_form); ?>
             </div>            
           </div>
         </div>
