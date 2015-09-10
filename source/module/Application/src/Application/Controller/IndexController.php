@@ -2095,12 +2095,6 @@ class IndexController extends AbstractActionController
       return $this->redirect()->toRoute('application/crud', array('action'=>'index'));     
     }
 
-
-    
-    public function editAction()
-    {
-    }
-
     public function editAllProfileAction()
     {
     }

@@ -18,7 +18,7 @@ class JosAdminResourceTable
     }
 
     /*
-        sử dụng trong Permission/Controller/User loginAction
+        sử dụng trong Permission/Controller/User loginAction        
     */
 
     public function getResourceByUsername($username)
@@ -232,4 +232,31 @@ class JosAdminResourceTable
             'resource_id' => $resource_id
         ));
     }
+
+    /*
+        sử dụng trong Application\Navigation\MyNavigation removeRoute
+    */
+    /*public function getModuleNameByUsername($username)
+    {
+        $adapter = $this->tableGateway->adapter;
+        $sql = new Sql($adapter);        
+        // select
+        $sqlSelect = $sql->select();
+        $sqlSelect->from(array('t1'=>'jos_users'));
+        $sqlSelect->columns(array());
+        $sqlSelect->join(array('t2'=>'jos_admin_role'), 't1.usertype=t2.role_name', array('role_id'), 'LEFT');
+        $sqlSelect->join(array('t3'=>'jos_admin_rule'), 't2.role_id=t3.role_id', array(), 'LEFT');
+        $sqlSelect->join(array('t4'=>'jos_admin_resource'), 't3.resource_id=t4.resource_id', array('action'=>'resource', 'resource_id'), 'LEFT');
+        $sqlSelect->join(array('t5'=>'jos_admin_resource'), 't4.parent_id=t5.resource_id', array('controller'=>'resource'), 'LEFT');
+        $sqlSelect->where(array('username'=>$username, 't'));
+           
+        $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
+        $resultSets = $statement->execute();
+        foreach ($resultSets as $key => $resultSet) {
+            $allRow[$resultSet['resource_id']] = $resultSet;
+        }
+        die(var_dump($allRow));
+        return $allRow;
+    }*/
+
 }

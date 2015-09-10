@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `jos_admin_resource` (
   `is_white_list` int(11) DEFAULT '0',
   `is_hidden` int(11) DEFAULT '0',
   PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='Admin Resource Table';
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COMMENT='Admin Resource Table';
 
 -- Dumping data for table lylichkhoahoc.jos_admin_resource: ~51 rows (approximately)
 /*!40000 ALTER TABLE `jos_admin_resource` DISABLE KEYS */;
@@ -48,7 +48,6 @@ INSERT INTO `jos_admin_resource` (`resource_id`, `parent_id`, `resource`, `resou
 	(15, 0, 'Application', 'Application Module', 'Module', 'ACL', 0, 0),
 	(16, 15, 'Application\\Controller\\Index', 'Application\\Controller\\Index Controller', 'Controller', 'ACL', 0, 0),
 	(17, 16, 'index', 'index Action', 'Action', 'ACL', 1, 0),
-	(18, 16, 'edit', 'edit Action', 'Action', 'ACL', 0, 0),
 	(19, 16, 'editInfor', 'editInfor Action', 'Action', 'ACL', 0, 0),
 	(20, 16, 'editAllProfile', 'editAllProfile Action', 'Action', 'ACL', 0, 0),
 	(21, 0, 'CongTacNghienCuu', 'CongTacNghienCuu Module', 'Module', 'ACL', 0, 0),
@@ -81,7 +80,30 @@ INSERT INTO `jos_admin_resource` (`resource_id`, `parent_id`, `resource`, `resou
 	(48, 46, 'add', 'add Action', 'Action', 'ACL', 0, 0),
 	(49, 46, 'edit', 'edit Action', 'Action', 'ACL', 0, 0),
 	(50, 46, 'delete', 'delete Action', 'Action', 'ACL', 0, 0),
-	(51, 46, 'editOption', 'editOption Action', 'Action', 'ACL', 0, 0);
+	(51, 46, 'editOption', 'editOption Action', 'Action', 'ACL', 0, 0),
+	(52, 16, 'editCertificate', 'editCertificate Action', 'Action', 'ACL', 0, 0),
+	(53, 16, 'addTeaching', 'addTeaching Action', 'Action', 'ACL', 0, 0),
+	(54, 16, 'editTeaching', 'editTeaching Action', 'Action', 'ACL', 0, 0),
+	(55, 16, 'deleteTeaching', 'deleteTeaching Action', 'Action', 'ACL', 0, 0),
+	(56, 16, 'editHoatDongNghienCuuKhoaHoc', 'editHoatDongNghienCuuKhoaHoc Action', 'Action', 'ACL', 0, 0),
+	(57, 16, 'addOrtherWork', 'addOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(58, 16, 'editOrtherWork', 'editOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(59, 16, 'deleteOrtherWork', 'deleteOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(60, 16, 'addFutureTeaching', 'addFutureTeaching Action', 'Action', 'ACL', 0, 0),
+	(61, 16, 'editFutureTeaching', 'editFutureTeaching Action', 'Action', 'ACL', 0, 0),
+	(62, 16, 'deleteFutureTeaching', 'deleteFutureTeaching Action', 'Action', 'ACL', 0, 0),
+	(63, 16, 'addFutureHoatDongNghienCuuKhoaHoc', 'addFutureHoatDongNghienCuuKhoaHoc Action', 'Action', 'ACL', 0, 0),
+	(64, 16, 'editFutureHoatDongNghienCuuKhoaHoc', 'editFutureHoatDongNghienCuuKhoaHoc Action', 'Action', 'ACL', 0, 0),
+	(65, 16, 'deleteFutureHoatDongNghienCuuKhoaHoc', 'deleteFutureHoatDongNghienCuuKhoaHoc Action', 'Action', 'ACL', 0, 0),
+	(66, 16, 'addFutureStudy', 'addFutureStudy Action', 'Action', 'ACL', 0, 0),
+	(67, 16, 'editFutureStudy', 'editFutureStudy Action', 'Action', 'ACL', 0, 0),
+	(68, 16, 'deleteFutureStudy', 'deleteFutureStudy Action', 'Action', 'ACL', 0, 0),
+	(69, 16, 'addFutureOrtherWork', 'addFutureOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(70, 16, 'editFutureOrtherWork', 'editFutureOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(71, 16, 'deleteFutureOrtherWork', 'deleteFutureOrtherWork Action', 'Action', 'ACL', 0, 0),
+	(72, 16, 'addScientificReport', 'addScientificReport Action', 'Action', 'ACL', 0, 0),
+	(73, 16, 'editScientificReport', 'editScientificReport Action', 'Action', 'ACL', 0, 0),
+	(74, 16, 'deleteScientificReport', 'deleteScientificReport Action', 'Action', 'ACL', 0, 0);
 /*!40000 ALTER TABLE `jos_admin_resource` ENABLE KEYS */;
 
 
@@ -112,59 +134,174 @@ CREATE TABLE IF NOT EXISTS `jos_admin_rule` (
   KEY `IDX_JOS_RULE_RESOURCE_ID_ROLE_ID` (`resource_id`,`role_id`),
   KEY `IDX_JOS_RULE_ROLE_ID_RESOURCE_ID` (`role_id`,`resource_id`),
   CONSTRAINT `FK_JOS_RULE_ROLE_ID_JOS_ROLE_ROLE_ID` FOREIGN KEY (`role_id`) REFERENCES `jos_admin_role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='Admin Rule Table';
+) ENGINE=InnoDB AUTO_INCREMENT=344 DEFAULT CHARSET=utf8 COMMENT='Admin Rule Table';
 
 -- Dumping data for table lylichkhoahoc.jos_admin_rule: ~48 rows (approximately)
 /*!40000 ALTER TABLE `jos_admin_rule` DISABLE KEYS */;
 INSERT INTO `jos_admin_rule` (`rule_id`, `role_id`, `resource_id`) VALUES
-	(58, 1, '10'),
-	(59, 1, '11'),
-	(60, 1, '12'),
-	(61, 1, '13'),
-	(62, 1, '14'),
-	(63, 1, '15'),
-	(64, 1, '16'),
-	(65, 1, '17'),
-	(66, 1, '18'),
-	(67, 1, '19'),
-	(68, 1, '20'),
-	(69, 1, '21'),
-	(70, 1, '22'),
-	(71, 1, '23'),
-	(72, 1, '24'),
-	(73, 1, '25'),
-	(74, 1, '26'),
-	(75, 1, '27'),
-	(76, 1, '28'),
-	(77, 1, '29'),
-	(78, 1, '30'),
-	(79, 1, '31'),
-	(80, 1, '32'),
-	(81, 1, '33'),
-	(82, 1, '34'),
-	(83, 1, '35'),
-	(84, 1, '36'),
-	(85, 1, '37'),
-	(86, 1, '38'),
-	(87, 1, '39'),
-	(52, 1, '4'),
-	(88, 1, '40'),
-	(89, 1, '41'),
-	(90, 1, '42'),
-	(91, 1, '43'),
-	(92, 1, '44'),
-	(93, 1, '45'),
-	(94, 1, '46'),
-	(95, 1, '47'),
-	(96, 1, '48'),
-	(97, 1, '49'),
-	(53, 1, '5'),
-	(98, 1, '50'),
-	(99, 1, '51'),
-	(54, 1, '6'),
-	(55, 1, '7'),
-	(56, 1, '8'),
-	(57, 1, '9');
+	(106, 1, '10'),
+	(107, 1, '11'),
+	(108, 1, '12'),
+	(109, 1, '13'),
+	(110, 1, '14'),
+	(111, 1, '15'),
+	(286, 2, '15'),
+	(317, 3, '15'),
+	(255, 4, '15'),
+	(112, 1, '16'),
+	(287, 2, '16'),
+	(318, 3, '16'),
+	(256, 4, '16'),
+	(113, 1, '17'),
+	(288, 2, '17'),
+	(319, 3, '17'),
+	(257, 4, '17'),
+	(114, 1, '19'),
+	(289, 2, '19'),
+	(320, 3, '19'),
+	(258, 4, '19'),
+	(115, 1, '20'),
+	(139, 1, '21'),
+	(140, 1, '22'),
+	(141, 1, '23'),
+	(142, 1, '24'),
+	(143, 1, '25'),
+	(144, 1, '26'),
+	(145, 1, '27'),
+	(146, 1, '28'),
+	(147, 1, '29'),
+	(148, 1, '30'),
+	(149, 1, '31'),
+	(150, 1, '32'),
+	(151, 1, '33'),
+	(152, 1, '34'),
+	(153, 1, '35'),
+	(154, 1, '36'),
+	(155, 1, '37'),
+	(156, 1, '38'),
+	(157, 1, '39'),
+	(100, 1, '4'),
+	(282, 2, '4'),
+	(313, 3, '4'),
+	(251, 4, '4'),
+	(158, 1, '40'),
+	(159, 1, '41'),
+	(160, 1, '42'),
+	(161, 1, '43'),
+	(162, 1, '44'),
+	(163, 1, '45'),
+	(164, 1, '46'),
+	(165, 1, '47'),
+	(166, 1, '48'),
+	(167, 1, '49'),
+	(101, 1, '5'),
+	(283, 2, '5'),
+	(314, 3, '5'),
+	(252, 4, '5'),
+	(168, 1, '50'),
+	(169, 1, '51'),
+	(116, 1, '52'),
+	(290, 2, '52'),
+	(321, 3, '52'),
+	(259, 4, '52'),
+	(117, 1, '53'),
+	(291, 2, '53'),
+	(322, 3, '53'),
+	(260, 4, '53'),
+	(118, 1, '54'),
+	(292, 2, '54'),
+	(323, 3, '54'),
+	(261, 4, '54'),
+	(119, 1, '55'),
+	(293, 2, '55'),
+	(324, 3, '55'),
+	(262, 4, '55'),
+	(120, 1, '56'),
+	(294, 2, '56'),
+	(325, 3, '56'),
+	(263, 4, '56'),
+	(121, 1, '57'),
+	(295, 2, '57'),
+	(326, 3, '57'),
+	(264, 4, '57'),
+	(122, 1, '58'),
+	(296, 2, '58'),
+	(327, 3, '58'),
+	(265, 4, '58'),
+	(123, 1, '59'),
+	(297, 2, '59'),
+	(328, 3, '59'),
+	(266, 4, '59'),
+	(102, 1, '6'),
+	(124, 1, '60'),
+	(298, 2, '60'),
+	(329, 3, '60'),
+	(267, 4, '60'),
+	(125, 1, '61'),
+	(299, 2, '61'),
+	(330, 3, '61'),
+	(268, 4, '61'),
+	(126, 1, '62'),
+	(300, 2, '62'),
+	(331, 3, '62'),
+	(269, 4, '62'),
+	(127, 1, '63'),
+	(301, 2, '63'),
+	(332, 3, '63'),
+	(270, 4, '63'),
+	(128, 1, '64'),
+	(302, 2, '64'),
+	(333, 3, '64'),
+	(271, 4, '64'),
+	(129, 1, '65'),
+	(303, 2, '65'),
+	(334, 3, '65'),
+	(272, 4, '65'),
+	(130, 1, '66'),
+	(304, 2, '66'),
+	(335, 3, '66'),
+	(273, 4, '66'),
+	(131, 1, '67'),
+	(305, 2, '67'),
+	(336, 3, '67'),
+	(274, 4, '67'),
+	(132, 1, '68'),
+	(306, 2, '68'),
+	(337, 3, '68'),
+	(275, 4, '68'),
+	(133, 1, '69'),
+	(307, 2, '69'),
+	(338, 3, '69'),
+	(276, 4, '69'),
+	(103, 1, '7'),
+	(284, 2, '7'),
+	(315, 3, '7'),
+	(253, 4, '7'),
+	(134, 1, '70'),
+	(308, 2, '70'),
+	(339, 3, '70'),
+	(277, 4, '70'),
+	(135, 1, '71'),
+	(309, 2, '71'),
+	(340, 3, '71'),
+	(278, 4, '71'),
+	(136, 1, '72'),
+	(310, 2, '72'),
+	(341, 3, '72'),
+	(279, 4, '72'),
+	(137, 1, '73'),
+	(311, 2, '73'),
+	(342, 3, '73'),
+	(280, 4, '73'),
+	(138, 1, '74'),
+	(312, 2, '74'),
+	(343, 3, '74'),
+	(281, 4, '74'),
+	(104, 1, '8'),
+	(285, 2, '8'),
+	(316, 3, '8'),
+	(254, 4, '8'),
+	(105, 1, '9');
 /*!40000 ALTER TABLE `jos_admin_rule` ENABLE KEYS */;
 
 
@@ -180,15 +317,10 @@ CREATE TABLE IF NOT EXISTS `jos_attribute` (
   UNIQUE KEY `attribute_code` (`attribute_code`,`year_id`),
   KEY `FK_jos_attribute_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_attribute_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Sử dụng trong jos_information';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Sử dụng trong jos_information';
 
 -- Dumping data for table lylichkhoahoc.jos_attribute: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jos_attribute` DISABLE KEYS */;
-INSERT INTO `jos_attribute` (`attribute_id`, `attribute_code`, `year_id`, `frontend_input`, `frontend_label`, `value_table`) VALUES
-	(1, 'ho_va_ten', '2015', 'Text', 'Họ và Tên', 'jos_infomation'),
-	(2, 'ngay_sinh', '2015', 'Date', 'Ngày sinh', 'jos_infomation'),
-	(4, 'gioi_tinh', '2015', 'Select', 'Giới tính', 'jos_infomation'),
-	(5, 'ho_va_ten', '2016', 'Text', 'Họ Và Tên', 'jos_infomation');
 /*!40000 ALTER TABLE `jos_attribute` ENABLE KEYS */;
 
 
@@ -205,9 +337,6 @@ CREATE TABLE IF NOT EXISTS `jos_attribute_option` (
 
 -- Dumping data for table lylichkhoahoc.jos_attribute_option: ~2 rows (approximately)
 /*!40000 ALTER TABLE `jos_attribute_option` DISABLE KEYS */;
-INSERT INTO `jos_attribute_option` (`value_id`, `attribute_id`, `key`, `label`) VALUES
-	(5, 4, 'nu', 'Nữ'),
-	(6, 4, 'nam', 'Nam');
 /*!40000 ALTER TABLE `jos_attribute_option` ENABLE KEYS */;
 
 
@@ -224,12 +353,6 @@ CREATE TABLE IF NOT EXISTS `jos_certificate` (
 
 -- Dumping data for table lylichkhoahoc.jos_certificate: ~5 rows (approximately)
 /*!40000 ALTER TABLE `jos_certificate` DISABLE KEYS */;
-INSERT INTO `jos_certificate` (`value_id`, `year_id`, `name`) VALUES
-	(5, '2015', 'Chứng chỉ khác'),
-	(3, '2015', 'Lý luận dạy học'),
-	(1, '2015', 'Nghiệp vụ sư phạm'),
-	(4, '2015', 'Ngoại ngữ'),
-	(2, '2015', 'Triết học sau đại học');
 /*!40000 ALTER TABLE `jos_certificate` ENABLE KEYS */;
 
 
@@ -248,17 +371,6 @@ CREATE TABLE IF NOT EXISTS `jos_certificate_user` (
 
 -- Dumping data for table lylichkhoahoc.jos_certificate_user: ~10 rows (approximately)
 /*!40000 ALTER TABLE `jos_certificate_user` DISABLE KEYS */;
-INSERT INTO `jos_certificate_user` (`value_id`, `certificate_id`, `user_id`, `level`, `note`) VALUES
-	(1, 1, 75, NULL, 'Nghiệp vụ sư phạm'),
-	(2, 2, 75, NULL, ''),
-	(3, 3, 75, NULL, ''),
-	(4, 4, 75, NULL, 'TA'),
-	(5, 5, 75, '', ''),
-	(16, 1, 62, '', '0'),
-	(17, 2, 62, '', '0'),
-	(18, 3, 62, '', '0'),
-	(19, 4, 62, 'TOEICE', 'TA'),
-	(20, 5, 62, '', '0');
 /*!40000 ALTER TABLE `jos_certificate_user` ENABLE KEYS */;
 
 
@@ -277,16 +389,8 @@ CREATE TABLE IF NOT EXISTS `jos_future_orther_work` (
   CONSTRAINT `FK_jos_future_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nCông tác khác';
 
--- Dumping data for table lylichkhoahoc.jos_future_orther_work: ~7 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_future_orther_work: ~8 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_orther_work` DISABLE KEYS */;
-INSERT INTO `jos_future_orther_work` (`value_id`, `year_id`, `user_id`, `content`, `time_from`, `time_to`, `note`) VALUES
-	(1, '2015', 75, 'Đi chơi vũng tàu', '2014-09-07', '2015-09-07', 'Vui lắm hén'),
-	(2, '2015', 75, 'Ở nhà chơi không làm gì hết', '2014-09-07', '2015-09-07', 'Chắc buồn lắm hén'),
-	(3, '2016', 75, 'Đi chơi vũng tàu', '2014-09-07', '2015-09-07', 'Vui lắm hén'),
-	(4, '2016', 75, 'Ở nhà chơi không làm gì hết', '2014-09-07', '2015-09-07', 'Chắc buồn lắm hén'),
-	(5, '2015', 75, 'gà', '2015-08-09', '2015-11-09', 'gà'),
-	(6, '2015', 75, 'fff', '2015-08-09', '0000-00-00', 'fff'),
-	(9, '2015', 62, 'ff', '2015-09-02', '2015-09-10', 'ff');
 /*!40000 ALTER TABLE `jos_future_orther_work` ENABLE KEYS */;
 
 
@@ -308,11 +412,6 @@ CREATE TABLE IF NOT EXISTS `jos_future_science_research_of_user` (
 
 -- Dumping data for table lylichkhoahoc.jos_future_science_research_of_user: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_science_research_of_user` DISABLE KEYS */;
-INSERT INTO `jos_future_science_research_of_user` (`value_id`, `user_id`, `science_activity_name`, `year_id`, `time_from`, `time_to`, `note`) VALUES
-	(1, 75, 'Báo cáo hội thảo chuyên ngành', '2015', '2015-09-06', '2015-09-06', 'dang tien hanh'),
-	(2, 75, 'Báo cáo hội thảo chuyên ngành', '2016', '2015-09-06', '2015-09-06', 'dang tien hanh'),
-	(8, 80, 'hoạt động gì đây 1', '2015', '2015-08-09', NULL, 'hoạt động gì đây 1'),
-	(9, 79, 'F', '2015', '2015-09-16', NULL, 'F');
 /*!40000 ALTER TABLE `jos_future_science_research_of_user` ENABLE KEYS */;
 
 
@@ -329,9 +428,9 @@ CREATE TABLE IF NOT EXISTS `jos_future_study` (
   PRIMARY KEY (`value_id`),
   UNIQUE KEY `user_id` (`user_id`,`subject_name`,`year_id`),
   KEY `FK_jos_future_study_jos_subject` (`subject_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nHọc tập nâng cao trình độ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Định hướng phát triển\r\nHọc tập nâng cao trình độ';
 
--- Dumping data for table lylichkhoahoc.jos_future_study: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_future_study: ~1 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_study` DISABLE KEYS */;
 /*!40000 ALTER TABLE `jos_future_study` ENABLE KEYS */;
 
@@ -353,8 +452,6 @@ CREATE TABLE IF NOT EXISTS `jos_future_teaching` (
 
 -- Dumping data for table lylichkhoahoc.jos_future_teaching: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_future_teaching` DISABLE KEYS */;
-INSERT INTO `jos_future_teaching` (`value_id`, `user_id`, `subject_id`, `lesson_number`, `qualifications`, `edu_system`, `note`) VALUES
-	(1, 79, 1, 60, 'Đại học, Cao đẳng', 'Chính quy, Liên thông', '');
 /*!40000 ALTER TABLE `jos_future_teaching` ENABLE KEYS */;
 
 
@@ -372,13 +469,6 @@ CREATE TABLE IF NOT EXISTS `jos_infomation` (
 
 -- Dumping data for table lylichkhoahoc.jos_infomation: ~6 rows (approximately)
 /*!40000 ALTER TABLE `jos_infomation` DISABLE KEYS */;
-INSERT INTO `jos_infomation` (`value_id`, `user_id`, `attribute_id`, `value`) VALUES
-	(16, 75, 1, 'Nguyễn Hoàng Duy Thiện'),
-	(17, 75, 2, '29/08/2015'),
-	(18, 75, 4, 'nam'),
-	(19, 62, 1, 'Admin'),
-	(20, 62, 2, '28/08/2015'),
-	(21, 62, 4, 'nu');
 /*!40000 ALTER TABLE `jos_infomation` ENABLE KEYS */;
 
 
@@ -395,16 +485,10 @@ CREATE TABLE IF NOT EXISTS `jos_orther_work` (
   UNIQUE KEY `user_id_content` (`user_id`,`content`,`year_id`),
   KEY `FK_jos_orther_work_jos_year` (`year_id`,`user_id`,`content`),
   CONSTRAINT `FK_jos_orther_work_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Công tác khác';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Công tác khác';
 
 -- Dumping data for table lylichkhoahoc.jos_orther_work: ~5 rows (approximately)
 /*!40000 ALTER TABLE `jos_orther_work` DISABLE KEYS */;
-INSERT INTO `jos_orther_work` (`value_id`, `year_id`, `user_id`, `content`, `time_from`, `time_to`, `note`) VALUES
-	(8, '2015', 75, 'Công tác 1', '2015-12-09', '1970-01-01', 'Chưa hoàn thành'),
-	(9, '2015', 79, 'ff', '2015-01-09', '2015-09-30', 'ff'),
-	(10, '2015', 79, 'fsd', '2015-09-01', '2015-09-30', 'fff'),
-	(11, '2015', 79, 'sdfasd', '2015-09-10', '2015-09-12', ''),
-	(12, '2015', 79, 'sdfasdfa', '2015-09-09', '2015-09-25', 'sdfa');
 /*!40000 ALTER TABLE `jos_orther_work` ENABLE KEYS */;
 
 
@@ -421,11 +505,6 @@ CREATE TABLE IF NOT EXISTS `jos_science_activity` (
 
 -- Dumping data for table lylichkhoahoc.jos_science_activity: ~4 rows (approximately)
 /*!40000 ALTER TABLE `jos_science_activity` DISABLE KEYS */;
-INSERT INTO `jos_science_activity` (`value_id`, `name`, `year_id`) VALUES
-	(2, 'Nghiên cứu khoa học', '2015'),
-	(4, 'Nghiên cứu khoa học', '2016'),
-	(3, 'Sáng tạo thiết bị, ,mô hình, đồ dùng dạy học', '2016'),
-	(1, 'Sáng tạo thiết bị, mô hình, đồ dùng dạy học', '2015');
 /*!40000 ALTER TABLE `jos_science_activity` ENABLE KEYS */;
 
 
@@ -445,10 +524,6 @@ CREATE TABLE IF NOT EXISTS `jos_science_research_of_user` (
 
 -- Dumping data for table lylichkhoahoc.jos_science_research_of_user: ~2 rows (approximately)
 /*!40000 ALTER TABLE `jos_science_research_of_user` DISABLE KEYS */;
-INSERT INTO `jos_science_research_of_user` (`value_id`, `user_id`, `science_activity_id`, `time_from`, `time_to`, `note`) VALUES
-	(2, 75, 2, '2014-09-04', '2015-09-14', 'Hoàn thành'),
-	(3, 75, 1, '2015-03-09', '2015-03-09', 'f'),
-	(4, 80, 2, '2015-05-09', '2015-07-09', 'g');
 /*!40000 ALTER TABLE `jos_science_research_of_user` ENABLE KEYS */;
 
 
@@ -465,12 +540,10 @@ CREATE TABLE IF NOT EXISTS `jos_scientific_report` (
   UNIQUE KEY `user_id_name` (`user_id`,`name`,`year_id`),
   KEY `FK_jos_scientific_report_jos_year` (`year_id`),
   CONSTRAINT `FK_jos_scientific_report_jos_year` FOREIGN KEY (`year_id`) REFERENCES `jos_year` (`year_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Báo cáo khoa học đã công bố';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Báo cáo khoa học đã công bố';
 
--- Dumping data for table lylichkhoahoc.jos_scientific_report: ~0 rows (approximately)
+-- Dumping data for table lylichkhoahoc.jos_scientific_report: ~1 rows (approximately)
 /*!40000 ALTER TABLE `jos_scientific_report` DISABLE KEYS */;
-INSERT INTO `jos_scientific_report` (`value_id`, `year_id`, `user_id`, `name`, `publish_date`, `publish_place`, `note`) VALUES
-	(1, '2015', 75, 'Thiêt kế robot 2015', '2015-09-09', 'Mỹ', 'rất thành công');
 /*!40000 ALTER TABLE `jos_scientific_report` ENABLE KEYS */;
 
 
@@ -487,11 +560,6 @@ CREATE TABLE IF NOT EXISTS `jos_subject` (
 
 -- Dumping data for table lylichkhoahoc.jos_subject: ~4 rows (approximately)
 /*!40000 ALTER TABLE `jos_subject` DISABLE KEYS */;
-INSERT INTO `jos_subject` (`value_id`, `year_id`, `name`) VALUES
-	(1, '2015', 'Nhập môn lập trình'),
-	(3, '2016', 'Nhập môn lập trình'),
-	(2, '2015', 'Tin học đại cương'),
-	(4, '2016', 'Tin học đại cương');
 /*!40000 ALTER TABLE `jos_subject` ENABLE KEYS */;
 
 
@@ -512,10 +580,6 @@ CREATE TABLE IF NOT EXISTS `jos_teaching` (
 
 -- Dumping data for table lylichkhoahoc.jos_teaching: ~0 rows (approximately)
 /*!40000 ALTER TABLE `jos_teaching` DISABLE KEYS */;
-INSERT INTO `jos_teaching` (`value_id`, `user_id`, `subject_id`, `lesson_number`, `qualifications`, `edu_system`, `note`) VALUES
-	(1, 78, 1, 60, 'Đại học, Cao đẳng, Trung cấp', 'Chính quy, Liên thông', 'fff'),
-	(2, 80, 1, 60, 'Đại học, Cao đẳng', 'Chính quy, Liên thông', ''),
-	(3, 79, 1, 60, 'Đại học, Cao đẳng', 'Chính quy', '');
 /*!40000 ALTER TABLE `jos_teaching` ENABLE KEYS */;
 
 
@@ -574,7 +638,7 @@ INSERT INTO `jos_users` (`id`, `name`, `username`, `email`, `password`, `usertyp
 	(98, 'Trịnh Quốc Việt', 'tqvietttt', 'tqvietttt@gmail.com', '3cc79d8782545686ca8ecd8a6f080d9e:kXX2BLYw7ACFr4AQIwlB4GIRJdEulGVq', 'Registered', 0, 0, 18, '2012-01-30 03:55:21', '2014-05-27 01:57:23', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
 	(99, 'Nguyễn Thị Ngọc Mai', 'maithaophuc', 'maithaophuc@gmail.com', '676de6e77bb43c117d6a3650b5e83b12:BfLnePHemXcCB1cyixde9s5bgJ1Si8Bf', 'Registered', 1, 0, 18, '2012-01-30 03:55:58', '2014-01-07 23:23:29', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
 	(100, 'Thạch Kọng Saoane', 'kongsaoanethach', 'kongsaoanethach@gmail.com', 'ed401c2de59133ed0af4cd30c1809203:qxaWuXIMASKKNudGiP7XkNQBMuyaTMg7', 'Registered', 1, 0, 18, '2012-01-30 03:56:51', '2014-02-20 01:59:12', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
-	(113, 'Trịnh Thị Anh Duyên', 'trinhanhduyen89', 'trinhanhduyen89@yahoo.com.vn', 'e10adc3949ba59abbe56e057f20f883e', 'Editor', 0, 0, 20, '2012-07-11 03:42:27', '2014-04-25 03:38:55', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
+	(113, 'Trịnh Thị Anh Duyên', 'trinhanhduyen89', 'trinhanhduyen89@yahoo.com.vn', 'd6b0ab7f1c8ab8f514db9a6d85de160a', 'Editor', 0, 0, 20, '2012-07-11 03:42:27', '2014-04-25 03:38:55', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
 	(105, 'Dương Thị Chiểu', 'dtchieu', 'dtchieu@tvu.edu.vn', 'd6b0ab7f1c8ab8f514db9a6d85de160a', 'Author', 1, 0, 19, '2012-04-06 02:09:33', '2012-05-28 03:21:27', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
 	(112, 'Phan Quốc Nghĩa', 'nghiatvnt', 'nghiatvnt@tvu.edu.vn', '55d224a87d341c8fabb52e7a5869ce42:rehiETzNypOJxIUsNj51BV5RwPDunYlE', 'Author', 1, 1, 19, '2012-07-07 08:26:37', '0000-00-00 00:00:00', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
 	(114, 'Nguyễn Mộng Hiền', 'hientvu', 'nguyenmonghienjcu@gmail.com', '8da2932ae33e86fc2b5e463f1c5d76c5:NBqVeeIXxOeNkEm0lePTJhAROaaCNNlL', 'Registered', 0, 0, 18, '2012-08-15 03:00:17', '2014-05-27 01:54:54', '', 'admin_language=\nlanguage=\neditor=\nhelpsite=\ntimezone=7\n\n', 2),
@@ -610,8 +674,7 @@ CREATE TABLE IF NOT EXISTS `jos_year` (
 -- Dumping data for table lylichkhoahoc.jos_year: ~1 rows (approximately)
 /*!40000 ALTER TABLE `jos_year` DISABLE KEYS */;
 INSERT INTO `jos_year` (`year_id`, `is_active`) VALUES
-	('2015', 1),
-	('2016', 0);
+	('2015', 1);
 /*!40000 ALTER TABLE `jos_year` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

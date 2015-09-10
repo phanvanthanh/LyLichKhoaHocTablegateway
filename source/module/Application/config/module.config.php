@@ -76,36 +76,42 @@ return array(
                 'label' => 'Phân quyền', 
                 'title' => 'Phân quyền', 
                 'route' => 'permission/permission',
+                'module'=> 'Permission',    
                 'order' => 0
             ),              
             array(
                 'label' => 'Nghiên cứu', 
                 'title' => 'Nghiên cứu', 
                 'route' => 'cong_tac_nghien_cuu/crud',
+                'module'=> 'CongTacNghienCuu',
                 'order' => 1
             ),
             array(
                 'label' => 'Môn học', 
                 'title' => 'Môn học', 
                 'route' => 'mon_hoc/crud',
+                'module'=> 'MonHoc',
                 'order' => 2
             ),  
             array(
                 'label' => 'Chứng chỉ', 
                 'title' => 'Chứng chỉ', 
                 'route' => 'chung_chi_khac/crud',
+                'module'=> 'ChungChiKhac',
                 'order' => 3
             ), 
             array(
                 'label' => 'Năm học', 
                 'title' => 'Năm học', 
                 'route' => 'nam_hoc/crud',
+                'module'=> 'NamHoc',
                 'order' => 4
             ),  
             array(
                 'label' => 'Thuộc tính', 
                 'title' => 'Thuộc tính', 
                 'route' => 'thuoc_tinh/crud',
+                'module'=> 'Attribute',
                 'order' => 5
             ),      
         ),

@@ -2,7 +2,7 @@
 return array(
     'modules' => array(
         'Route',
-        //'ACL',
+        'ACL',
         'Permission',        
         'Application',
         'CongTacNghienCuu',
