@@ -32,8 +32,10 @@ class Module
                 'Permission\Model\JosAdminRoleTable' => 'Permission\Factory\Table\JosAdminRoleTableFactory',
                 'Permission\Model\JosAdminRuleTable' => 'Permission\Factory\Table\JosAdminRuleTableFactory',
                 'Permission\Model\JosUsersTable' => 'Permission\Factory\Table\JosUsersTableFactory',
+                'Permission\Model\JosUserLasttimeLoginTable' => 'Permission\Factory\Table\JosUserLasttimeLoginTableFactory',
                 // Form
                 'Permission\Form\LoginForm' => 'Permission\Factory\Form\LoginFormFactory',
+
             )
             
         );

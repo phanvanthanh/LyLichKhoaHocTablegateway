@@ -43,6 +43,7 @@ class JosUsersTable
         sử dụng trong Application\Controller\Index editCertificateAction
         sử dụng trong Application\Controller\Index editInforAction
         sử dụng trong Application\Controller\Index editTeachingAction
+        sử dụng trong Permission\Controller\Permission updateAction
     */
     public function getGiangVienByArrayConditionAndArrayColumns($array_conditions=array(), $array_columns=array()){
          /*

@@ -658,9 +658,6 @@ CREATE TABLE IF NOT EXISTS `jos_user_lasttime_login` (
 
 -- Dumping data for table lylichkhoahoc.jos_user_lasttime_login: ~2 rows (approximately)
 /*!40000 ALTER TABLE `jos_user_lasttime_login` DISABLE KEYS */;
-INSERT INTO `jos_user_lasttime_login` (`value_id`, `user_id`, `lasttime_login`) VALUES
-	(1, 62, '2015-09-10 14:24:07'),
-	(2, 75, '2015-09-10 14:23:36');
 /*!40000 ALTER TABLE `jos_user_lasttime_login` ENABLE KEYS */;
 
 

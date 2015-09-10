@@ -14,9 +14,11 @@ use Zend\View\Model\ViewModel;
 
 use Permission\Model\Entity\JosAdminResource;
 use Permission\Model\Entity\JosAdminRule;
+use Permission\Model\Entity\JosAdminRole;
 use Permission\Form\EditPermissionForm;
 use Permission\Form\EditResourceForm;
 use Permission\Form\EditPermissionOfUserForm;
+use Zend\Db\Sql\Expression;
 
 class PermissionController extends AbstractActionController
 {
@@ -169,6 +171,25 @@ class PermissionController extends AbstractActionController
     }
 
     public function updateAction(){
+        // cập nhật lại tất cả các role theo usertype trong bảng user
+        $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
+        $role_names=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array(), array(new Expression('DISTINCT(usertype) as role')));
+        
+        $jos_role_table=$this->getServiceLocator()->get('Permission\Model\JosAdminRoleTable');
+        $roles=$jos_role_table->getRoleByArrayConditionAndArrayColumn(array(), array());
+        $array_roles=array();
+        foreach ($roles as $key => $value) {
+            $array_roles[$value['role_name']]=$value;
+        }
+        // kiểm tra nếu có usertype mới mà trong bảng role hỏng tồn tại thì thêm vào bảng role
+        foreach ($role_names as $key => $value) {
+            if(!isset($array_roles[$value['role']])){
+                $role_new=new JosAdminRole();
+                $role_new->setRoleName($value['role']);
+                $jos_role_table->saveRole($role_new);
+            }
+        }
+
         //Auto Save All Controller and Action
         //truy cập tablegateway resource
         $resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');

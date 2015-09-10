@@ -5,9 +5,9 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Sql;
 
-use Permission\Model\Entity\JosAdminRole;
+use Permission\Model\Entity\JosUserLasttimeLogin;
 
-class JosAdminRoleTable
+class JosUserLasttimeLoginTable
 {
 
     protected $tableGateway;
@@ -18,10 +18,9 @@ class JosAdminRoleTable
     }
 
     /*
-        sử dụng trong Permission/Controller/Permission indexAction
-        sử dụng trong Permission/Controller/Permission updateAction
+        sử dụng trong Permission\Controller\User loginAction
     */
-    public function getRoleByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
+    public function getJosUserLasttimeLoginByArrayConditionAndArrayColumn($array_conditions=array(), $array_columns=array()){
         /*
             chuyền vào 2 tham số:   1 tham số là mảng điều kiện, 
                                     1 tham số là mảng cột cần lấy ra
@@ -30,7 +29,7 @@ class JosAdminRoleTable
         $sql = new Sql($adapter);        
         // select
         $sqlSelect = $sql->select();
-        $sqlSelect->from(array('t1'=>'jos_admin_role'));
+        $sqlSelect->from(array('t1'=>'jos_user_lasttime_login'));
         if($array_columns){
             $sqlSelect->columns($array_columns);
         }
@@ -47,21 +46,22 @@ class JosAdminRoleTable
     }
 
     /*
-        sử dụng trong Permission/Controller/Permission updateAction
+        sử dụng trong Permission\Controller\User loginAction
     */
-    public function saveRole(JosAdminRole $role)
+    public function saveJosUserLasttimeLogin(JosUserLasttimeLogin $jos_user_lasttime_login)
     {
         $data = array(
-            'role_name' => $role->getRoleName()
+            'user_id' => $jos_user_lasttime_login->getUserId(),
+            'lasttime_login' => $jos_user_lasttime_login->getLasttimeLogin(),
         );
         
-        $role_id = (int) $role->getRoleId();
-        if ($role_id == 0) {
+        $value_id = (int) $jos_user_lasttime_login->getValueId();
+        if ($value_id == 0) {
             $this->tableGateway->insert($data);
         } else {
-            if ($this->getRoleByArrayConditionAndArrayColumn(array('role_id'=>$role_id), array())) {
+            if ($this->getJosUserLasttimeLoginByArrayConditionAndArrayColumn(array('value_id'=>$value_id), array())) {
                 $this->tableGateway->update($data, array(
-                    'role_id' => $role_id
+                    'value_id' => $value_id
                 ));
             } else {
                 return false;

@@ -12,6 +12,7 @@ namespace Permission\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Permission\Model\MyAuthStorage;
+use Permission\Model\Entity\JosUserLasttimeLogin;
 
 class UserController extends AbstractActionController
 {
@@ -30,7 +31,7 @@ class UserController extends AbstractActionController
     }
 
     public function loginAction()
-    {
+    {               
         // kiểm tra nếu đã đăng nhập rồi thì không cho zô
         $read=$this->getAuthService()->getStorage()->read();
         if(isset($read['username']) and $read['username']){
@@ -59,7 +60,7 @@ class UserController extends AbstractActionController
                 $password=$post['password'];
                 // lấy dữ liệu theo user name
                 $jos_users_table=$this->getServiceLocator()->get('Permission\Model\JosUsersTable');
-                $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$username), array('password'));
+                $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$username), array('password', 'id'));
                 if($user_exist and isset($user_exist[0]['password'])){
                     $array_password=explode(':' , $user_exist[0]['password']);
                     //$password=$array_password[0].':'.md5($password);
@@ -73,6 +74,17 @@ class UserController extends AbstractActionController
                         $jos_admin_resource_table=$this->getServiceLocator()->get('Permission\Model\JosAdminResourceTable');
                         $white_list=$jos_admin_resource_table->getResourceByUsername($username);
                         $this->getAuthService()->getStorage()->write(array('username'=>$username,'white_list' => $white_list));         
+                        
+                        // lastime login
+                        $jos_lasttime_login_table=$this->getServiceLocator()->get('Permission\Model\JosUserLasttimeLoginTable');
+                        $user_lastime_login_exist=$jos_lasttime_login_table->getJosUserLasttimeLoginByArrayConditionAndArrayColumn(array('user_id'=>$user_exist[0]['id']),array());
+                        $new_lasttime_login=new JosUserLasttimeLogin();
+                        if($user_lastime_login_exist){
+                            $new_lasttime_login->exchangeArray($user_lastime_login_exist[0]);
+                        }
+                        $new_lasttime_login->setUserId($user_exist[0]['id']);
+                        $new_lasttime_login->setLasttimeLogin(date("Y-m-d H:i:s"));
+                        $jos_lasttime_login_table->saveJosUserLasttimeLogin($new_lasttime_login);
                         return $this->redirect()->toUrl($url_login);
                     }
                 }
