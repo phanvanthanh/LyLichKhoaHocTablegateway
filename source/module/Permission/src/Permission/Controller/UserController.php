@@ -62,8 +62,8 @@ class UserController extends AbstractActionController
                 $user_exist=$jos_users_table->getGiangVienByArrayConditionAndArrayColumns(array('username'=>$username), array('password'));
                 if($user_exist and isset($user_exist[0]['password'])){
                     $array_password=explode(':' , $user_exist[0]['password']);
-                    $password=$array_password[0].':'.md5($password);
-                    $password='d6b0ab7f1c8ab8f514db9a6d85de160a';
+                    //$password=$array_password[0].':'.md5($password);
+                    $password=md5($password);
                     // Xác định lớp chứng thực authentication
                     $this->getAuthService()->getAdapter()->setIdentity($username)->setCredential($password);
                     $result = $this->getAuthService()->authenticate();
