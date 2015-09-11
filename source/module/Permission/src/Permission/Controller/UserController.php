@@ -85,6 +85,9 @@ class UserController extends AbstractActionController
                         $new_lasttime_login->setUserId($user_exist[0]['id']);
                         $new_lasttime_login->setLasttimeLogin(date("Y-m-d H:i:s"));
                         $jos_lasttime_login_table->saveJosUserLasttimeLogin($new_lasttime_login);
+                        
+                        // thông báo đăng nhập thành công
+                        $this->flashMessenger()->addSuccessMessage('Đăng nhập thành công!');
                         return $this->redirect()->toUrl($url_login);
                     }
                 }
