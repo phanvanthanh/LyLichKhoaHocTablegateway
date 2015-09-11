@@ -110,10 +110,13 @@
                 <td data-title="Trạng thái">
                   <?php
                     $trang_thai='Không';
-                    $note='';
+                    $note='_';
                     if(isset($certificate_infor['note']) and $certificate_infor['note']!='0'){
                       $trang_thai='Có';
-                      $note=$certificate_infor['note'];
+                      if($certificate_infor['note']!=''){
+                        $note=$certificate_infor['note'];
+                      }
+                      
                     }
                     echo $trang_thai;
                   ?>
@@ -690,6 +693,7 @@
                   <?php 
                     // input id
                     $certificate_id='certificate_id_'.$certificate_list['value_id'];
+                    $certificate_edit_form->get($certificate_id)->setAttribute('value',$certificate_list['value_id']);
                     echo $this->formHidden($certificate_edit_form->get($certificate_id));
                     // Label name
                     $certificate_name='certificate_name_'.$certificate_list['value_id'];

@@ -160,7 +160,7 @@ class IndexController extends AbstractActionController
           THÔNG TIN CÁ NHÂN: phần 2
         */
           //  lấy tất cả chứng chỉ của user trong năm đang active
-          $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('certificate_id', 'level', 'note'), array('name'));
+          $certificate_infors=$certificate_table_jos_certificate_user->getCertificateUserAndCertificateByArrayConditionAndArrayColumns(array('t1.user_id'=>$id, 't2.year_id'=>$year_id), array('value_id'=>'certificate_id', 'level', 'note'), array('name'));
           // nếu không có dữ liệu thì lấy mặc định ra hiển thị đỡ
           if(!$certificate_infors){
             $certificate_lists=$certificate_table_jos_certificate->getCertificateByYearActive();
@@ -545,6 +545,9 @@ class IndexController extends AbstractActionController
                   $this->flashMessenger()->addErrorMessage($error);
                 }
                 return $this->redirect()->toRoute('application/crud', array('action'=>'index', 'id'=>$id));
+              }
+              else{
+                die(var_dump($certificate_edit_form->getMessages()));
               }
             }
           }                  
