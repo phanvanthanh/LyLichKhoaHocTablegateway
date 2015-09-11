@@ -132,12 +132,18 @@
                     if(isset($certificate_infor['note']) and $certificate_infor['note']!='0' and isset($ngoai_ngu[$certificate_infor['note']])){
                       echo $ngoai_ngu[$certificate_infor['note']];
                     }
+                    else{
+                      echo '_';
+                    }
                   ?>
                 </td>                   
                 <td data-title="Trình độ">
                   <?php 
-                    if(isset($certificate_infor['level'])){
+                    if(isset($certificate_infor['level']) and $certificate_infor['level']){
                       echo $certificate_infor['level'];
+                    }
+                    else{
+                      echo '_';
                     }
                   ?>
                 </td> 
@@ -182,9 +188,36 @@
           <tr>
             <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $teaching['value_id']; ?></span><?php $key++; echo $key; ?></td>
             <td data-title="Tên môn"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $teaching['subject_id']; ?></span><?php echo $teaching['name']; ?></td>
-            <td data-title="Số tiết"><?php echo $teaching['lesson_number']; ?></td> 
-            <td data-title="Bậc học"><?php echo $teaching['qualifications']; ?></td>
-            <td data-title="Hệ đào tạo"><?php echo $teaching['edu_system']; ?></td>
+            <td data-title="Số tiết">
+              <?php 
+                if(isset($teaching['lesson_number']) and $teaching['lesson_number']){
+                  echo $teaching['lesson_number']; 
+                }
+                else{
+                  echo '0';
+                }
+              ?>
+            </td> 
+            <td data-title="Bậc học">
+              <?php 
+                if(isset($teaching['qualifications']) and $teaching['qualifications']){
+                  echo $teaching['qualifications']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>
+            <td data-title="Hệ đào tạo">
+              <?php 
+                if(isset($teaching['edu_system']) and $teaching['edu_system']){
+                  echo $teaching['edu_system']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>
             <td data-title="Ghi chú"><?php echo $teaching['note']; ?></td>   
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
@@ -226,14 +259,24 @@
               $activity_id=$science_activity_all['value_id'];
               $activity_name=$science_activity_all['name'];
               $trang_thai='Không';
-              $time_from='';
-              $time_to='';
-              $note='';
+              $time_from='0000-00-00';
+              $time_to='0000-00-00';
+              $note='_';
               if(isset($science_researchs[$activity_id])){
                 $trang_thai='Có';
                 $time_from=$science_researchs[$activity_id]['time_from'];
+                if($time_from=='1970-01-01'){
+                  $time_from='0000-00-00';
+                }
                 $time_to=$science_researchs[$activity_id]['time_to'];
+                if($time_to=='1970-01-01'){
+                  $time_to='0000-00-00';
+                }
                 $note=$science_researchs[$activity_id]['note'];
+                if($note==''){
+                  $note='_';
+                }
+
               }
             ?>             
             <tr>
@@ -254,20 +297,6 @@
         </tbody>
       </table>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     <div class="row">
       <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
@@ -297,12 +326,45 @@
           <?php foreach ($orther_works as $key => $value) { ?>
             <tr>
               <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span> <?php $key++; echo $key; ?></td>
-              <td data-title="Nội dung"><?php echo $value['content']; ?></td>
+              <td data-title="Nội dung">
+                <?php 
+                  if(isset($value['content']) and $value['content']){
+                    echo $value['content']; 
+                  }
+                  else{
+                    echo '_';
+                  }
+                ?>
+              </td>
               <td data-title="Thời gian">
-                <span class="time_from"><?php echo $value['time_from']; ?></span> đến 
-                <span class="time_to"><?php echo $value['time_to']; ?></span>
+                <span class="time_from">
+                  <?php 
+                    if(isset($value['time_from']) and $value['time_from']=='1970-01-01'){
+                       $value['time_from']='0000-00-00';
+                    }
+                    echo $value['time_from'];
+                  ?>
+                </span> 
+                đến 
+                <span class="time_to">
+                  <?php 
+                    if(isset($value['time_to']) and $value['time_to']=='1970-01-01'){
+                       $value['time_to']='0000-00-00';
+                    }
+                    echo $value['time_to']; 
+                  ?>
+                </span>
               </td> 
-              <td data-title="Ghi chú"><?php echo $value['note']; ?></td>   
+              <td data-title="Ghi chú">
+                <?php 
+                  if(isset($value['note']) and $value['note']){
+                    echo $value['note']; 
+                  }
+                  else{
+                    echo '_';
+                  }
+                ?>
+              </td>   
               <?php if($can_edit==1){ ?>
                 <td data-title="Xóa">
                   <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa công tác này?', '<?php echo $this->url('application/crud', array('action'=>'delete-orther-work', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
@@ -350,9 +412,36 @@
             <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $future_teaching['value_id']; ?></span><?php $key++; echo $key; ?></td>
             <td data-title="Tên môn"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $future_teaching['subject_id']; ?></span><?php echo $future_teaching['name']; ?></td>
             <td data-title="Số tiết"><?php echo $future_teaching['lesson_number']; ?></td> 
-            <td data-title="Bậc học"><?php echo $future_teaching['qualifications']; ?></td>
-            <td data-title="Hệ đào tạo"><?php echo $future_teaching['edu_system']; ?></td>
-            <td data-title="Ghi chú"><?php echo $future_teaching['note']; ?></td>   
+            <td data-title="Bậc học">
+              <?php 
+                if(isset($future_teaching['qualifications']) and $future_teaching['qualifications']){
+                  echo $future_teaching['qualifications']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>
+            <td data-title="Hệ đào tạo">
+              <?php 
+                if(isset($future_teaching['edu_system']) and $future_teaching['edu_system']){
+                  echo $future_teaching['edu_system']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>
+            <td data-title="Ghi chú">
+              <?php 
+                if(isset($future_teaching['note']) and $future_teaching['note']){
+                  echo $future_teaching['note']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>   
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
                 <a class="btn btn-default" onclick="deleteConfirm('Bạn thật sự muốn xóa công tác giảng dạy?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-teaching', 'id'=>$future_teaching['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
@@ -397,8 +486,24 @@
           <tr>
             <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
             <td data-title="Nội dung"><?php echo $value['science_activity_name']; ?></td>
-            <td data-title="Thời gian bắt đầu"><?php echo $value['time_from']; ?></td>
-            <td data-title="Ghi chú"><?php echo $value['note']; ?></td>  
+            <td data-title="Thời gian bắt đầu">
+              <?php
+                if(isset($value['time_from']) and $value['time_from'] and $value['time_from']=='1970-01-01'){ 
+                   $value['time_from']='0000-00-00';
+                }
+                echo $value['time_from'];
+              ?>
+            </td>
+            <td data-title="Ghi chú">
+              <?php 
+                if(isset($value['note']) and $value['note']){ 
+                  echo $value['note']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td>  
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
                 <a class="btn btn-default" onclick="deleteConfirm('Bạn thật sự muốn xóa công tác nghiên cứu này?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-hoat-dong-nghien-cuu-khoa-hoc', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
@@ -413,55 +518,6 @@
         </tbody>
       </table>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     <div class="row">
       <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
@@ -493,13 +549,45 @@
           <tr>
             <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
             <td data-title="Nội dung"><?php echo $value['subject_name']; ?></td>
-            <td data-title="Nơi học"><?php echo $value['address']; ?></td> 
+            <td data-title="Nơi học">
+              <?php 
+                if(isset($value['address']) and $value['address']){
+                  echo $value['address']; 
+                }
+                else{
+                  echo '_';
+                }
+              ?>
+            </td> 
             <td data-title="Thời gian">
-              <span class="time_from"><?php echo $value['time_from']; ?></span> 
+              <span class="time_from">
+                <?php 
+                  if(isset($value['time_from']) and $value['time_from'] and $value['time_from']=='1970-01-01'){
+                    $value['time_from']='0000-00-00';
+                  }
+                  echo $value['time_from']; 
+                ?>
+              </span> 
               đến
-              <span class="time_to"><?php echo $value['time_to']; ?></span> 
+              <span class="time_to">
+                <?php 
+                  if(isset($value['time_to']) and $value['time_to'] and $value['time_to']=='1970-01-01'){
+                    $value['time_to']='0000-00-00';
+                  }
+                  echo $value['time_to']; 
+                ?>
+              </span> 
             </td>
-            <td data-title="Ghi chú"><?php echo $value['note']; ?></td> 
+            <td data-title="Ghi chú">
+            <?php 
+              if(isset($value['note']) and $value['note']){
+                echo $value['note']; 
+              }
+              else{
+                echo '_';
+              }
+            ?>
+            </td> 
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
                 <a class="btn btn-default" onclick="deleteConfirm('Bạn thật sự muốn xóa môn học này?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-study', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
@@ -545,10 +633,34 @@
               <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span> <?php $key++; echo $key; ?></td>
               <td data-title="Nội dung"><?php echo $value['content']; ?></td>
               <td data-title="Thời gian">
-                <span class="time_from"><?php echo $value['time_from']; ?></span> đến 
-                <span class="time_to"><?php echo $value['time_to']; ?></span>
+                <span class="time_from">
+                <?php 
+                  if(isset($value['time_from']) and $value['time_from'] and $value['time_from']=='1970-01-01'){
+                    $value['time_from']='0000-00-00';
+                  }
+                  echo $value['time_from']; 
+                ?>
+                </span> 
+                đến 
+                <span class="time_to">
+                <?php 
+                  if(isset($value['time_to']) and $value['time_to'] and $value['time_to']=='1970-01-01'){
+                    $value['time_to']='0000-00-00';
+                  }
+                  echo $value['time_to']; 
+                ?>
+                </span>
               </td>
-              <td data-title="Ghi chú"><?php echo $value['note']; ?></td> 
+              <td data-title="Ghi chú">
+                <?php 
+                  if(isset($value['note']) and $value['note']){
+                    echo $value['note']; 
+                  }
+                  else{
+                    echo '_';
+                  }
+                ?>
+              </td> 
               <?php if($can_edit==1){ ?>
                 <td data-title="Xóa">
                   <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa công tác này?', '<?php echo $this->url('application/crud', array('action'=>'delete-future-orther-work', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
@@ -594,9 +706,34 @@
           <tr>
             <td data-title="STT"><span class="hidden-xs hidden-sm hidden-md hidden-lg"><?php echo $value['value_id']; ?></span><?php $key++; echo $key; ?></td>
             <td data-title="Tên bài báo"><?php echo $value['name']; ?></td>
-            <td data-title="Nơi xuất bản"><?php echo $value['publish_place']; ?></td> 
-            <td data-title="Năm xuất bản"><?php echo $value['publish_date']; ?></td>
-            <td data-title="Ghi chú"><?php echo $value['note']; ?></td>    
+            <td data-title="Nơi xuất bản">
+            <?php 
+              if(isset($value['publish_place']) and $value['publish_place']){
+                echo $value['publish_place']; 
+              }
+              else{
+                echo '_';
+              }
+            ?>
+            </td> 
+            <td data-title="Năm xuất bản">
+            <?php 
+              if(isset($value['publish_date']) and $value['publish_date'] and $value['publish_date']=='1970-01-01'){
+                $value['publish_date']='0000-00-00';
+              }
+              echo $value['publish_date']; 
+            ?>
+            </td>
+            <td data-title="Ghi chú">
+            <?php 
+              if(isset($value['note']) and $value['note']){
+                echo $value['note']; 
+              }
+              else{
+                echo '_';
+              }
+            ?>
+            </td>    
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
                 <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa bài báo này?', '<?php echo $this->url('application/crud', array('action'=>'delete-scientific-report', 'id'=>$value['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
