@@ -218,7 +218,16 @@
                 }
               ?>
             </td>
-            <td data-title="Ghi chú"><?php echo $teaching['note']; ?></td>   
+            <td data-title="Ghi chú">
+            <?php 
+              if(isset($teaching['note']) and $teaching['note']){
+                echo $teaching['note']; 
+              }
+              else{
+                echo '_';
+              }
+            ?>
+            </td>   
             <?php if($can_edit==1){ ?>
               <td data-title="Xóa">
                 <a class="btn btn-default" onclick="deleteConfirm('Bạn muốn xóa công tác giảng dạy?', '<?php echo $this->url('application/crud', array('action'=>'delete-teaching', 'id'=>$teaching['value_id'])); ?>')"><b class="glyphicon glyphicon-remove"></b></a>
