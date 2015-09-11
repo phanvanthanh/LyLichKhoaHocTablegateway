@@ -97,6 +97,8 @@
                   <td class="text-center" data-title="Option">
                     <?php if($all_attribute['frontend_input']=='Select'){ ?>
                       <a class="btn btn-default" href="<?php echo $this->url('thuoc_tinh/crud', array('action'=>'edit-option', 'id'=>$all_attribute['attribute_id'])); ?>">Option</a>
+                    <?php }else{ ?>
+                      Không
                     <?php } ?>
                   </td>
                   <td class="text-center" data-title="Xóa">
