@@ -31,7 +31,6 @@ class MyNavigation extends DefaultNavigationFactory
             $pages = $this->getPagesFromConfig($configuration[$this->getName()]);
             $this->pages = $this->injectComponents($pages, $routeMatch, $router);
         }
-        
         //$this->pages=$this->removeRoute($serviceLocator, $this->pages);
         return $this->pages;
     }
