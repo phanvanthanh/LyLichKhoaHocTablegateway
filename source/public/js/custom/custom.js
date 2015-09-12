@@ -188,12 +188,12 @@ $(document).ready(function(){
     */
 
     jQuery('.ctgd-btn-edit').on('click', function(){
-        var id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var ten_mon=jQuery(this).closest('tr').find('td[data-title="Tên môn"] span').text();
-        var so_tiet=jQuery(this).closest('tr').find('td[data-title="Số tiết"]').text();
-        var bac_hoc=jQuery(this).closest('tr').find('td[data-title="Bậc học"]').text();
-        var he_dao_tao=jQuery(this).closest('tr').find('td[data-title="Hệ đào tạo"]').text();
-        var ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var ten_mon=jQuery(this).closest('tr').find('td[data-title="Tên môn"] span').text().trim();
+        var so_tiet=jQuery(this).closest('tr').find('td[data-title="Số tiết"]').text().trim();
+        var bac_hoc=jQuery(this).closest('tr').find('td[data-title="Bậc học"]').text().trim();
+        var he_dao_tao=jQuery(this).closest('tr').find('td[data-title="Hệ đào tạo"]').text().trim();
+        var ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
         
         jQuery('#modal-cong-tac-giang-day-edit').find('input[name="id_cong_tac"]').val(id);
         jQuery('#modal-cong-tac-giang-day-edit').find('select[name="ten_mon"]').val(ten_mon);
@@ -218,12 +218,12 @@ $(document).ready(function(){
     */
 
     jQuery('.future-ctgd-btn-edit').on('click', function(){
-        var id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var ten_mon=jQuery(this).closest('tr').find('td[data-title="Tên môn"] span').text();
-        var so_tiet=jQuery(this).closest('tr').find('td[data-title="Số tiết"]').text();
-        var bac_hoc=jQuery(this).closest('tr').find('td[data-title="Bậc học"]').text();
-        var he_dao_tao=jQuery(this).closest('tr').find('td[data-title="Hệ đào tạo"]').text();
-        var ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var ten_mon=jQuery(this).closest('tr').find('td[data-title="Tên môn"] span').text().trim();
+        var so_tiet=jQuery(this).closest('tr').find('td[data-title="Số tiết"]').text().trim();
+        var bac_hoc=jQuery(this).closest('tr').find('td[data-title="Bậc học"]').text().trim();
+        var he_dao_tao=jQuery(this).closest('tr').find('td[data-title="Hệ đào tạo"]').text().trim();
+        var ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
         
         jQuery('#modal-future-cong-tac-giang-day-edit').find('input[name="id_cong_tac"]').val(id);
         jQuery('#modal-future-cong-tac-giang-day-edit').find('select[name="ten_mon"]').val(ten_mon);
@@ -246,16 +246,16 @@ $(document).ready(function(){
     });
         
     jQuery('.nghien-cuu-btn-edit').on('click', function(){
-        var id_hoat_dong=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var ten_hoat_dong=jQuery(this).closest('tr').find('td[data-title="Tham gia hoạt động"]').text();
-        var trang_thai=jQuery(this).closest('tr').find('td[data-title="Trạng thái"]').text();
+        var id_hoat_dong=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var ten_hoat_dong=jQuery(this).closest('tr').find('td[data-title="Tham gia hoạt động"]').text().trim();
+        var trang_thai=jQuery(this).closest('tr').find('td[data-title="Trạng thái"]').text().trim();
         var bat_dau='';
         var ket_thuc='';
         var ghi_chu='';
         if(trang_thai=='Có'){
-            bat_dau=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text();
-            ket_thuc=jQuery(this).closest('tr').find('td[data-title="Thời gian kết thúc"]').text();
-            ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+            bat_dau=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text().trim();
+            ket_thuc=jQuery(this).closest('tr').find('td[data-title="Thời gian kết thúc"]').text().trim();
+            ghi_chu=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
             jQuery('#modal-nghien-cuu-edit').find('input[name="trang_thai"].checkbox').prop('checked', true).val(1);
         }
         console.log(id_hoat_dong, ten_hoat_dong, trang_thai, bat_dau, ket_thuc, ghi_chu);
@@ -267,10 +267,10 @@ $(document).ready(function(){
     });
 
     jQuery('.future-hdnckh-btn-edit').on('click', function(){
-        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var science_activity_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
-        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text();
-        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var science_activity_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text().trim();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian bắt đầu"]').text().trim();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
         jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="value_id"]').val(value_id);
         jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="science_activity_name"]').val(science_activity_name);
         jQuery('#modal-future-hoat-dong-nghien-cuu-khoa-hoc-edit').find('input[name="time_from"]').val(time_from);
@@ -279,11 +279,11 @@ $(document).ready(function(){
     });
 
     jQuery('.orther-work-btn-edit').on('click', function(){
-        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
-        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
-        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
-        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text().trim();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text().trim();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text().trim();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
 
         jQuery('#modal-orther-work-edit').find('input[name="value_id"]').val(value_id);
         jQuery('#modal-orther-work-edit').find('input[name="content"]').val(content);
@@ -294,11 +294,11 @@ $(document).ready(function(){
     });
 
     jQuery('.future-orther-work-btn-edit').on('click', function(){
-        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
-        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
-        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
-        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var content=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text().trim();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text().trim();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text().trim();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
 
         jQuery('#modal-future-orther-work-edit').find('input[name="value_id"]').val(value_id);
         jQuery('#modal-future-orther-work-edit').find('input[name="content"]').val(content);
@@ -313,12 +313,12 @@ $(document).ready(function(){
     */
 
     jQuery('.future-study-btn-edit').on('click', function(){
-        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var subject_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text();
-        var address=jQuery(this).closest('tr').find('td[data-title="Nơi học"]').text();
-        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text();
-        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text();
-        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var subject_name=jQuery(this).closest('tr').find('td[data-title="Nội dung"]').text().trim();
+        var address=jQuery(this).closest('tr').find('td[data-title="Nơi học"]').text().trim();
+        var time_from=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_from').text().trim();
+        var time_to=jQuery(this).closest('tr').find('td[data-title="Thời gian"] span.time_to').text().trim();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
 
         jQuery('#modal-future-study-edit').find('input[name="value_id"]').val(value_id);
         jQuery('#modal-future-study-edit').find('input[name="subject_name"]').val(subject_name);
@@ -333,11 +333,11 @@ $(document).ready(function(){
         sửa các bài báo cáo khoa học đã được xuất bản
     */
     jQuery('.scientific-report-btn-edit').on('click', function(){
-        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text();
-        var name=jQuery(this).closest('tr').find('td[data-title="Tên bài báo"]').text();
-        var publish_place=jQuery(this).closest('tr').find('td[data-title="Nơi xuất bản"]').text();
-        var publish_date=jQuery(this).closest('tr').find('td[data-title="Năm xuất bản"]').text();
-        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text();
+        var value_id=jQuery(this).closest('tr').find('td[data-title="STT"] span').text().trim();
+        var name=jQuery(this).closest('tr').find('td[data-title="Tên bài báo"]').text().trim();
+        var publish_place=jQuery(this).closest('tr').find('td[data-title="Nơi xuất bản"]').text().trim();
+        var publish_date=jQuery(this).closest('tr').find('td[data-title="Năm xuất bản"]').text().trim();
+        var note=jQuery(this).closest('tr').find('td[data-title="Ghi chú"]').text().trim();
         console.log(value_id, name, publish_place, publish_date, note);
         jQuery('#modal-scientific-report-edit').find('input[name="value_id"]').val(value_id);
         jQuery('#modal-scientific-report-edit').find('input[name="name"]').val(name);
